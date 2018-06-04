@@ -30,7 +30,7 @@ class card {
         })
     }
     afterAtk(bf){
-        this.beforeAtkList.forEach( ati => {
+        this.beforeAtkList.forEach( aTi => {
             attr.invoke(bf);
         })
     }
