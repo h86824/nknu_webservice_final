@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/load.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <canvas width="1280" height="720" style="border: 1px solid #E0E0E0"></canvas>
+
+    <script>
+
+      var loader = new HS.Loader();
+      loader.load(function(){
+        var core = new HS.Core();
+
+        core.start();
+      })
+      loader.start();
+      
+    </script>
+    
+  </body>
+</html>
