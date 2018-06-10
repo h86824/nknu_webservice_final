@@ -62,11 +62,11 @@ this.HS = this.HS || {};
     function handleSetting(action){
         playerId = action.player;
     }
-
+    let count = 0;
     function handleDrainage(action){
 
         if(playerId === action.player){
-            card = new HS.Card(0 , HS.Global.Source.getResult("CardBack"));
+            let card = new HS.Card(count++ , HS.Global.Source.getResult("CardBack"));
             battleField.selfHandArea.addCard(card); 
             card.onmove = (function(event){
                 if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
@@ -78,6 +78,10 @@ this.HS = this.HS || {};
     }
 
     function handleDiscard(card){
+        console.log({type:HS.Action.discard ,msg:"出牌" , obj:card.information});
+        battleField.selfBattleArea.addCard(card);
+        battleField.selfHandArea.removeCard(card); 
+        card.moveable = false;
         socket.emit('match', {type:HS.Action.discard ,msg:"出牌" , obj:card.information});
     }
 

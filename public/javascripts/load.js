@@ -11,10 +11,10 @@ this.HS = this.HS || {};
             "/javascripts/hs/hs.global.js",
             "/javascripts/hs/hs.method.js",
             "/javascripts/hs/hs.battle-field.js",
+            "/javascripts/hs/hs.battle-area.js",
             "/javascripts/hs/hs.card.js",
             "/javascripts/hs/hs.card1.js",
             "/javascripts/hs/hs.handArea.js",
-            "/javascripts/hs/hs.battle-area.js",
             
             "/javascripts/hs/error/hs.error.type-error.js"
         ];

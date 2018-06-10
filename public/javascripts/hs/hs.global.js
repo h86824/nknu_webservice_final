@@ -46,6 +46,9 @@ this.HS = this.HS || {};
 
             handAreaWidth: battleFieldWidth,
             handAreaHeight: parseInt( height * percentHandArea / 2 ),
+
+            battleAreaWidth: battleFieldWidth,
+            battleAreaHeight: parseInt( height * percentBattleArea / 2 ),
         }
     }
 

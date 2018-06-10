@@ -15,7 +15,9 @@ this.HS = this.HS || {};
 
     HandArea.prototype = {
         cards: undefined,
-        addCard: addCard
+        addCard: addCard,
+        removeCard: removeCard,
+        relocate: relocate,
     }
 
     function addCard(item){
@@ -25,6 +27,24 @@ this.HS = this.HS || {};
         this.addChild(item);
         this.cards.push(item);
 
+        this.relocate();
+    }
+
+    function removeCard(item){
+        let index = -1;
+
+        for(let i = 0 ; i < this.cards.length ; i++){
+            if(this.cards[i].id === item.id){
+                index = i;
+                break;
+            }
+        }
+        this.cards.splice(index , 1);
+
+        this.relocate();
+    }
+
+    function relocate(){
         for(let i = 0 ; i < this.cards.length ; i++){
             this.cards[i].x = HS.Global.handCardDistance * i + 10;
             this.cards[i].y = 10;
