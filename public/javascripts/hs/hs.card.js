@@ -3,13 +3,13 @@ this.HS = this.HS || {};
 
 (function(){
     function Card(name , image){
-        createjs.Bitmap.call(this , image);
+        createjs.Shape.call(this);
         this.name = name;
-        /*if(bitmap){
-            this.graphics.clear().beginBitmapFill(bitmap, null, true, false).drawRect(0,0, bitmap.width, bitmap.height).endFill();
+        if(image){
+            this.graphics.beginBitmapFill(image, null, true, false).drawRect(0,0, image.width, image.height).endFill();
         }else{
             this.graphics.beginFill("#1565C0").drawRoundRect(0 , 0 , HS.Global.cardWidth , HS.Global.cardHeight , 2);
-        }*/
+        }
 
         this.scaleX = HS.Global.cardWidth / image.width;
         this.scaleY = HS.Global.cardHeight / image.height;
@@ -48,7 +48,7 @@ this.HS = this.HS || {};
         });
 
         if(event.target.onmove){
-            event.target.onmove();
+            event.target.onmove( event );
         }
     }
 
@@ -74,6 +74,6 @@ this.HS = this.HS || {};
         event.currentTarget.scaleY = event.currentTarget.scaleY * (1/1.045);
     }
 
-    extend(Card , createjs.Bitmap);
+    extend(Card , createjs.Shape);
     HS.Card = Card;
 }());

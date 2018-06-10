@@ -29,8 +29,6 @@ this.HS = this.HS || {};
             this.cards[i].x = HS.Global.handCardDistance * i + 10;
             this.cards[i].y = 10;
         }
-
-        console.log(this.cards);
     }
 
     extend(HandArea , createjs.Container)

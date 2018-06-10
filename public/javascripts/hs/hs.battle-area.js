@@ -1,0 +1,2 @@
+
+this.HS = this.HS || {};

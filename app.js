@@ -1,3 +1,4 @@
+var GameCore = require('./HS/game-core');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -45,8 +46,11 @@ module.exports = app;
 server.listen(3001);
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-	console.log(data);
-  });
+  var core = new GameCore(socket , socket);
+  core.start();
+  /*socket.on('my other event', function (data) {
+	  console.log(data);
+    var core = new GameCore(socket , socket);
+    core.Start();
+  });*/
 });

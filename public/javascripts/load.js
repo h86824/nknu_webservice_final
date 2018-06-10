@@ -9,10 +9,12 @@ this.HS = this.HS || {};
             "https://code.createjs.com/createjs-2015.11.26.min.js",
             "/javascripts/hs/hs.core.js",
             "/javascripts/hs/hs.global.js",
+            "/javascripts/hs/hs.method.js",
             "/javascripts/hs/hs.battle-field.js",
             "/javascripts/hs/hs.card.js",
             "/javascripts/hs/hs.card1.js",
             "/javascripts/hs/hs.handArea.js",
+            "/javascripts/hs/hs.battle-area.js",
             
             "/javascripts/hs/error/hs.error.type-error.js"
         ];

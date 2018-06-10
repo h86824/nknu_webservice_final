@@ -5,6 +5,7 @@ this.HS = this.HS || {};
     let socket;
     let battleField;
     let stage;
+    let playerId;
     
     function Core(){
         return {
@@ -15,9 +16,8 @@ this.HS = this.HS || {};
     function start(){
         socket = io('http://localhost:3001');
 
-        socket.on('news', function (data) {
-            console.log(data);
-            socket.emit('my other event', { my: 'data' });
+        socket.on('match', function (data) {
+            handleAction(data);
         });
         
         stage = new createjs.Stage("battlefield");
@@ -28,17 +28,6 @@ this.HS = this.HS || {};
         battleField.y = HS.Global.battleFieldY;
         stage.addChild(battleField);
 
-        for(let i = 0 ; i < 10 ; i++){
-            card = new HS.Card(i , HS.Global.Source.getResult("CardBack"));
-            battleField.selfHandArea.addCard(card);
-        }
-
-        for(let i = 0 ; i < 10 ; i++){
-            card = new HS.Card(i , HS.Global.Source.getResult("CardBack"));
-            card.moveable = false;
-            battleField.opponentHandArea.addCard(card);
-        }
-        
         createjs.Ticker.addEventListener("tick", handleTick);
         createjs.Ticker.setFPS(60);
 
@@ -57,9 +46,46 @@ this.HS = this.HS || {};
             // Actions carried out when the Ticker is not paused.
         }
     }
+
+    function handleAction(action){
+        switch(action.type){
+        case HS.Action.setting:
+            handleSetting(action);
+            break;
+        case HS.Action.drainage:
+            handleDrainage(action);
+            break;
+        }
+    }
+
+    function handleSetting(action){
+        playerId = action.player;
+    }
+
+    function handleDrainage(action){
+        console.log(action);
+        if(playerId === action.player){
+            card = new HS.Card(0 , HS.Global.Source.getResult("CardBack"));
+            battleField.selfHandArea.addCard(card); 
+            card.onmove = (function(event){
+                console.log(HS.Method.isSelfBattleArea(event.stageX , event.stageY));
+            });
+        }
+            
+    }
+
 }());
 
 function extend(child, supertype)
 {
    child.prototype.__proto__ = supertype.prototype;
 }
+
+(function(){
+
+    HS.Action = {
+        setting: 0,
+        drainage: 1,
+    };
+
+}())
