@@ -17,4 +17,6 @@ class battleField {
     getplay2(){
         return this.player2.hero;
     }
+    
 }
+module.exports = battleField;
