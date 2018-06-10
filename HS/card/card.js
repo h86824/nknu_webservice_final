@@ -21,42 +21,42 @@ class card {
 
     battleCry(bf){
         this.beforeAtkList.forEach(bci =>{
-            bci.invoke(bf);
+            bci.invoke(bf,target);
         })
     }
     reiki(bf){
         this.beforeAtkList.forEach(ri =>{
-            bci.invoke(bf);
+            bci.invoke(bf,target);
         })
     }
     afterAtk(bf){
         this.beforeAtkList.forEach( aTi => {
-            attr.invoke(bf);
+            attr.invoke(bf,target);
         })
     }
     beforeAtk(bf){
         this.beforeAtkList.forEach( attr => {
-            attr.invoke(bf);
+            attr.invoke(bf,target);
         })
     }
     Deathrattle(bf){
         this.DeathrattleList.forEach(dri=>{
-            dri.invoke(bf);
+            dri.invoke(bf,target);
         })
     }
     endTurn(bf){
         this.endTurnList.forEach(eti=>{
-            dri.invoke(bf);
+            dri.invoke(bf,target);
         })
     }
     beginTurn(bf){
         this.beginTurnList.forEach(bti=>{
-            dri.invoke(bf);
+            dri.invoke(bf,target);
         })
     }
     heroPower(bf){
         this.heroPowerList.forEach(hp=>{
-            hp.invoke(bf);
+            hp.invoke(bf,target);
         })
     }
 }
