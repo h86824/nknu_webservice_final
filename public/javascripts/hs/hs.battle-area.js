@@ -17,16 +17,17 @@ this.HS = this.HS || {};
         cards: undefined,
         addCard: addCard,
         relocate: relocate,
+        getInsertIndex: getInsertIndex,
     }
 
-    function addCard(item){
+    function addCard(item , index){
         if(! item instanceof HS.Card){
             throw HS.Error.TypeError("HS.Card" , "item");
         }
-        console.log(item);
+        
+        this.cards.splice(index , 0 , item);
+        
         this.addChild(item);
-        this.cards.push(item);
-
         this.relocate();
     }
 
@@ -67,6 +68,18 @@ this.HS = this.HS || {};
             }
         }
         
+    }
+
+    function getInsertIndex(stageX){
+        let index = 0;
+        for(let i = 0 ; i < this.cards.length ; i++){
+            if(stageX > this.cards[i].getStageX()){
+                index++;
+            }else{
+                break;
+            }
+        }
+        return index;
     }
 
     extend(BattleArea , createjs.Container)

@@ -77,17 +77,18 @@ this.HS = this.HS || {};
             };
             card.onmoved = (function(event){
                 if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
-                    handleDiscard(card);
+                    handleDiscard(event);
                 }
             });
         }
             
     }
 
-    function handleDiscard(card){
+    function handleDiscard(event){
+        let card = event.target;
         console.log({type:HS.Action.discard ,msg:"出牌" , obj:card.information});
-        battleField.selfBattleArea.addCard(card);
-        battleField.selfHandArea.removeCard(card); 
+        battleField.selfHandArea.removeCard(card);
+        battleField.selfBattleArea.addCard(card , battleField.selfBattleArea.getInsertIndex(event.stageX));
         card.moveable = false;
         socket.emit('match', {type:HS.Action.discard ,msg:"出牌" , obj:card.information});
     }
