@@ -9,6 +9,12 @@ class player{
         this.hero = hero;
         this.drawDamage;
     }
+    get allayList(){
+        return this.addallayList;
+    }
+    get hero(){
+        return hero;
+    }
     addallayList(card,position){
         if(this.allayList.length<7){
             this.allayList.splice(position,0,card)
@@ -52,3 +58,4 @@ class player{
         });
     }
 }
+module.exports = player;
