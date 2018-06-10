@@ -68,7 +68,14 @@ this.HS = this.HS || {};
         if(playerId === action.player){
             let card = new HS.Card(count++ , HS.Global.Source.getResult("CardBack"));
             battleField.selfHandArea.addCard(card); 
-            card.onmove = (function(event){
+            card.onmoving = function(event){
+                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
+                    battleField.selfBattleArea.relocate(card.getStageX());
+                }else{
+                    battleField.selfBattleArea.relocate();
+                }
+            };
+            card.onmoved = (function(event){
                 if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
                     handleDiscard(card);
                 }

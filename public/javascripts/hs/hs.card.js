@@ -25,10 +25,12 @@ this.HS = this.HS || {};
 
     Card.prototype = {
         moveable: true,
-        onmove: undefined,
+        onmoving: undefined,
+        onmoved: undefined,
         fixX:0,
         fixY:0,
-        information: {}
+        information: {},
+        getStageX : getStageX,
     }
 
     function pressMove( event ){
@@ -38,6 +40,9 @@ this.HS = this.HS || {};
             x: event.stageX - offsetX - HS.Global.cardWidth / 2,
             y: event.stageY - event.target.parent.y - HS.Global.cardHeight / 2
         });
+
+        if(event.target.onmoving)
+            event.target.onmoving(event);
     }
 
     function pressUp( event ){
@@ -47,8 +52,8 @@ this.HS = this.HS || {};
             y: event.currentTarget.fixY
         });
 
-        if(event.target.onmove){
-            event.target.onmove( event );
+        if(event.target.onmoved){
+            event.target.onmoved( event );
         }
     }
 
@@ -72,6 +77,10 @@ this.HS = this.HS || {};
     function mouseOut(event){
         event.currentTarget.scaleX = event.currentTarget.scaleX * (1/1.045);
         event.currentTarget.scaleY = event.currentTarget.scaleY * (1/1.045);
+    }
+
+    function getStageX(){
+        return getParent(this , "x") + this.x;
     }
 
     extend(Card , createjs.Shape);

@@ -10,7 +10,7 @@ this.HS = this.HS || {};
         
         let graphics = new createjs.Graphics().beginFill("#B39DDB").drawRect(0, 0, HS.Global.battleFieldWidth , HS.Global.battleFieldHeight);
         let background = new createjs.Shape(graphics);
-
+        
         this.opponentHandArea = new HS.HandArea();
         this.opponentHandArea.x = 0;
         this.opponentHandArea.y = HS.Global.opponentHandAreaY;
