@@ -16,6 +16,7 @@ class Action{
 Action.Type = {
     Setting: 0,
     Drainage: 1,
+    Discard:2,
 };
 
 module.exports = Action;

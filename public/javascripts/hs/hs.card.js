@@ -2,9 +2,9 @@
 this.HS = this.HS || {};
 
 (function(){
-    function Card(name , image){
+    function Card(id , image){
         createjs.Shape.call(this);
-        this.name = name;
+        this.information.id = id;
         if(image){
             this.graphics.beginBitmapFill(image, null, true, false).drawRect(0,0, image.width, image.height).endFill();
         }else{
@@ -24,11 +24,11 @@ this.HS = this.HS || {};
     }
 
     Card.prototype = {
-        name: undefined,
         moveable: true,
         onmove: undefined,
         fixX:0,
-        fixY:0
+        fixY:0,
+        information: {}
     }
 
     function pressMove( event ){

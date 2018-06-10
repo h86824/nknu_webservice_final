@@ -48,6 +48,7 @@ this.HS = this.HS || {};
     }
 
     function handleAction(action){
+        console.log(action);
         switch(action.type){
         case HS.Action.setting:
             handleSetting(action);
@@ -63,15 +64,21 @@ this.HS = this.HS || {};
     }
 
     function handleDrainage(action){
-        console.log(action);
+
         if(playerId === action.player){
             card = new HS.Card(0 , HS.Global.Source.getResult("CardBack"));
             battleField.selfHandArea.addCard(card); 
             card.onmove = (function(event){
-                console.log(HS.Method.isSelfBattleArea(event.stageX , event.stageY));
+                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
+                    handleDiscard(card);
+                }
             });
         }
             
+    }
+
+    function handleDiscard(card){
+        socket.emit('match', {type:HS.Action.discard ,msg:"出牌" , obj:card.information});
     }
 
 }());
@@ -86,6 +93,7 @@ function extend(child, supertype)
     HS.Action = {
         setting: 0,
         drainage: 1,
+        discard: 2,
     };
 
-}())
+}());

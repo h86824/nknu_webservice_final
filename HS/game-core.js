@@ -29,11 +29,20 @@ class GameCore {
             player.emit("match" , new Drainage(this.actionCount++ , player) );
         });
 
+        this.players.forEach( player => { player.on("match", data => this._handlePlayerMessage(player, data) ) });
+
         this._gameLoop();
     }
 
     _gameLoop() {
-        
+        this.currentPlayer = this.players[0];
+
+    }
+
+    _handlePlayerMessage(player , data){
+        if(this.currentPlayer === player){
+            console.log(data);
+        }
     }
 
 }
