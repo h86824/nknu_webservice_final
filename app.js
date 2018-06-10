@@ -4,13 +4,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var UUID = require('node-uuid');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
+var playersList = [];
+var matchList = [];
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,9 +47,19 @@ module.exports = app;
 
 server.listen(3001);
 
-io.sockets.on('connection', function (socket) {
-  var core = new GameCore(socket , socket);
-  core.start();
+io.sockets.on('connection', function (client) {
+  client.id = UUID();
+  playersList.push(client);
+  client.on('match',function(data){
+    if(matchList.length){
+      let opponent=matchList.splice(0,1);
+      let game = new GameCore(client,opponent);
+    }
+    else{
+      matchList.push(client);
+    }
+    
+  })
   /*socket.on('my other event', function (data) {
 	  console.log(data);
     var core = new GameCore(socket , socket);

@@ -60,3 +60,4 @@ class card {
         })
     }
 }
+module.exports = card;

@@ -3,6 +3,7 @@ class skill{
 
     }
     invoke(bf,target){
-
+        
     }
 }
+module.exports = skill;
