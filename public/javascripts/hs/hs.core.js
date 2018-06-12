@@ -56,6 +56,9 @@ this.HS = this.HS || {};
         case HS.Action.drainage:
             handleDrainage(action);
             break;
+        case HS.Action.endturn:
+            handleEndTurn(action);
+            break
         }
     }
 
@@ -92,6 +95,10 @@ this.HS = this.HS || {};
         card.moveable = false;
         socket.emit('match', {type:HS.Action.discard ,msg:"出牌" , obj:card.information});
     }
+    function handleEndTurn(event){
+        console.log({type:HS.Action.endturn ,msg:"結束回合"});
+        socket.emit('match',{type:HS.Action.endturn ,msg:"結束回合"})
+    }
 
 }());
 
@@ -106,6 +113,7 @@ function extend(child, supertype)
         setting: 0,
         drainage: 1,
         discard: 2,
+        endturn:0
     };
 
 }());

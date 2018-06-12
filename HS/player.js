@@ -1,13 +1,14 @@
 
 class player{
     
-    constructor(hero){
+    constructor(socket,hero,mydeck){
         this.allayList=[];
         this.hand=[];
-        this.deck=[30];
+        this.deck=mydeck;
         this.cardNumbers=30;
         this.hero = hero;
         this.drawDamage;
+        this.socket = socket;
     }
     get allayList(){
         return this.addallayList;

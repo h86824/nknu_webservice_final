@@ -6,4 +6,4 @@ class EndTurn extends Action{
     }
 }
 
-module.exports = Drainage;
+module.exports = EndTurn;
