@@ -17,6 +17,7 @@ Action.Type = {
     Setting: 0,
     Drainage: 1,
     Discard:2,
+    End:0
 };
 
 module.exports = Action;
