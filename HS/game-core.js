@@ -3,7 +3,6 @@ var Setting = require("./action/action.setting");
 var bfSetting = require("./action/action.battleField")
 var battlefield = require("./battleField");
 
-
 class GameCore {
     
     constructor(playerA , playerB){
@@ -46,11 +45,11 @@ class GameCore {
             switch(data.type){
                 case HS.Action.endturn:
                     this.currentPlayer = this.players[(playernumber+1)%2];
-                    break
+                    break;
                 case HS.Action.Drainage:
-                    break
+                    break;
                 case  HS.Action.setting:
-                    break
+                    break;
             }
                 
             
