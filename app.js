@@ -7,7 +7,7 @@ var logger = require('morgan');
 var UUID = require('node-uuid');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var Player = require("./player")
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
@@ -50,13 +50,15 @@ server.listen(3001);
 io.sockets.on('connection', function (client) {
   client.id = UUID();
   playersList.push(client);
+
   client.on('match',function(data){
     if(matchList.length){
       let opponent=matchList.splice(0,1);
-      let game = new GameCore(client,opponent);
+      let game = new GameCore(new Player(client,data.hero,data.deck),opponent);
+      game.start();
     }
     else{
-      matchList.push(client);
+      matchList.push(new Player(client,data.hero,data.deck));
     }
     
   })

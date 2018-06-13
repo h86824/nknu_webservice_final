@@ -2,17 +2,14 @@ var Drainage = require("./action/action.drainage");
 var Setting = require("./action/action.setting");
 var bfSetting = require("./action/action.battleField")
 var battlefield = require("./battleField");
-var player = require("./player")
+
+
 class GameCore {
     
     constructor(playerA , playerB){
         this.players = [];
-        this.p1deck=[];
-        this.p2deck=[]
-        player1 = player(playerA,"傳入TingLee英雄實體",p1deck);
-        player2 = player(playerB,"傳入郭哥英雄實體",p2deck);
-        this.players.push(player1);
-        this.players.push(player2)
+        this.players.push(playerA);
+        this.players.push(playerB)
         this.actionCount = 0;
     }
 
@@ -60,7 +57,7 @@ class GameCore {
         }
     }
     _createGame(){
-        this.bf = battlefield(player1,player2);
+        this.bf = new battlefield(player1,player2);
         this.players.forEach( player => {
             player.socket.emit("game" , new  bfSetting(bf,player));
         });
