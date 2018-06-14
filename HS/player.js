@@ -2,8 +2,8 @@
 class player{
     
     constructor(socket,hero,mydeck){
-        this.allayList=[];
-        this.hand=[];
+        this.allayList=[7];
+        this.hand=[10];
         this.deck=mydeck;
         this.cardNumbers=30;
         this.hero = hero;
@@ -53,10 +53,10 @@ class player{
             drawDamage++;
         }
     }
-    getdeck(mydeck){
+    /*getdeck(mydeck){
         mydeck.forEach(element => {
             this.deck.push(element);
         });
-    }
+    }*/
 }
 module.exports = player;
