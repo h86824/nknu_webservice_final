@@ -10,11 +10,13 @@ class battleField {
     getplayer(currentplayer){
         return currentplayer.hero;
     }
-    BattlecryInvoke(card,target){
-        let actionCard =player1.getMinion (card);
-        if(actionCard==null){
-            actionCard = this.player2.getMinion(card);
-        }
+    attackInvoke(player,opponent,card,target){
+        let actionCard = player.getMinion(card);
+        let targetCard = opponent.getMinion(target);
+        actionCard.attack(targetCard);
+    }
+    BattlecryInvoke(player,card,target){
+        let actionCard =player.getMinion (card);
         let targetCard = this.player1.getMinion(target);
         if(targetCard==null){
             targetCard = this.player2.getMinion(target);
@@ -22,4 +24,6 @@ class battleField {
         actionCard.battleCry(targetCard);
     }
 }
+
+
 module.exports = battleField;

@@ -1,14 +1,17 @@
 class card {
     
-    constructor (ID,classes,cost,armor,originAtk,originDef,cardType){
+    constructor (ID){
         this.cardID = ID;
-        this.classes = classes;
-        this.cost = cost;
-        this.armor = armor;
-        this.originAtk = originAtk;
-        this.originDef = originDef;
-        this.cardType = cardType;
-        this.race = race;
+        this.classes;
+        this.cost;
+        this.armor ;
+        this.originAtk;
+        this.originDef;
+        this.newAtk=originAtk;
+        this.newDef= originDef;
+        this.StatusList = [];
+        this.cardType;
+        this.race;
         this.attackable = false;
         this.beforeAtkList = [];
         this.afterAtkList = [];
@@ -19,7 +22,20 @@ class card {
         this.beginTurnList = [];
         this.heroPowerList = [];
     }
-
+    attack(target){
+        if(this.attackable){        
+            if(!this.DividShield){
+                this.newDef-=target.newAtk;
+                target.newDef-=this.newAtk;
+            }
+            else{
+                target.newDef-=this.newAtk;
+            }
+        }
+        else{
+             return false;
+        }
+    }
     battleCry(target){
         this.beforeAtkList.forEach(bci =>{
             bci.invoke(target);

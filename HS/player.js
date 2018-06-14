@@ -65,12 +65,12 @@ class player{
             if(hand[i].cardID==card){
                 let temp = this.hand[i];
                 if(temp.cardType=="minion"){
-                    this.minushand(position);
-                    this.addallayList(temp,position);
+                    this.minushand(i);
+                    this.addallayList(temp,i);
                     return true;
                 }
                 else if(temp.cardType=="spell"){
-                    this.minushand(position);
+                    this.minushand(i);
                     return true;
                 }
                 else{
