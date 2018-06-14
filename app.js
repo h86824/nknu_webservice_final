@@ -4,10 +4,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var UUID = require('node-uuid');
+var UUID = require('uuid/v4');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var Player = require("./player")
+var Player = require("./HS/player")
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
@@ -51,14 +51,14 @@ io.sockets.on('connection', function (client) {
   client.id = UUID();
   playersList.push(client);
 
-  client.on('match',function(data){
+  client.on('dual',function(data){
     if(matchList.length){
       let opponent=matchList.splice(0,1);
-      let game = new GameCore(new Player(client,data.hero,data.deck),opponent);
+      let game = new GameCore(new Player(client,data.obj.hero,data.obj.deck),opponent);
       game.start();
     }
     else{
-      matchList.push(new Player(client,data.hero,data.deck));
+      matchList.push(new Player(client,data.obj.hero,data.obj.deck));
     }
     
   })
