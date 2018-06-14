@@ -35,10 +35,16 @@ class player{
             return false;
         }
     }
-    minushand(card,position){
+    minushand(card){
         if(this.hand.length>0){
-            this.hand.splice(position,1);
-            return true;
+            let i;
+            for(i=0;i<hand.length;i++){
+                if(hand[i].cardID==card){
+                    this.hand.splice(i,1);
+                    return true;
+                }
+            }
+
         }
     }
     draw(){
@@ -52,6 +58,38 @@ class player{
             this.hero.originDef-=drawDamage;
             drawDamage++;
         }
+    }
+    discard(card){
+        let i;
+        for(i=0;i<hand.length;i++){
+            if(hand[i].cardID==card){
+                let temp = this.hand[i];
+                if(temp.cardType=="minion"){
+                    this.minushand(position);
+                    this.addallayList(temp,position);
+                    return true;
+                }
+                else if(temp.cardType=="spell"){
+                    this.minushand(position);
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+    getMinion(card){
+        let i;
+        for(i=0;i<allayList.length;i++){
+            if(hand[i].cardID==card){
+                return this.addallayList[i];
+            }
+            else{
+                return null;
+            }
+        }
+
     }
     /*getdeck(mydeck){
         mydeck.forEach(element => {

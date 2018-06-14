@@ -1,6 +1,7 @@
 class card {
     
-    constructor (classes,cost,armor,originAtk,originDef,cardType){
+    constructor (ID,classes,cost,armor,originAtk,originDef,cardType){
+        this.cardID = ID;
         this.classes = classes;
         this.cost = cost;
         this.armor = armor;
@@ -19,44 +20,44 @@ class card {
         this.heroPowerList = [];
     }
 
-    battleCry(bf){
+    battleCry(target){
         this.beforeAtkList.forEach(bci =>{
-            bci.invoke(bf,target);
+            bci.invoke(target);
         })
     }
-    reiki(bf){
+    reiki(target){
         this.beforeAtkList.forEach(ri =>{
-            bci.invoke(bf,target);
+            bci.invoke(target);
         })
     }
-    afterAtk(bf){
+    afterAtk(target){
         this.beforeAtkList.forEach( aTi => {
-            attr.invoke(bf,target);
+            attr.invoke(target);
         })
     }
-    beforeAtk(bf){
+    beforeAtk(target){
         this.beforeAtkList.forEach( attr => {
-            attr.invoke(bf,target);
+            attr.invoke(target);
         })
     }
-    Deathrattle(bf){
+    Deathrattle(target){
         this.DeathrattleList.forEach(dri=>{
-            dri.invoke(bf,target);
+            dri.invoke(target);
         })
     }
-    endTurn(bf){
+    endTurn(target){
         this.endTurnList.forEach(eti=>{
-            dri.invoke(bf,target);
+            dri.invoke(target);
         })
     }
-    beginTurn(bf){
+    beginTurn(target){
         this.beginTurnList.forEach(bti=>{
-            dri.invoke(bf,target);
+            bti.invoke(target);
         })
     }
-    heroPower(bf){
+    heroPower(target){
         this.heroPowerList.forEach(hp=>{
-            hp.invoke(bf,target);
+            hp.invoke(target);
         })
     }
 }

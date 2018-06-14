@@ -3,20 +3,23 @@ class battleField {
         this.player1=player1;
         this.player2=player2;
     }
-    getplayer1Minion(position){
-        let tempArr1 = this.player1.allayList;
+    getplayerMinion(currentplayer,position){
+        let tempArr1 = currentplayer.allayList;
         return tempArr1[position];
     }
-    getplayer2Minion(position){
-        let tempArr2 = this.player2.allayList;
-        return tempArr2[position];
+    getplayer(currentplayer){
+        return currentplayer.hero;
     }
-    getplay1(){
-        return this.player1.hero;
+    BattlecryInvoke(card,target){
+        let actionCard =player1.getMinion (card);
+        if(actionCard==null){
+            actionCard = this.player2.getMinion(card);
+        }
+        let targetCard = this.player1.getMinion(target);
+        if(targetCard==null){
+            targetCard = this.player2.getMinion(target);
+        }
+        actionCard.battleCry(targetCard);
     }
-    getplay2(){
-        return this.player2.hero;
-    }
-    
 }
 module.exports = battleField;

@@ -1,6 +1,7 @@
 var Drainage = require("./action/action.drainage");
 var Setting = require("./action/action.setting");
 var bfSetting = require("./action/action.battleField")
+var Discard = require("./action/action.discard");
 var battlefield = require("./battleField");
 
 class GameCore {
@@ -13,20 +14,22 @@ class GameCore {
     }
 
     start() {
+        this._createGame();
+
         this.players.forEach( player => {
-            player.socket.emit("match" , new Setting(this.actionCount++ , player) );
+            player.socket.emit("match" , new Setting(this.actionCount++ , player.socket) );
         });
 
         this.players.forEach( player => {
-            player.socket.emit("match" , new Drainage(this.actionCount++ , player) );
+            player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket) );
         });
 
         this.players.forEach( player => {
-            player.socket.emit("match" , new Drainage(this.actionCount++ , player) );
+            player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket) );
         });
 
         this.players.forEach( player => {
-            player.socket.emit("match" , new Drainage(this.actionCount++ , player) );
+            player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket) );
         });
 
         this.players.forEach( player => { player.socket.on("match", data => this._handlePlayerMessage(player, data) ) });
@@ -36,6 +39,7 @@ class GameCore {
 
     _gameLoop() {
         this.currentPlayer = this.players[0];
+        this.uncurrentPlayer = this.players[1];
         this.playernumber = 0;
     }
 
@@ -44,12 +48,18 @@ class GameCore {
             console.log(data);
             switch(data.type){
                 case HS.Action.endturn:
-                    this.currentPlayer = this.players[(playernumber+1)%2];
+                    this.playernumber++;
+                    this.currentPlayer = this.players[(this.playernumber)%2];
+                    this.uncurrentPlayer = this.players[(this.playernumber+1)%2];
                     break;
                 case HS.Action.Drainage:
+                    this.bf.currentPlayer.draw();
                     break;
                 case  HS.Action.setting:
                     break;
+                case HS.Action.Discard:
+                    let tempcard=this.bf.currentPlayer.discard(data.obj.cardID);
+                    this.bf.BattlecryInvoke(data.from,data.to);
             }
                 
             
@@ -58,7 +68,7 @@ class GameCore {
     _createGame(){
         this.bf = new battlefield(player1,player2);
         this.players.forEach( player => {
-            player.socket.emit("game" , new  bfSetting(bf,player));
+            player.socket.emit("game" , new bfSetting(player,this.bf));
         });
     }
 
