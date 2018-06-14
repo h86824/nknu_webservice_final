@@ -33,7 +33,7 @@ this.HS = this.HS || {};
 
     function relocate( blankX ){
         if(!blankX){
-            let startX = HS.Global.handCardDistance * ( (10 - this.cards.length) / 2);
+            let startX = HS.Global.handCardDistance * ( (11.5 - this.cards.length) / 2);
 
             for(let i = 0 ; i < this.cards.length ; i++){
                 this.cards[i].x = startX + HS.Global.handCardDistance * i + 10;
@@ -42,7 +42,7 @@ this.HS = this.HS || {};
             return;
         }
 
-        let startX = HS.Global.handCardDistance * ( (10 - this.cards.length) / 2);
+        let startX = HS.Global.handCardDistance * ( (11.5 - this.cards.length) / 2);
         
         let threshMin = 0;
         let threshMax = startX;

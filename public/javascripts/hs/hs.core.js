@@ -35,6 +35,25 @@ this.HS = this.HS || {};
         stage.addChild(fpsLabel);
         fpsLabel.x = 10;
         fpsLabel.y = 10;
+        let ts = ["溫聽力大怪獸" , "精英溫聽力" , "溫聽力史萊姆"];
+        for(let i = 0 ; i < 10 ; i++){
+            let card = new HS.Card(0 , HS.Global.Source.getResult("CardBack"));
+            battleField.selfHandArea.addCard(card); 
+            card.cost = i + 1;
+            card.name = ts[i%ts.length];
+            card.onmoving = function(event){
+                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
+                    battleField.selfBattleArea.relocate(card.getStageX());
+                }else{
+                    battleField.selfBattleArea.relocate();
+                }
+            };
+            card.onmoved = (function(event){
+                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
+                    handleDiscard(event);
+                }
+            });
+        }
     };
 
     HS.Core = Core;
@@ -88,8 +107,13 @@ this.HS = this.HS || {};
     }
 
     function handleDiscard(event){
-        let card = event.target;
+        if(battleField.selfBattleArea.cards.length >= 7){
+            battleField.selfBattleArea.relocate();
+            return;
+        }
+        let card = event.currentTarget;
         console.log({type:HS.Action.discard ,msg:"出牌" , obj:card.information});
+        
         battleField.selfHandArea.removeCard(card);
         battleField.selfBattleArea.addCard(card , battleField.selfBattleArea.getInsertIndex(event.stageX));
         card.moveable = false;

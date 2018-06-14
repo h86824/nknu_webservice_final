@@ -4,9 +4,11 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="/javascripts/load.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   </head>
   <body>
     <h1 id="title"><%= title %></h1>
+   
     <canvas width="1920" height="1080" id="battlefield" style="width:1440px;"></canvas>
 
     <script>
@@ -16,6 +18,25 @@
         var core = new HS.Core();
         
         core.start();
+        /*var resolutions = [
+          {width:1920 , height:1080},
+          {width:1440 , height:900},
+          {width:3840 , height:2160},
+        ];
+        
+        resolutions.forEach(item => { 
+          let option = $(document.createElement("option")).text(item.width + " , " + item.height).val(JSON.stringify(item));
+          $("#resolutionSelect").append(option);
+        });
+
+        $("#resolutionSelect").change(function(){
+          let resolution = JSON.parse($("#resolutionSelect").val());
+          HS.Global.resize( resolution.width , resolution.height);
+          let canvas = document.getElementById("battlefield");
+          canvas.width = resolution.width;
+          canvas.height = resolution.height;
+        });*/
+        
       })
       loader.start();
       

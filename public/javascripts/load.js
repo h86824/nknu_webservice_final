@@ -71,7 +71,11 @@ this.HS = this.HS || {};
 
     function getManifest(){
         var manifest = [
-            {src:"/images/card-back.png", id:"CardBack"}
+            {src:"/images/card-back.png", id:"CardBack"},
+            {src:"/images/card-atk.png", id:"CardAtk"},
+            {src:"/images/card-def.png", id:"CardDef"},
+            {src:"/images/card-template.png", id:"CardTemplate"},
+            {src:"/images/card-sticker.jpg", id:"CardSticker"}
         ];
 
         return manifest;

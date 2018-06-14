@@ -46,8 +46,12 @@ this.HS = this.HS || {};
 
     function relocate(){
         for(let i = 0 ; i < this.cards.length ; i++){
-            this.cards[i].x = HS.Global.handCardDistance * i + 10;
-            this.cards[i].y = 10;
+            if(i >= 5){
+                this.cards[i].x = HS.Global.handCardDistance * (i + 1.5) ;
+            }else{
+                this.cards[i].x = HS.Global.handCardDistance * i ;
+            }
+            this.cards[i].y = 0;
         }
     }
 

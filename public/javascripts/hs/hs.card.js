@@ -3,24 +3,99 @@ this.HS = this.HS || {};
 
 (function(){
     function Card(id , image){
-        createjs.Shape.call(this);
+        createjs.Container.call(this);
+        this.sticker = new createjs.Shape();
         this.information.id = id;
-        if(image){
-            this.graphics.beginBitmapFill(image, null, true, false).drawRect(0,0, image.width, image.height).endFill();
-        }else{
-            this.graphics.beginFill("#1565C0").drawRoundRect(0 , 0 , HS.Global.cardWidth , HS.Global.cardHeight , 2);
-        }
 
-        this.scaleX = HS.Global.cardWidth / image.width;
-        this.scaleY = HS.Global.cardHeight / image.height;
+        image = HS.Global.Source.getResult("CardSticker");
+        if(image){
+            this.sticker.scaleX = HS.Global.cardWidth / image.width * 0.66;
+            this.sticker.scaleY = HS.Global.cardHeight / image.height * 0.55;
+            this.sticker.x = HS.Global.cardWidth * 0.2;
+            this.sticker.y = HS.Global.cardHeight * 0.0845;
+            this.sticker.graphics.beginBitmapFill(image, "no-repeat", true, false)
+            .drawEllipse(HS.Global.ellipseStickerX, HS.Global.ellipseStickerY, HS.Global.ellipseStickerW, HS.Global.ellipseStickerH);
+        }else{
+            this.sticker.graphics.beginFill("#1565C0").drawRoundRect(0 , 0 , HS.Global.cardWidth , HS.Global.cardHeight , 2);
+        }
+        
 
         this.on("rollover" , (e) => { if(this.moveable) mouseOver(e) });
         this.on("rollout" , (e) => { if(this.moveable) mouseOut(e) });
         this.on("pressmove", (e) => { if(this.moveable) pressMove(e) });
         this.on("pressup", (e) => { if(this.moveable) pressUp(e) });
         this.on("mousedown" , (e) => { if(this.moveable) pressDown(e) });
+        //this.snapToPixel = true;
+        //this.cache(0, 0, image.width, image.height);
+
+        let templateImg = HS.Global.Source.getResult("CardTemplate");
+        this.template = new createjs.Shape(); 
+        this.template.graphics.beginBitmapFill(templateImg, null, true, false).drawRect(0,0, templateImg.width, templateImg.height).endFill();
+        this.template.scaleX = HS.Global.cardWidth / templateImg.width;
+        this.template.scaleY = HS.Global.cardHeight / templateImg.height;
+
+        this.costText = new createjs.Text("5", HS.Global.TextFontLarge, "#fff");
+        this.costText.set({
+            textAlign:"center",
+            x: HS.Global.cardCostTextX,
+            y: HS.Global.cardCostTextY,
+            outline:false,
+        });
+        this.costTextOutline = new createjs.Text("5", HS.Global.TextFontLarge, "#20120c");
+        this.costTextOutline.set({
+            textAlign:"center",
+            x: HS.Global.cardCostTextX,
+            y: HS.Global.cardCostTextY,
+            outline:HS.Global.outline,
+        });
+
+        this.atkText = new createjs.Text("15", HS.Global.TextFont, "#FFF");
+        this.atkText.set({
+            textAlign:"center",
+            x: HS.Global.cardAtkTextX,
+            y: HS.Global.cardAtkTextY
+        });
+        this.atkTextOutline = new createjs.Text("15", HS.Global.TextFont, "#20120c");
+        this.atkTextOutline.set({
+            textAlign:"center",
+            x: HS.Global.cardAtkTextX,
+            y: HS.Global.cardAtkTextY,
+            outline:HS.Global.outline,
+        });
+
+        this.defText = new createjs.Text("15", HS.Global.TextFont, "#fff");
+        this.defText.set({
+            textAlign:"center",
+            x: HS.Global.cardDefTextX,
+            y: HS.Global.cardDefTextY,
+            outline:false,
+        });
+        this.defTextOutline = new createjs.Text("15", HS.Global.TextFont, "#20120c");
+        this.defTextOutline.set({
+            textAlign:"center",
+            x: HS.Global.cardDefTextX,
+            y: HS.Global.cardDefTextY,
+            outline:HS.Global.outline,
+        });
+
+        this.cardName = new createjs.Container();
+
+        this.addChild(this.sticker);
+        this.addChild(this.template);
+        this.addChild(this.costTextOutline);
+        this.addChild(this.costText);
+        this.addChild(this.atkTextOutline);
+        this.addChild(this.atkText);
+        this.addChild(this.defTextOutline);
+        this.addChild(this.defText);
+        //this.addChild(this.cardNameTextOutline);
+        this.addChild(this.cardName);
+
+        /*this.setAtk = setText(this.atkTextOutline , this.atkText);
+        this.setDef = setText(this.defTextOutline , this.defText);
+        this.setCost = setText(this.costTextOutline , this.costText);*/
         this.snapToPixel = true;
-        this.cache(0, 0, image.width, image.height);
+        //this.cache(0, 0, HS.Global.cardWidth , HS.Global.cardHeight);
     }
 
     Card.prototype = {
@@ -31,29 +106,52 @@ this.HS = this.HS || {};
         fixY:0,
         information: {},
         getStageX : getStageX,
+        set atk(value){
+            setText(this , this.atkTextOutline , this.atkText)(value);
+        } ,
+        set cost(value){
+            setText(this , this.costTextOutline , this.costText)(value);
+        } ,
+        set def ( value){
+            setText(this , this.defTextOutline , this.defText)(value);
+        },
+        set name( value ){
+            setName(this)(value);
+        }
+    }
+
+    function setText(self , ... targets){
+        return function(value){
+            targets.forEach( target =>
+                target.text = value
+            );
+            //self.cache(0, 0, HS.Global.cardWidth , HS.Global.cardHeight);
+        }
     }
 
     function pressMove( event ){
-        let offsetX = getParent(event.target , "x");
+        let offsetX = getParent(event.currentTarget , "x");
 
         event.currentTarget.set({
             x: event.stageX - offsetX - HS.Global.cardWidth / 2,
-            y: event.stageY - event.target.parent.y - HS.Global.cardHeight / 2
+            y: event.stageY - event.currentTarget.parent.y - HS.Global.cardHeight / 2
         });
 
-        if(event.target.onmoving)
-            event.target.onmoving(event);
+        if(event.currentTarget.onmoving)
+            event.currentTarget.onmoving(event);
     }
 
     function pressUp( event ){
         
         event.currentTarget.set({
             x: event.currentTarget.fixX,
-            y: event.currentTarget.fixY
+            y: event.currentTarget.fixY,
+            scaleX: 1,
+            scaleY: 1,
         });
 
-        if(event.target.onmoved){
-            event.target.onmoved( event );
+        if(event.currentTarget.onmoved){
+            event.currentTarget.onmoved( event );
         }
     }
 
@@ -72,17 +170,44 @@ this.HS = this.HS || {};
     function mouseOver(event){
         event.currentTarget.scaleX = event.currentTarget.scaleX * 1.045;
         event.currentTarget.scaleY = event.currentTarget.scaleY * 1.045;
+        event.currentTarget.parent.setChildIndex(event.currentTarget , event.currentTarget.parent.getNumChildren()-1);
     }
 
     function mouseOut(event){
-        event.currentTarget.scaleX = event.currentTarget.scaleX * (1/1.045);
-        event.currentTarget.scaleY = event.currentTarget.scaleY * (1/1.045);
+        event.currentTarget.scaleX = 1;
+        event.currentTarget.scaleY = 1;
     }
 
     function getStageX(){
         return getParent(this , "x") + this.x;
     }
 
-    extend(Card , createjs.Shape);
+    function setName(self){
+        return function(name){
+            if(name)
+                for(let i = 0 ; i < name.length ; i++){
+                    let locate = (name.length / 2 - i ) * 17 * HS.Global.cardNameScale;
+                    let yOffset = - Math.sin(i * 0.4) * 6.5 * HS.Global.cardNameScale;
+
+                    let cardNameText = new createjs.Text(name.charAt(i), HS.Global.TextFontSmall, "#fff");
+                    cardNameText.set({
+                        textAlign:"center",
+                        x: HS.Global.cardNameTextX - locate,
+                        y: HS.Global.cardNameTextY + yOffset,
+                        outline:false,
+                    });
+                    let cardNameTextOutline = new createjs.Text(name.charAt(i), HS.Global.TextFontSmall, "#20120c");
+                    cardNameTextOutline.set({
+                        textAlign:"center",
+                        x: HS.Global.cardNameTextX - locate,
+                        y: HS.Global.cardNameTextY + yOffset,
+                        outline:HS.Global.outline,
+                    });
+                    self.cardName.addChild(cardNameTextOutline , cardNameText );
+                }
+        }
+    }
+
+    extend(Card , createjs.Container);
     HS.Card = Card;
 }());
