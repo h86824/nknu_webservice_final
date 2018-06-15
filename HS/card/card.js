@@ -36,44 +36,44 @@ class card {
              return false;
         }
     }
-    battleCry(target){
+    battleCry(bf,target){
         this.beforeAtkList.forEach(bci =>{
-            bci.invoke(target);
+            bci.invoke(bf,target);
         })
     }
-    reiki(target){
+    reiki(bf,target){
         this.beforeAtkList.forEach(ri =>{
-            bci.invoke(target);
+            bci.invoke(bf,target);
         })
     }
-    afterAtk(target){
+    afterAtk(bf,target){
         this.beforeAtkList.forEach( aTi => {
-            attr.invoke(target);
+            attr.invoke(bf,target);
         })
     }
-    beforeAtk(target){
+    beforeAtk(bf,target){
         this.beforeAtkList.forEach( attr => {
-            attr.invoke(target);
+            attr.invoke(bf,target);
         })
     }
-    Deathrattle(target){
+    Deathrattle(bf,target){
         this.DeathrattleList.forEach(dri=>{
-            dri.invoke(target);
+            dri.invoke(bf,target);
         })
     }
-    endTurn(target){
+    endTurn(bf,target){
         this.endTurnList.forEach(eti=>{
-            dri.invoke(target);
+            dri.invoke(bf,target);
         })
     }
-    beginTurn(target){
+    beginTurn(bf,target){
         this.beginTurnList.forEach(bti=>{
-            bti.invoke(target);
+            bti.invoke(bf,target);
         })
     }
-    heroPower(target){
+    heroPower(bf,target){
         this.heroPowerList.forEach(hp=>{
-            hp.invoke(target);
+            hp.invoke(bf,target);
         })
     }
 }

@@ -10,10 +10,13 @@ class battleField {
     getplayer(currentplayer){
         return currentplayer.hero;
     }
+
     attackInvoke(player,opponent,card,target){
         let actionCard = player.getMinion(card);
         let targetCard = opponent.getMinion(target);
-        actionCard.attack(targetCard);
+        actionCard.beforeAtk(this,targetCard);
+        actionCard.attack(this,targetCard);
+        actionCard.afterAtk(this,targetCard);
     }
     BattlecryInvoke(player,card,target){
         let actionCard =player.getMinion (card);
@@ -21,7 +24,35 @@ class battleField {
         if(targetCard==null){
             targetCard = this.player2.getMinion(target);
         }
-        actionCard.battleCry(targetCard);
+        actionCard.battleCry(this,targetCard);
+    }
+    DeathrattleInvoke(){
+        let deadList1 = this.player1.deadyet();
+        let deadList2 = this.player2.deadyet();
+        if(deadList1.length>0){
+            let i;
+            for(i=0;i<deadList1.length;i++){
+                deadList1[i].Deathrattle(this,null);
+            }
+        }
+        if(deadList2.length>0){
+            let j;
+            for(j=0;j<deadList2.length;j++){
+                deadList2[j].Deathrattle(this,null);
+            }
+        }
+    }
+    EndTurnInvoke(player){
+        let i;
+        for(i=0;i<player.playorder.length;i++){
+            player.playorder[i].endTurn(this,null);
+        }
+    }
+    BeginTurnInvoke(player){
+        let i;
+        for(i=0;i<player.playorder.length;i++){
+            player.playorder[i].beginTurn(this,null);
+        }
     }
 }
 

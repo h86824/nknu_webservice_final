@@ -2,7 +2,7 @@ var Drainage = require("./action/action.drainage");
 var Setting = require("./action/action.setting");
 var bfSetting = require("./action/action.battleField")
 var Discard = require("./action/action.discard");
-var battlefield = require("./battleField");
+var battlefield = require("./battleField").default;
 
 class GameCore {
     
@@ -44,6 +44,7 @@ class GameCore {
     _gameLoop() {
         this.currentPlayer = this.players[0];
         this.playernumber = 0;
+        this.opponent = this.players[1]
     }
 
     _handlePlayerMessage(player , data){
@@ -51,8 +52,11 @@ class GameCore {
             console.log(data);
             switch(data.type){
                 case HS.Action.endturn:
+                    this.bf.EndTurnInvoke(this.currentPlayer)
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
+                    this.bf.BeginTurnInvoke(this.currentPlayer);
+                    this.opponent = this.players[(this.playernumber+1)%2];
                     break;
                 case HS.Action.Drainage:
                     this.bf.currentPlayer.draw();
@@ -62,7 +66,13 @@ class GameCore {
                 case HS.Action.Discard:
                     this.bf.currentPlayer.discard(data.obj.cardID);
                     this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
+                    this.bf.DeathrattleInvoke();
+                    break;
                 case HS.Action.attack:
+                    this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
+                    this.bf.DeathrattleInvoke();
+                    break;
+                
                     
             }
                 
