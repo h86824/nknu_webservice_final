@@ -88,6 +88,9 @@ class player{
                 this.addallayList.splice(i,1);
                 return this.addallayList[i];
             }
+            else if(this.hero.cardID==card){
+                return this.hero;
+            }
             else{
                 return null;
             }

@@ -11,6 +11,7 @@ class GameCore {
         this.players.push(playerA);
         this.players.push(playerB)
         this.actionCount = 0;
+        
     }
 
     start() {
@@ -37,7 +38,6 @@ class GameCore {
         });*/
 
         this.players.forEach( player => { player.socket.on("match", data => this._handlePlayerMessage(player, data) ) });
-
         this._gameLoop();
     }
 
@@ -95,7 +95,7 @@ class GameCore {
         });
     }
     _createGame(){
-        this.bf = new battlefield(player1,player2);
+        this.bf = new battlefield(players[0],players[1]);
         _sendBF();
     }
 
