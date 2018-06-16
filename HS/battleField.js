@@ -42,6 +42,9 @@ class battleField {
             }
         }
     }
+    HeropowerInvoke(player,target){
+        player.hero.heroPower(this,target);
+    }
     EndTurnInvoke(player){
         let i;
         for(i=0;i<player.playorder.length;i++){

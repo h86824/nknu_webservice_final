@@ -19,7 +19,8 @@ Action.Type = {
     Discard:2,
     Endturn:3,
     Battlefield:4,
-    Attack:5
+    Attack:5,
+    Heropower:6
 };
 
 module.exports = Action;

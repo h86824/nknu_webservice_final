@@ -20,7 +20,7 @@ class card {
         this.DeathrattleList = [];
         this.endTurnList = [];
         this.beginTurnList = [];
-        this.heroPowerList = [];
+        this.heroPowerList=[];
     }
     attack(target){
         if(this.attackable){        

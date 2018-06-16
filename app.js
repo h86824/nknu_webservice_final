@@ -53,7 +53,7 @@ io.sockets.on('connection', function (client) {
 
   client.on('dual',function(data){
     if(matchList.length){
-      let opponent=matchList.splice(0,1);
+      let opponent=matchList.splice(0,1)[0];
       let game = new GameCore(new Player(client,data.obj.hero,data.obj.deck),opponent);
       game.start();
     }

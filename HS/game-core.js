@@ -2,7 +2,7 @@ var Drainage = require("./action/action.drainage");
 var Setting = require("./action/action.setting");
 var bfSetting = require("./action/action.battleField")
 var Discard = require("./action/action.discard");
-var battlefield = require("./battleField").default;
+var battlefield = require("./battleField");
 
 class GameCore {
     
@@ -51,39 +51,52 @@ class GameCore {
         if(this.currentPlayer === player){
             console.log(data);
             switch(data.type){
-                case HS.Action.endturn:
+                case HS.Action.Endturn:
                     this.bf.EndTurnInvoke(this.currentPlayer)
+                    _sendBF();
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
                     this.bf.BeginTurnInvoke(this.currentPlayer);
+                    _sendBF();
                     this.opponent = this.players[(this.playernumber+1)%2];
                     break;
                 case HS.Action.Drainage:
                     this.bf.currentPlayer.draw();
+                    _sendBF();
                     break;
-                case  HS.Action.setting:
+                case  HS.Action.Setting:
                     break;
                 case HS.Action.Discard:
                     this.bf.currentPlayer.discard(data.obj.cardID);
+                    _sendBF();
                     this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
+                    _sendBF();
                     this.bf.DeathrattleInvoke();
+                    _sendBF();
                     break;
-                case HS.Action.attack:
+                case HS.Action.Attack:
                     this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
+                    _sendBF();
                     this.bf.DeathrattleInvoke();
+                    _sendBF();
                     break;
+                case HS.Action.Heropower:
+                    this.bf.HeropowerInvoke(this.currentPlayer,data.to);
+                    _sendBF();
                 
-                    
             }
                 
             
         }
     }
-    _createGame(){
-        this.bf = new battlefield(player1,player2);
+    _sendBF(){
         this.players.forEach( player => {
             player.socket.emit("game" , new bfSetting(player,this.bf));
         });
+    }
+    _createGame(){
+        this.bf = new battlefield(player1,player2);
+        _sendBF();
     }
 
 }
