@@ -53,13 +53,16 @@ class player{
     draw(){
         if(deck.length>0){
             let ramdomInt = Math.floor(Math.random()*cardNumbers);
-            this.addhand(this.deck[ramdomInt]);
+            let temp =this.deck[ramdomInt];
+            this.addhand(temp);
             this.cardNumbers--;
             this.deck[ramdomInt]=this.deck[this.cardNumbers];
+            return temp;
         }
         else{
             this.hero.originDef-=drawDamage;
             drawDamage++;
+            return null;
         }
     }
     discard(card,position){
@@ -72,7 +75,7 @@ class player{
                     if(temp.cardType=="minion"){
                         this.minushand(i);
                         this.addallayList(temp,position);
-                        return true;
+                        return {};
                     }
                     else if(temp.cardType=="spell"){
                         this.minushand(i);

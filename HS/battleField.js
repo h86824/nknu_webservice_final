@@ -25,48 +25,60 @@ class battleField {
     attackInvoke(player,opponent,card,target){
         let actionCard = player.getMinion(card);
         let targetCard = opponent.getMinion(target);
-        actionCard.beforeAtk(this,targetCard);
-        actionCard.attack(this,targetCard);
-        actionCard.afterAtk(this,targetCard);
+        let attArr = [];
+        attArr.push(actionCard);
+        attArr.push(targetCard);
+        actionCard.beforeAtk(this,targetCard,attArr);
+        actionCard.attack(targetCard);
+        actionCard.afterAtk(this,targetCard,attArr);
+        return {"cards":attArr};
     }
     BattlecryInvoke(player,card,target){
         let actionCard =player.getMinion (card);
         let targetCard = this.player1.getMinion(target);
+        let BattleArr = [];
         if(targetCard==null){
             targetCard = this.player2.getMinion(target);
         }
-        actionCard.battleCry(this,targetCard);
+        actionCard.battleCry(this,targetCard,BattleArr);
+        return {"cards":BattleArr};
     }
     DeathrattleInvoke(){
         let deadList1 = this.player1.deadyet();
         let deadList2 = this.player2.deadyet();
+        let DeathArr = [];
         if(deadList1.length>0){
             let i;
             for(i=0;i<deadList1.length;i++){
-                deadList1[i].Deathrattle(this,null);
+                deadList1[i].Deathrattle(this,null,DeathArr);
             }
         }
         if(deadList2.length>0){
             let j;
             for(j=0;j<deadList2.length;j++){
-                deadList2[j].Deathrattle(this,null);
+                deadList2[j].Deathrattle(this,null,DeathArr);
             }
         }
+        return {"cards":DeathArr};
     }
     HeropowerInvoke(player,target){
         player.hero.heroPower(this,target);
     }
     EndTurnInvoke(player){
         let i;
+        let endArr = [];
         for(i=0;i<player.playorder.length;i++){
-            player.playorder[i].endTurn(this,null);
+            player.playorder[i].endTurn(this,null,endArr);
         }
+        return {"cards":endArr};
     }
     BeginTurnInvoke(player){
         let i;
+        let StartArr = [];
         for(i=0;i<player.playorder.length;i++){
-            player.playorder[i].beginTurn(this,null);
+            player.playorder[i].beginTurn(this,null,StartArr);
         }
+        return {"cards":StartArr};
     }
 }
 
