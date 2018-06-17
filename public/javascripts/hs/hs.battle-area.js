@@ -33,16 +33,16 @@ this.HS = this.HS || {};
 
     function relocate( blankX ){
         if(!blankX){
-            let startX = HS.Global.handCardDistance * ( (11.5 - this.cards.length) / 2);
+            let startX = HS.Global.battleAreaCardDistance * ( (10 - this.cards.length) / 2);
 
             for(let i = 0 ; i < this.cards.length ; i++){
-                this.cards[i].x = startX + HS.Global.handCardDistance * i + 10;
+                this.cards[i].x = startX + HS.Global.battleAreaCardDistance * i + 10;
                 this.cards[i].y = 10;
             }
             return;
         }
 
-        let startX = HS.Global.handCardDistance * ( (11.5 - this.cards.length) / 2);
+        let startX = HS.Global.battleAreaCardDistance * ( (10 - this.cards.length) / 2);
         
         let threshMin = 0;
         let threshMax = startX;
@@ -54,16 +54,16 @@ this.HS = this.HS || {};
         if( blankX > threshMin && blankX < threshMax){
             for(let i = 0 ; i < this.cards.length ; i++){
                 if(blankX < this.cards[i].getStageX()){
-                    this.cards[i].x = startX + HS.Global.handCardDistance * ( i + 0.35 ) + 10;
+                    this.cards[i].x = startX + HS.Global.battleAreaCardDistance * ( i + 0.35 ) + 10;
                     this.cards[i].y = 10;
                 }else{
-                    this.cards[i].x = startX + HS.Global.handCardDistance * ( i - 0.35 ) + 10;
+                    this.cards[i].x = startX + HS.Global.battleAreaCardDistance * ( i - 0.35 ) + 10;
                     this.cards[i].y = 10;
                 }
             }
         }else{
             for(let i = 0 ; i < this.cards.length ; i++){
-                this.cards[i].x = startX + HS.Global.handCardDistance * i + 10;
+                this.cards[i].x = startX + HS.Global.battleAreaCardDistance * i + 10;
                 this.cards[i].y = 10;
             }
         }

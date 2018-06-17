@@ -15,6 +15,8 @@ this.HS = this.HS || {};
             "/javascripts/hs/hs.card.js",
             "/javascripts/hs/hs.card1.js",
             "/javascripts/hs/hs.handArea.js",
+            "/javascripts/hs/hs.button.js",
+            "/javascripts/hs/hs.arrows-manager.js",
             
             "/javascripts/hs/error/hs.error.type-error.js"
         ];

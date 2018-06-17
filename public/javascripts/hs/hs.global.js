@@ -62,6 +62,7 @@ this.HS = this.HS || {};
             
             
             handCardDistance: parseInt( battleFieldWidth / 11.5) ,
+            battleAreaCardDistance: parseInt( battleFieldWidth / 10) ,
 
             opponentHandAreaY: parseInt( battleFieldY  ),
             opponentBattleAreaY: parseInt( (percentHandArea / 2) * battleFieldHeight + battleFieldY  ),
@@ -74,6 +75,9 @@ this.HS = this.HS || {};
 
             battleAreaWidth: battleFieldWidth,
             battleAreaHeight: parseInt( height * percentBattleArea / 2 ),
+
+            buttonWidth: width * 0.06,
+            buttonHeight: width * 0.03,
         }
     }
 

@@ -40,6 +40,8 @@ this.HS = this.HS || {};
             let card = new HS.Card(0 , HS.Global.Source.getResult("CardBack"));
             battleField.selfHandArea.addCard(card); 
             card.cost = i + 1;
+            card.moveable = true;
+            card.active = true;
             card.name = ts[i%ts.length];
             card.onmoving = function(event){
                 if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
@@ -54,6 +56,9 @@ this.HS = this.HS || {};
                 }
             });
         }
+
+        var arrowsManager = new HS.ArrowsManager();
+        arrowsManager.handle(stage , battleField);
     };
 
     HS.Core = Core;
@@ -117,6 +122,7 @@ this.HS = this.HS || {};
         battleField.selfHandArea.removeCard(card);
         battleField.selfBattleArea.addCard(card , battleField.selfBattleArea.getInsertIndex(event.stageX));
         card.moveable = false;
+        card.assignable = true;
         socket.emit('match', {type:HS.Action.discard ,msg:"出牌" , obj:card.information});
     }
     function handleEndTurn(event){
