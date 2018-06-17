@@ -36,44 +36,44 @@ class card {
              return false;
         }
     }
-    battleCry(bf,target){
+    battleCry(bf,target,Arr){
         this.beforeAtkList.forEach(bci =>{
-            bci.invoke(bf,target);
+            bci.invoke(bf,target,Arr);
         })
     }
-    reiki(bf,target){
+    reiki(bf,target,Arr){
         this.beforeAtkList.forEach(ri =>{
-            bci.invoke(bf,target);
+            bci.invoke(bf,target,Arr);
         })
     }
-    afterAtk(bf,target){
+    afterAtk(bf,target,Arr){
         this.beforeAtkList.forEach( aTi => {
-            attr.invoke(bf,target);
+            attr.invoke(bf,target,Arr);
         })
     }
-    beforeAtk(bf,target){
+    beforeAtk(bf,target,Arr){
         this.beforeAtkList.forEach( attr => {
-            attr.invoke(bf,target);
+            attr.invoke(bf,target,Arr);
         })
     }
-    Deathrattle(bf,target){
+    Deathrattle(bf,target,Arr){
         this.DeathrattleList.forEach(dri=>{
-            dri.invoke(bf,target);
+            dri.invoke(bf,target,Arr);
         })
     }
-    endTurn(bf,target){
+    endTurn(bf,target,Arr){
         this.endTurnList.forEach(eti=>{
-            dri.invoke(bf,target);
+            dri.invoke(bf,target,Arr);
         })
     }
-    beginTurn(bf,target){
+    beginTurn(bf,target,Arr){
         this.beginTurnList.forEach(bti=>{
-            bti.invoke(bf,target);
+            bti.invoke(bf,target,Arr);
         })
     }
-    heroPower(bf,target){
+    heroPower(bf,target,Arr){
         this.heroPowerList.forEach(hp=>{
-            hp.invoke(bf,target);
+            hp.invoke(bf,target,Arr);
         })
     }
 }

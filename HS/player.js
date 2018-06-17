@@ -3,6 +3,7 @@ class player{
     
     constructor(socket,hero,mydeck){
         this.allayList=[7];
+        this.cost=0;
         this.playorder = [7];
         this.hand=[10];
         this.deck=mydeck;
@@ -52,13 +53,16 @@ class player{
     draw(){
         if(deck.length>0){
             let ramdomInt = Math.floor(Math.random()*cardNumbers);
-            this.addhand(this.deck[ramdomInt]);
+            let temp =this.deck[ramdomInt];
+            this.addhand(temp);
             this.cardNumbers--;
             this.deck[ramdomInt]=this.deck[this.cardNumbers];
+            return temp;
         }
         else{
             this.hero.originDef-=drawDamage;
             drawDamage++;
+            return null;
         }
     }
     discard(card,position){
@@ -66,18 +70,21 @@ class player{
         for(i=0;i<hand.length;i++){
             if(hand[i].cardID==card){
                 let temp = this.hand[i];
-                if(temp.cardType=="minion"){
-                    this.minushand(i);
-                    this.addallayList(temp,position);
-                    return true;
+                if(temp.cost<=this.cost){
+                    this.cost-=temp.cost;
+                    if(temp.cardType=="minion"){
+                        this.minushand(i);
+                        this.addallayList(temp,position);
+                        return {};
+                    }
+                    else if(temp.cardType=="spell"){
+                        this.minushand(i);
+                        return true;
+                    }
                 }
-                else if(temp.cardType=="spell"){
-                    this.minushand(i);
-                    return true;
-                }
-                else{
-                    return false;
-                }
+            }
+            else{
+                return false;
             }
         }
     }
@@ -97,21 +104,25 @@ class player{
         }
 
     }
+    herodead(){
+        if(hero.newDef<=0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     deadyet(){
         let i;
         let deadArr = [];
         for(i=0;i<this.playorder.length;i++){
             if(this.playorder[i].newDef<=0){
                 deadArr.push(this.playorder[i]);
-                let j;
-                for(j=0;j<this.allayList.length;j++){
-                    if(this.allayList[j]===this.playorder[i]){
-                        this.allayList.splice(j,1);
-                    }
-                }
-                this.playorder.splice(i,1);
-            }
+             }
         }
+        this.playorder.splice(i,1);
+        let tempindex =playersList.indexOf(this.playorder[i]);
+        this.allayList.splice(tempindex,1);
         return deadArr;
     }
     /*getdeck(mydeck){
