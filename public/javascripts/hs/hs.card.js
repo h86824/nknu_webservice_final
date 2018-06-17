@@ -20,11 +20,11 @@ this.HS = this.HS || {};
         }
         
 
-        this.on("rollover" , (e) => { if(this.moveable) mouseOver(e) });
-        this.on("rollout" , (e) => { if(this.moveable) mouseOut(e) });
-        this.on("pressmove", (e) => { if(this.moveable) pressMove(e) });
-        this.on("pressup", (e) => { if(this.moveable) pressUp(e) });
-        this.on("mousedown" , (e) => { if(this.moveable) pressDown(e) });
+        this.on("rollover" , (e) => { if(this.moveable && this.active) mouseOver(e) });
+        this.on("rollout" , (e) => { if(this.moveable && this.active) mouseOut(e) });
+        this.on("pressmove", (e) => { if(this.moveable && this.active) pressMove(e) });
+        this.on("pressup", (e) => { if(this.moveable && this.active) pressUp(e) });
+        this.on("mousedown" , (e) => { if(this.moveable && this.active) pressDown(e) });
         //this.snapToPixel = true;
         //this.cache(0, 0, image.width, image.height);
 
@@ -80,6 +80,13 @@ this.HS = this.HS || {};
 
         this.cardName = new createjs.Container();
 
+        this.activeShape = new createjs.Shape();
+        this.activeShape.graphics
+        .setStrokeStyle(7)
+        .beginStroke("#7CB342")
+        .drawRoundRect(HS.Global.cardWidth * 0.05,  HS.Global.cardHeight * 0.1, HS.Global.cardWidth * 0.9 , HS.Global.cardHeight* 0.9 , 10);
+
+        this.addChild(this.activeShape);
         this.addChild(this.sticker);
         this.addChild(this.template);
         this.addChild(this.costTextOutline);
@@ -96,6 +103,7 @@ this.HS = this.HS || {};
         this.setCost = setText(this.costTextOutline , this.costText);*/
         this.snapToPixel = true;
         //this.cache(0, 0, HS.Global.cardWidth , HS.Global.cardHeight);
+        this.active = false;
     }
 
     Card.prototype = {
@@ -106,6 +114,7 @@ this.HS = this.HS || {};
         fixY:0,
         information: {},
         getStageX : getStageX,
+        getStageY : getStageY,
         set atk(value){
             setText(this , this.atkTextOutline , this.atkText)(value);
         } ,
@@ -117,7 +126,14 @@ this.HS = this.HS || {};
         },
         set name( value ){
             setName(this)(value);
-        }
+        },
+        set active(value){
+            setActive(this)(value);
+        },
+        get active(){
+            return this.isActive;
+        },
+        assignable: false,
     }
 
     function setText(self , ... targets){
@@ -182,6 +198,10 @@ this.HS = this.HS || {};
         return getParent(this , "x") + this.x;
     }
 
+    function getStageY(){
+        return getParent(this , "y") + this.y;
+    }
+
     function setName(self){
         return function(name){
             if(name)
@@ -205,6 +225,17 @@ this.HS = this.HS || {};
                     });
                     self.cardName.addChild(cardNameTextOutline , cardNameText );
                 }
+        }
+    }
+
+    function setActive(self){
+        return function(value){
+            self.isActive = value;
+            if(self.isActive){
+                self.activeShape.alpha = 0.85;
+            }else{
+                self.activeShape.alpha = 0;
+            }
         }
     }
 

@@ -30,12 +30,34 @@ this.HS = this.HS || {};
         this.selfHandArea.x = 0;
         this.selfHandArea.y = HS.Global.selfHandAreaY;
         this.addChild(this.selfHandArea);
+
+        this.btn = new HS.Button("結束回合");
+        this.btn.x = HS.Global.battleAreaWidth - HS.Global.buttonWidth;
+        this.btn.y = HS.Global.selfBattleAreaY - HS.Global.buttonHeight / 2;
+        this.addChild(this.btn);
+
+        this.findCard = (target) => {
+            //console.log(this.selfBattleArea.cards[i]);
+            
+            for(let i = 0 ; i < this.selfBattleArea.cards.length ; i++){
+                let pt = target.localToLocal( 0 , 0 , this.selfBattleArea.cards[i] );
+                if( this.selfBattleArea.cards[i].hitTest(pt.x , pt.y) )
+                    return this.selfBattleArea.cards[i];
+            }
+            for(let i = 0 ; i < this.opponentBattleArea.cards.length ; i++){
+                if( this.opponentBattleArea.cards[i].hitTest(x , y) )
+                    return this.opponentBattleArea.cards[i];
+            }
+        }
     }
 
     BattleField.prototype = {
         opponentHandArea: undefined,
-        selfHandArea: undefined
+        selfHandArea: undefined,
+        findCard:undefined,
     }
+
+
 
     extend(BattleField , createjs.Container);
     this.HS.BattleField = BattleField;
