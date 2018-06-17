@@ -13,6 +13,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var playersList = [];
 var matchList = [];
+var creatCard = require("./HS/creatCard")
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,21 +51,22 @@ server.listen(3001);
 io.sockets.on('connection', function (client) {
   client.id = UUID();
   playersList.push(client);
-
+  console.log(client.id+" has connected!");
   client.on('dual',function(data){
     if(matchList.length){
-      let opponent=matchList.splice(0,1);
-      let game = new GameCore(new Player(client,data.obj.hero,data.obj.deck),opponent);
+      let opponent=matchList.splice(0,1)[0];
+      let card = new creatCard();
+      let game = new GameCore(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)),opponent);
       game.start();
     }
     else{
       matchList.push(new Player(client,data.obj.hero,data.obj.deck));
     }
     
-  })
-  /*socket.on('my other event', function (data) {
-	  console.log(data);
-    var core = new GameCore(socket , socket);
-    core.Start();
-  });*/
+  });
+  client.on('disconnect', function () {
+    let tempindex =playersList.indexOf(client);
+    playersList.splice(tempindex,1);
+    console.log(client.id+" has disconnected!");
+  });
 });

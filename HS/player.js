@@ -3,6 +3,7 @@ class player{
     
     constructor(socket,hero,mydeck){
         this.allayList=[7];
+        this.playorder = [7];
         this.hand=[10];
         this.deck=mydeck;
         this.cardNumbers=30;
@@ -18,7 +19,8 @@ class player{
     }
     addallayList(card,position){
         if(this.allayList.length<7){
-            this.allayList.splice(position,0,card)
+            this.allayList.splice(position,0,card);
+            this.playorder.push(card);
             return true;
         }
         else{
@@ -59,18 +61,18 @@ class player{
             drawDamage++;
         }
     }
-    discard(card){
+    discard(card,position){
         let i;
         for(i=0;i<hand.length;i++){
             if(hand[i].cardID==card){
                 let temp = this.hand[i];
                 if(temp.cardType=="minion"){
-                    this.minushand(position);
+                    this.minushand(i);
                     this.addallayList(temp,position);
                     return true;
                 }
                 else if(temp.cardType=="spell"){
-                    this.minushand(position);
+                    this.minushand(i);
                     return true;
                 }
                 else{
@@ -82,14 +84,35 @@ class player{
     getMinion(card){
         let i;
         for(i=0;i<allayList.length;i++){
-            if(hand[i].cardID==card){
+            if(this.allayList[i].cardID==card){
+                this.addallayList.splice(i,1);
                 return this.addallayList[i];
+            }
+            else if(this.hero.cardID==card){
+                return this.hero;
             }
             else{
                 return null;
             }
         }
 
+    }
+    deadyet(){
+        let i;
+        let deadArr = [];
+        for(i=0;i<this.playorder.length;i++){
+            if(this.playorder[i].newDef<=0){
+                deadArr.push(this.playorder[i]);
+                let j;
+                for(j=0;j<this.allayList.length;j++){
+                    if(this.allayList[j]===this.playorder[i]){
+                        this.allayList.splice(j,1);
+                    }
+                }
+                this.playorder.splice(i,1);
+            }
+        }
+        return deadArr;
     }
     /*getdeck(mydeck){
         mydeck.forEach(element => {
