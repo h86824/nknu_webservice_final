@@ -58,9 +58,11 @@ io.sockets.on('connection', function (client) {
       let card = new creatCard();
       let game = new GameCore(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)),opponent);
       game.start();
+      console.log(opponent.socket.id+" VS "+client.id+" start");
     }
     else{
-      matchList.push(new Player(client,data.obj.hero,data.obj.deck));
+      matchList.push(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)));
+      console.log(client.id+" start waiting")
     }
     
   });

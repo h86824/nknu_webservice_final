@@ -1,8 +1,8 @@
 var Action = require("./action");
 
 class Drainage extends Action{
-    constructor(id , player){
-        super(id , Action.Type.Drainage , "抽牌" , {} , player.id , null , null);
+    constructor(id , player ,cards){
+        super(id , Action.Type.Drainage , "抽牌" , cards , player.id , null , null);
     }
 }
 

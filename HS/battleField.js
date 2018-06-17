@@ -3,6 +3,17 @@ class battleField {
         this.player1=player1;
         this.player2=player2;
     }
+    Endyet(){
+        if(player1.herodead()){
+            return [player2,player1];
+        }
+        else if(player2.herodead()){
+            return [player1,player2];
+        }
+        else{
+            return false;
+        }
+    }
     getplayerMinion(currentplayer,position){
         let tempArr1 = currentplayer.allayList;
         return tempArr1[position];
