@@ -10,13 +10,15 @@ this.HS = this.HS || {};
             "/javascripts/hs/hs.core.js",
             "/javascripts/hs/hs.global.js",
             "/javascripts/hs/hs.method.js",
-            "/javascripts/hs/hs.battle-field.js",
-            "/javascripts/hs/hs.battle-area.js",
             "/javascripts/hs/hs.card.js",
+            "/javascripts/hs/hs.hero.js",
             "/javascripts/hs/hs.card1.js",
+            "/javascripts/hs/hs.battle-field.js",
             "/javascripts/hs/hs.handArea.js",
+            "/javascripts/hs/hs.battle-area.js",
             "/javascripts/hs/hs.button.js",
             "/javascripts/hs/hs.arrows-manager.js",
+            "/javascripts/hs/hs.message-box.js",
             
             "/javascripts/hs/error/hs.error.type-error.js"
         ];
@@ -77,7 +79,11 @@ this.HS = this.HS || {};
             {src:"/images/card-atk.png", id:"CardAtk"},
             {src:"/images/card-def.png", id:"CardDef"},
             {src:"/images/card-template.png", id:"CardTemplate"},
-            {src:"/images/card-sticker.jpg", id:"CardSticker"}
+            {src:"/images/card-sticker.jpg", id:"CardSticker"},
+            {src:"/images/hero-template.png", id:"HeroTemplate"},
+            {src:"/images/background.png", id:"Background"},
+            {src:"/images/background2.png", id:"Background2"},
+            {src:"/images/background3.jpg", id:"Background3"},
         ];
 
         return manifest;

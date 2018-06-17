@@ -2,13 +2,14 @@
 this.HS = this.HS || {};
 
 (function(){
-
+    let _hero;
     function HandArea(){
         createjs.Container.call(this);
         
         this.cards = [];
-        let graphics = new createjs.Graphics().beginFill("#D1C4E9").drawRect(0, 0, HS.Global.battleFieldWidth , HS.Global.handAreaHeight);
+        let graphics = new createjs.Graphics().beginFill("#B39DDB").drawRect(0, 0, HS.Global.battleFieldWidth , HS.Global.handAreaHeight);
         let background = new createjs.Shape(graphics);
+
 
         this.addChild(background);
     }
@@ -18,6 +19,12 @@ this.HS = this.HS || {};
         addCard: addCard,
         removeCard: removeCard,
         relocate: relocate,
+        set hero(value){
+            _hero = value;
+            value.x = HS.Global.handCardDistance * 5;
+            value.y = 0;
+            this.addChild(value);
+        },
     }
 
     function addCard(item){

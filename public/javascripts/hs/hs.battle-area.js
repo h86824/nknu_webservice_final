@@ -7,7 +7,7 @@ this.HS = this.HS || {};
         createjs.Container.call(this);
         
         this.cards = [];
-        let graphics = new createjs.Graphics().beginFill("#9575CD").drawRect(0, 0, HS.Global.battleFieldWidth , HS.Global.battleAreaHeight);
+        let graphics = new createjs.Graphics().beginFill("#D1C4E9").drawRect(0, 0, HS.Global.battleFieldWidth , HS.Global.battleAreaHeight);
         let background = new createjs.Shape(graphics);
 
         this.addChild(background);

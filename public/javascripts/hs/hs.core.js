@@ -21,8 +21,8 @@ this.HS = this.HS || {};
         });
         
         stage = new createjs.Stage("battlefield");
-        stage.enableMouseOver(10);
-        
+        stage.enableMouseOver(7);
+
         battleField = new HS.BattleField();
         battleField.x = HS.Global.battleFieldX;
         battleField.y = HS.Global.battleFieldY;
@@ -30,6 +30,7 @@ this.HS = this.HS || {};
 
         createjs.Ticker.addEventListener("tick", handleTick);
         createjs.Ticker.setFPS(60);
+        createjs.Ticker.framerate = 60;
 
         fpsLabel = new createjs.Text("-- fps", "bold 18px Arial", "#0F0");
         stage.addChild(fpsLabel);
@@ -42,6 +43,7 @@ this.HS = this.HS || {};
             card.cost = i + 1;
             card.moveable = true;
             card.active = true;
+           // card.isCardBack = true;
             card.name = ts[i%ts.length];
             card.onmoving = function(event){
                 if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
@@ -59,6 +61,8 @@ this.HS = this.HS || {};
 
         var arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
+
+        stage.addChild(new HS.Alert());
     };
 
     HS.Core = Core;
@@ -67,7 +71,6 @@ this.HS = this.HS || {};
         stage.update();
         fpsLabel.text = Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
         if (!event.paused) {
-            // Actions carried out when the Ticker is not paused.
         }
     }
 

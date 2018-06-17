@@ -18,7 +18,6 @@ this.HS = this.HS || {};
         }else{
             this.sticker.graphics.beginFill("#1565C0").drawRoundRect(0 , 0 , HS.Global.cardWidth , HS.Global.cardHeight , 2);
         }
-        
 
         this.on("rollover" , (e) => { if(this.moveable && this.active) mouseOver(e) });
         this.on("rollout" , (e) => { if(this.moveable && this.active) mouseOut(e) });
@@ -132,6 +131,24 @@ this.HS = this.HS || {};
         },
         get active(){
             return this.isActive;
+        },
+        set isCardBack(value){
+            this._isCardBack = value;
+            if(this._isCardBack){
+                let templateImg = HS.Global.Source.getResult("CardBack");
+                this.active = false;
+                this.sticker.visible = false;
+                this.defTextOutline.visible = false;
+                this.atkTextOutline.visible = false;
+                if(templateImg){
+                    this.template.graphics.clear().beginBitmapFill(templateImg, null, true, false).drawRect(0,0, templateImg.width, templateImg.height).endFill();
+                    this.template.scaleX = HS.Global.cardWidth / templateImg.width ;
+                    this.template.scaleY = HS.Global.cardHeight / templateImg.height ;
+                }else{
+                    this.sticker.graphics.beginFill("#1565C0").drawRoundRect(0 , 0 , HS.Global.cardWidth , HS.Global.cardHeight , 2);
+                }
+                this.setChildIndex( this.template , this.getNumChildren()-1);
+            }
         },
         assignable: false,
     }

@@ -32,7 +32,6 @@ this.HS = this.HS || {};
 
             stage.on("pressmove" , (event) => {
                 let item = event.target.parent;
-                console.log( item.active);
                 if(isDragging){
                     moveArrow(event.stageX , event.stageY);
                 }
@@ -49,6 +48,7 @@ this.HS = this.HS || {};
                     isDragging = false;
 
                     let target = battleField.findCard(arrowHead);
+                    
                     if(target){
                         target.active = false;
                     }
@@ -57,7 +57,9 @@ this.HS = this.HS || {};
             });
 
             createjs.Ticker.on("tick", () => {
-                arrowLine.dash.offset++;
+                if(isDragging){
+                    arrowLine.dash.offset++;
+                }
             });
 
         }

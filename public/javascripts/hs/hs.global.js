@@ -45,6 +45,7 @@ this.HS = this.HS || {};
             TextFontSmall: 100 * (width / 1920) + "% Arial",
             TextFont: 160 * (width / 1920) + "% Arial",
             TextFontLarge: 180 * (width / 1920) + "% Arial",
+            TextFontVeryLarge: 210 * (width / 1920) + "% Arial",
             outline: 5 * (width / 1920),
             cardCostTextX: cardWidth * 0.15, 
             cardCostTextY: cardHeight * 0.115,
@@ -59,7 +60,6 @@ this.HS = this.HS || {};
             ellipseStickerY: 0,
             ellipseStickerW: cardWidth * (1920 / width) ,
             ellipseStickerH: cardHeight * (1920 / width) ,
-            
             
             handCardDistance: parseInt( battleFieldWidth / 11.5) ,
             battleAreaCardDistance: parseInt( battleFieldWidth / 10) ,
@@ -78,6 +78,9 @@ this.HS = this.HS || {};
 
             buttonWidth: width * 0.06,
             buttonHeight: width * 0.03,
+
+            alertWidth: width * 0.4,
+            alertHeight: height * 0.2,
         }
     }
 
