@@ -21,7 +21,7 @@ this.HS = this.HS || {};
         });
         
         stage = new createjs.Stage("battlefield");
-        stage.enableMouseOver(7);
+        stage.enableMouseOver(6.5);
 
         battleField = new HS.BattleField();
         battleField.x = HS.Global.battleFieldX;
@@ -29,8 +29,8 @@ this.HS = this.HS || {};
         stage.addChild(battleField);
 
         createjs.Ticker.addEventListener("tick", handleTick);
-        createjs.Ticker.setFPS(60);
-        createjs.Ticker.framerate = 60;
+        createjs.Ticker.setFPS(63);
+        createjs.Ticker.framerate = 63;
 
         fpsLabel = new createjs.Text("-- fps", "bold 18px Arial", "#0F0");
         stage.addChild(fpsLabel);

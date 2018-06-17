@@ -18,7 +18,7 @@ this.HS = this.HS || {};
         createjs.Ticker.addEventListener("tick", (event) => {
             if(!event.paused && this.cristalList.length){
                 this.cristalList.forEach(cristal => {
-                    cristal.rotation += 2;
+                    cristal.rotation += 1 * (60 / createjs.Ticker.getMeasuredFPS());
                 });
             }
         });

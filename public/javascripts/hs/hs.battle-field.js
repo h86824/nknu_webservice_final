@@ -134,12 +134,14 @@ this.HS = this.HS || {};
         backgroundContainer.addChild(background3_2);
 
         createjs.Ticker.addEventListener("tick", () => {
-            background1_1.rotation -= 0.05;
-            background1_2.rotation -= 0.05;
-            background2_1.rotation += 0.04;
-            background2_2.rotation += 0.04;
-            background3_1.rotation -= 0.04;
-            background3_2.rotation -= 0.04;
+            let scale = (60 / createjs.Ticker.getMeasuredFPS());
+            let rotation = 0.05 * scale;
+            background1_1.rotation -= rotation;
+            background1_2.rotation -= rotation;
+            background2_1.rotation += rotation;
+            background2_2.rotation += rotation;
+            background3_1.rotation -= rotation;
+            background3_2.rotation -= rotation;
         });
     }
 
