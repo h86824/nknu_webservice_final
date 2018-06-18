@@ -52,7 +52,7 @@ class GameCore {
         for(let draw3=0;draw3<3;draw3++){//起手排
             let drawArr = this.currentPlayer.draw();
             this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
-            this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.opponent.socket , {}));
+            this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {}));
         }
         this.currentPlayer.cost++;//水晶增加
         
@@ -60,7 +60,7 @@ class GameCore {
         for(let draw4=0;draw4<4;draw4++){//起手排
             let drawArr2 = this.opponent.draw();
             this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,drawArr2));
-            this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{}));
+            this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,{}));
 
         }
         this.currentPlayer.socket.emit("match", new Setting(this.actionCount++ , this.currentPlayer.socket));//回合Msg
@@ -72,22 +72,23 @@ class GameCore {
             console.log(data);
             switch(data.type){
                 case Action.Type.Endturn:
-                    let EndArr = this.bf.EndTurnInvoke(this.currentPlayer)
-                    this._sendBF(EndArr);
+                    //let EndArr = this.bf.EndTurnInvoke(this.currentPlayer)
+                    //this._sendBF(EndArr);
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
+                    this.opponent = this.players[(this.playernumber+1)%2];
                     this.currentPlayer.cost++;//水晶增加
                     this.currentPlayer.socket.emit("match" , new endTurn(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
-                    let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
-                    this._sendBF(beginArr);
+                    //let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
+                    //this._sendBF(beginArr);
                     let drawtemp = this.currentPlayer.draw();
                     if(!drawtemp.cards.length){
                        this. _sendHero(this.currentPlayer.hero);
                     }
                     else{
-                        this._sendDraw(drawtemp);
+                        this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawtemp));
+                        this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{}));
                     }
-                    this.opponent = this.players[(this.playernumber+1)%2];
                     break;
                 case  Action.Type.Setting:
                     break;
@@ -120,15 +121,6 @@ class GameCore {
     _sendHero(herocard){
         this.players.forEach( player => {
             player.socket.emit("match" , new hero(this.actionCount++ , player.socket , herocard));
-        });
-    }
-    _sendDraw(cards){
-        this.players.forEach( player => {
-            if(player==this.currentPlayer){player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket , cards));}
-            else{
-                player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket , {}));
-            }
-            
         });
     }
     _sendBF(cards){

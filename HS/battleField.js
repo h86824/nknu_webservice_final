@@ -65,9 +65,8 @@ class battleField {
         player.hero.heroPower(this,target);
     }
     EndTurnInvoke(player){
-        let i;
         let endArr = [];
-        for(i=0;i<player.playorder.length;i++){
+        for(let i=0;i<player.playorder.length;i++){
             player.playorder[i].endTurn(this,null,endArr);
         }
         return {"cards":endArr};
