@@ -92,11 +92,13 @@ class GameCore {
                         this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawtemp));
                         this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{}));
                     }
+                    
                     break;
                 case  Action.Type.Setting:
                     break;
                 case Action.Type.Discard:
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
+                    console.log(cardArr);
                     this._sendDiscard(cardArr);
                    // let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
                     //this._sendBF(BattleArr);

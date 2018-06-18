@@ -2,10 +2,10 @@
 class player{
     
     constructor(socket,hero,mydeck){
-        this.allayList=[7];
+        this.allayList=[];
         this.cost=0;
-        this.playorder = [7];
-        this.hand=[10];
+        this.playorder = [];
+        this.hand=[];
         this.deck=mydeck;
         this.cardNumbers=30;
         this.hero = hero;
@@ -35,8 +35,8 @@ class player{
     minushand(card){
         if(this.hand.length>0){
             let i;
-            for(i=0;i<hand.length;i++){
-                if(hand[i].cardID==card){
+            for(i=0;i<this.hand.length;i++){
+                if(this.hand[i].cardID==card){
                     this.hand.splice(i,1);
                     return true;
                 }
@@ -61,7 +61,9 @@ class player{
     }
     discard(card,position){
         let i;
-        for(i=0;i<this.hand.length;i++){
+        console.log(this.hand);
+        for(let i=0;i<this.hand.length;i++){
+            
             if(this.hand[i].cardID==card){
                 let temp = this.hand[i];
                 if(temp.cost<=this.cost){
@@ -75,10 +77,10 @@ class player{
                         this.minushand(i);
                         return {"cards":temp,"crystal":this.cost};
                     }
+                    else{
+                        return {"cards":null,"crystal":this.cost};
+                    }
                 }
-            }
-            else{
-                return {"cards":null,"crystal":this.cost};
             }
         }
     }
