@@ -75,6 +75,33 @@ this.HS = this.HS || {};
                 return this.selfHero;
             }
         }
+
+        this.findCardWithId = ( id ) => {
+            for(let i = 0 ; i < this.selfBattleArea.cards.length ; i++){
+                console.log(this.selfBattleArea.cards[i].information.id);
+                if( this.selfBattleArea.cards[i].information.id == id )
+                    return this.selfBattleArea.cards[i];
+            }
+            for(let i = 0 ; i < this.selfHandArea.cards.length ; i++){
+                if( this.selfHandArea.cards[i].information.id == id )
+                    return this.selfHandArea.cards[i];
+            }
+            for(let i = 0 ; i < this.opponentBattleArea.cards.length ; i++){
+                if( this.opponentBattleArea.cards[i].information.id == id )
+                    return this.opponentBattleArea.cards[i];
+            }
+            for(let i = 0 ; i < this.opponentHandArea.cards.length ; i++){
+                if( this.opponentHandArea.cards[i].information.id == id )
+                    return this.opponentHandArea.cards[i];
+            }
+            /*
+            if(this.opponentHero.information.id == id){
+                return this.opponentHero;
+            }
+            if(this.selfHero.information.id == id){
+                return this.selfHero;
+            }*/
+        } 
     }
 
     function setBackground(){
