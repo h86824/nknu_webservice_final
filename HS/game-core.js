@@ -6,6 +6,7 @@ var battlefield = require("./battleField");
 var endTurn = require("./action/action.endturn");
 var hero = require("./action/action.hero");
 var Action = require("./action/action");
+var start = require("./action/action.start")
 
 class GameCore {
     
@@ -63,8 +64,10 @@ class GameCore {
             this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,{}));
 
         }
-        this.currentPlayer.socket.emit("match", new Setting(this.actionCount++ , this.currentPlayer.socket));//回合Msg
-        this.opponent.socket.emit("match",new Setting(this.actionCount++ , this.opponent.socket));//回合Msg
+        this.currentPlayer.socket.emit("match", new start(this.actionCount++ , this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
+        let firstDraw =  this.currentPlayer.draw();
+        this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,firstDraw));
+        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {}));
     }
 
     _handlePlayerMessage(player , data){
@@ -78,7 +81,7 @@ class GameCore {
                     this.currentPlayer = this.players[(this.playernumber)%2];
                     this.opponent = this.players[(this.playernumber+1)%2];
                     this.currentPlayer.cost++;//水晶增加
-                    this.currentPlayer.socket.emit("match" , new endTurn(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
+                    this.currentPlayer.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     //let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
                     //this._sendBF(beginArr);
                     let drawtemp = this.currentPlayer.draw();
