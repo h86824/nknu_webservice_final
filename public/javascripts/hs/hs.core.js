@@ -17,7 +17,7 @@ this.HS = this.HS || {};
         socket = io('http://localhost:3001');
         
         socket.emit("dual" , new HS.Action.Dual());
-        socket.emit("match", new HS.Action.Drainage());
+        socket.emit("match", new HS.Action.Endturn());
 
         let bgm = new HS.BGM();
         bgm.start();

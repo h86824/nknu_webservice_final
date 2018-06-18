@@ -9,7 +9,7 @@ this.HS.Action = this.HS.Action || {};
         this.type = HS.Action.Type.Endturn;
     }
 
-    Drainage.prototype = {
+    Endturn.prototype = {
         
     }
 
