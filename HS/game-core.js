@@ -50,7 +50,7 @@ class GameCore {
         this.opponent = this.players[1];
         this.playernumber = 0;
         
-        for(let draw3=0;draw3<4;draw3++){//起手排
+        for(let draw3=0;draw3<3;draw3++){//起手排
             let drawArr = this.currentPlayer.draw();
             this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
             this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {}));
@@ -96,12 +96,12 @@ class GameCore {
                 case  Action.Type.Setting:
                     break;
                 case Action.Type.Discard:
-                    let cardArr = this.currentPlayer.discard(data.obj.cardID);
+                    let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
                     this._sendDiscard(cardArr);
-                    let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
-                    this._sendBF(BattleArr);
-                    let DeathArr=this.bf.DeathrattleInvoke();
-                    this._sendBF(DeathArr);
+                   // let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
+                    //this._sendBF(BattleArr);
+                    //let DeathArr=this.bf.DeathrattleInvoke();
+                    //this._sendBF(DeathArr);
                     break;
                 case Action.Type.Attack:
                     let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);

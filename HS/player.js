@@ -78,7 +78,7 @@ class player{
                 }
             }
             else{
-                return {"cards":[],"crystal":this.cost};
+                return {"cards":null,"crystal":this.cost};
             }
         }
     }
@@ -86,8 +86,8 @@ class player{
         let i;
         for(i=0;i<this.allayList.length;i++){
             if(this.allayList[i].cardID==card){
-                this.addallayList.splice(i,1);
-                return this.addallayList[i];
+                this.allayList.splice(i,1);
+                return this.allayList[i];
             }
             else if(this.hero.cardID==card){
                 return this.hero;
