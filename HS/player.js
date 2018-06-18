@@ -11,6 +11,7 @@ class player{
         this.hero = hero;
         this.drawDamage;
         this.socket = socket;
+        this.newCost;
     }
     addallayList(card,position){
         if(this.allayList.length<7){
@@ -59,21 +60,20 @@ class player{
         }
     }
     discard(card,position){
-        console.log(this.hand);
         for(let i=0;i<this.hand.length;i++){
             if(this.hand[i].cardID==card){
                 let temp = this.hand[i];
-                if(temp.cost<=this.cost){
-                    this.cost-=temp.cost;
+                if(temp.cost<=this.newCost){
+                    this.newCost-=temp.cost;
+                    console.log(this.newCost);
                     if(temp.cardType=="minion"){
                         this.minushand(temp);
-                        console.log(this.hand);
                         this.addallayList(temp,position);
-                        return {"cards":temp,"crystal":this.cost,"position":position};
+                        return {"cards":temp,"crystal":this.newCost,"position":position};
                     }
                     else if(temp.cardType=="spell"){
                         this.minushand(i);
-                        return {"cards":temp,"crystal":this.cost};
+                        return {"cards":temp,"crystal":this.newCost};
                     }
                     else{
                         return {"cards":null,"crystal":this.cost};

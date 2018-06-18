@@ -56,6 +56,7 @@ class GameCore {
             this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {}));
         }
         this.currentPlayer.cost++;//水晶增加
+        this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
         
         
         for(let draw4=0;draw4<4;draw4++){//起手排
@@ -82,6 +83,7 @@ class GameCore {
                     this.currentPlayer = this.players[(this.playernumber)%2];
                     this.opponent = this.players[(this.playernumber+1)%2];
                     this.currentPlayer.cost++;//水晶增加
+                    this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
                     this.currentPlayer.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     //let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
