@@ -2,12 +2,12 @@
 this.HS = this.HS || {};
 
 (function(){
-    function Card(id , image){
+    function Card(id , sticker){
         createjs.Container.call(this);
         this.sticker = new createjs.Shape();
         this.information.id = id;
 
-        image = HS.Global.Source.getResult("CardSticker");
+        image = HS.Global.Source.getResult(sticker);
         if(image){
             this.sticker.scaleX = HS.Global.cardWidth / image.width * 0.66;
             this.sticker.scaleY = HS.Global.cardHeight / image.height * 0.55;
@@ -16,7 +16,9 @@ this.HS = this.HS || {};
             this.sticker.graphics.beginBitmapFill(image, "no-repeat", true, false)
             .drawEllipse(HS.Global.ellipseStickerX, HS.Global.ellipseStickerY, HS.Global.ellipseStickerW, HS.Global.ellipseStickerH);
         }else{
-            this.sticker.graphics.beginFill("#1565C0").drawRoundRect(0 , 0 , HS.Global.cardWidth , HS.Global.cardHeight , 2);
+            this.sticker.x = HS.Global.cardWidth * 0.15;
+            this.sticker.y = HS.Global.cardHeight * 0.084;
+            this.sticker.graphics.beginFill("#1565C0").drawEllipse(HS.Global.ellipseStickerX, HS.Global.ellipseStickerY, HS.Global.ellipseStickerW * 0.75, HS.Global.ellipseStickerH* 0.75);
         }
 
         this.on("rollover" , (e) => { if(this.moveable && this.active) mouseOver(e) });

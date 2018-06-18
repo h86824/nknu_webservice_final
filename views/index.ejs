@@ -42,6 +42,8 @@
       
       document.getElementById("title").addEventListener("click", function(e) {
         var elem = document.getElementById("battlefield");
+        elem.style.width = screen.width + "px";
+
         if (elem.requestFullscreen) {
           elem.requestFullscreen();
         } else if (elem.msRequestFullscreen) {
@@ -52,6 +54,23 @@
           elem.webkitRequestFullscreen();
         }
       })
+
+      if (document.addEventListener)
+      {
+          document.addEventListener('webkitfullscreenchange', exitHandler, false);
+          document.addEventListener('mozfullscreenchange', exitHandler, false);
+          document.addEventListener('fullscreenchange', exitHandler, false);
+          document.addEventListener('MSFullscreenChange', exitHandler, false);
+      }
+
+      function exitHandler()
+      {
+          if (!(document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement))
+          {
+            var elem = document.getElementById("battlefield");
+            elem.style.width = 1440 + "px";
+          }
+      }
     </script>
     
   </body>
