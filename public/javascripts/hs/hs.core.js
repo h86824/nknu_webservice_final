@@ -104,14 +104,17 @@ this.HS = this.HS || {};
     function handleAction(action){
         console.log(action);
         switch(action.type){
-        case HS.Action.setting:
+        case HS.Action.Type.Setting:
             handleSetting(action);
             break;
-        case HS.Action.drainage:
+        case HS.Action.Type.Drainage:
             handleDrainage(action);
             break;
-        case HS.Action.endturn:
+        case HS.Action.Type.Endturn:
             handleEndTurn(action);
+            break;
+        case HS.Action.Type.Discard:
+            handleDiscard(action);
             break
         }
     }
@@ -146,7 +149,7 @@ this.HS = this.HS || {};
 
             card.onmoved = (function(event){
                 if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
-                    handleDiscard(event);
+                    handleSelfDiscard(event);
                 }
             });
             
@@ -158,7 +161,7 @@ this.HS = this.HS || {};
 
     }
 
-    function handleDiscard(event){
+    function handleSelfDiscard(event){
         if(battleField.selfBattleArea.cards.length >= 7){
             battleField.selfBattleArea.relocate();
             return;
@@ -171,6 +174,41 @@ this.HS = this.HS || {};
         card.assignable = true;*/
         console.log(new HS.Action.PlayCard(card.information.id , battleField.selfBattleArea.getInsertIndex(event.stageX)));
         socket.emit('match', new HS.Action.PlayCard(card.information.id , battleField.selfBattleArea.getInsertIndex(event.stageX)));
+    }
+
+    function handleDiscard(action){
+        
+        if(action.obj){
+            let card = action.obj.cards;
+
+            if(action.player == playerId && card){
+                let mycard = battleField.findCardWithId(card.cardID);
+                battleField.selfHero.cristal = action.obj.crystal;
+                if(mycard){
+                    battleField.selfHandArea.removeCard(mycard);
+                    battleField.selfBattleArea.addCard(mycard , action.obj.position);
+                    mycard.cost = card.cost;
+                    mycard.atk = card.originAtk;
+                    mycard.def = card.originDef;
+                    mycard.moveable = false;
+                    mycard.assignable = false;
+                }
+            }else if(action.player != playerId && card){
+                let mycard = battleField.findCardWithId( -1 );
+                battleField.opponentHandArea.removeCard(mycard);
+                battleField.opponentHero.cristal = action.obj.crystal;
+                if(mycard){
+                    mycard = new HS.Card(card.cardID);
+                    mycard.cost = card.cost;
+                    mycard.atk = card.originAtk;
+                    mycard.def = card.originDef;
+                    mycard.moveable = false;
+                    mycard.assignable = false;
+                    battleField.opponentBattleArea.addCard(mycard , card.position);
+                }
+            }
+        }
+
     }
 
     function handleEndTurn(event){
