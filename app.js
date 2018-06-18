@@ -61,8 +61,8 @@ io.sockets.on('connection', function (client) {
     if(matchList.length){
       let opponent=matchList.splice(0,1)[0];
       console.log(opponent.socket.id+" VS "+client.id+" start");
-      client.emit("dual",new setting(0.1,opponent.socket));
-      opponent.socket.emit("dual",new setting(0.1,client));
+      client.emit("dual",new setting(0.1,client));
+      opponent.socket.emit("dual",new setting(0.1,opponent.socket));
       let game = new GameCore(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)),opponent);
       game.start();
       opponent=null;
