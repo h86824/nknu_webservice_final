@@ -50,7 +50,7 @@ this.HS = this.HS || {};
         HS.Alert("歡迎來到心の石的世界");
 
         createjs.Ticker.addEventListener("tick", (event) => {
-            matchBackground.rotation += 0.01;
+            matchBackground.rotation += 0.05;
         });
 
         this.onmatch = (onmatch) => {
@@ -68,7 +68,7 @@ this.HS = this.HS || {};
         this.height = height;
         this.background = new createjs.Shape();
         this.background.graphics.beginFill(color).drawRoundRect(0, 0, width, height , 10);
-        this.background.alpha = 0.8;
+        this.background.alpha = 0.9;
         
         let text = new createjs.Text(content, HS.Global.TextFontHuge, "#fff");
         text.set({
@@ -76,7 +76,7 @@ this.HS = this.HS || {};
             textAlign: "center",
             x:width / 2,
             y:height / 2,
-            alpha: 0.8,
+            alpha: 0.9,
         });
         let textOutLine = text.clone();
         textOutLine.set({

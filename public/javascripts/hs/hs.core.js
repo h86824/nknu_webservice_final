@@ -16,13 +16,11 @@ this.HS = this.HS || {};
     function start(){
         socket = io('http://localhost:3001');
         
-<<<<<<< HEAD
         socket.emit("dual" , new HS.Action.Dual());
         socket.emit("match", new HS.Action.Drainage());
-=======
+
         let bgm = new HS.BGM();
         bgm.start();
->>>>>>> e4f3fb74adc402daf26a6cb8dd6409755d1b37da
         socket.on('dual', function (data) {
             handleAction(data);
         });
