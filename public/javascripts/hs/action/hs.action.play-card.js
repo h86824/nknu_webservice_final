@@ -5,9 +5,8 @@ this.HS.Action = this.HS.Action || {};
 (function(){
     function PlayCard(id){
         HS.Action.Action.call(this);
-        
         this.type = HS.Action.Type.Discard;
-        this.type.obj = {cardID : id};
+        this.obj = {cardID : id};
     }
 
     PlayCard.prototype = {

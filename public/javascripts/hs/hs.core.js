@@ -129,6 +129,9 @@ this.HS = this.HS || {};
             }
             let cardInfo = action.obj.cards[0];
             let card = new HS.Card(cardInfo.cardID);
+            card.atk = cardInfo.originAtk;
+            card.def = cardInfo.originDef;
+            card.cost = cardInfo.cost;
             card.moveable = true;
             card.active = true;
             battleField.selfHandArea.addCard(card);
@@ -161,15 +164,15 @@ this.HS = this.HS || {};
             return;
         }
         let card = event.currentTarget;
-        console.log(new HS.Action.PlayCard(card.information.id));
         
         /*battleField.selfHandArea.removeCard(card);
         battleField.selfBattleArea.addCard(card , battleField.selfBattleArea.getInsertIndex(event.stageX));
         card.moveable = false;
         card.assignable = true;*/
+        console.log(new HS.Action.PlayCard(card.information.id));
         socket.emit('match', new HS.Action.PlayCard(card.information.id));
     }
-    
+
     function handleEndTurn(event){
         console.log({type:HS.Action.endturn ,msg:"結束回合"});
         socket.emit('match',{type:HS.Action.endturn ,msg:"結束回合"})
