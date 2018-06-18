@@ -3,10 +3,13 @@ this.HS = this.HS || {};
 this.HS.Action = this.HS.Action || {};
 
 (function(){
-    function PlayCard(id){
+    function PlayCard(id , position){
         HS.Action.Action.call(this);
         this.type = HS.Action.Type.Discard;
-        this.obj = {cardID : id};
+        this.obj = {
+            cardID : id,
+            position : position,
+        };
     }
 
     PlayCard.prototype = {

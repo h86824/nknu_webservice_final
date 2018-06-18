@@ -5,6 +5,7 @@ this.HS = this.HS || {};
     function Card(id , sticker){
         createjs.Container.call(this);
         this.sticker = new createjs.Shape();
+        this.information = {};
         this.information.id = id;
 
         image = HS.Global.Source.getResult(sticker);
@@ -113,7 +114,7 @@ this.HS = this.HS || {};
         onmoved: undefined,
         fixX:0,
         fixY:0,
-        information: {},
+        information: undefined,
         getStageX : getStageX,
         getStageY : getStageY,
         set atk(value){

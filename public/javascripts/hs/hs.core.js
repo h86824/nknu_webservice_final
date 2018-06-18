@@ -155,7 +155,7 @@ this.HS = this.HS || {};
             card.isCardBack = true;
             battleField.opponentHandArea.addCard(card);
         }
-            
+
     }
 
     function handleDiscard(event){
@@ -169,8 +169,8 @@ this.HS = this.HS || {};
         battleField.selfBattleArea.addCard(card , battleField.selfBattleArea.getInsertIndex(event.stageX));
         card.moveable = false;
         card.assignable = true;*/
-        console.log(new HS.Action.PlayCard(card.information.id));
-        socket.emit('match', new HS.Action.PlayCard(card.information.id));
+        console.log(new HS.Action.PlayCard(card.information.id , battleField.selfBattleArea.getInsertIndex(event.stageX)));
+        socket.emit('match', new HS.Action.PlayCard(card.information.id , battleField.selfBattleArea.getInsertIndex(event.stageX)));
     }
 
     function handleEndTurn(event){
