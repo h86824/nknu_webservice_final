@@ -11,7 +11,7 @@ class card {
         this.newDef= originDef;
         this.StatusList = [];
         this.cardType="";
-        this.race="minion";
+        this.race="";
         this.attackable = false;
         this.beforeAtkList = [];
         this.afterAtkList = [];

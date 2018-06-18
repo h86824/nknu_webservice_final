@@ -13,7 +13,7 @@ class creatCard{
                 temp = new WinTingLee(this.cardID);
                 this.cardID++;
         }
-
+        return temp
     }
     creatDeck(id){
         let deckList=[];

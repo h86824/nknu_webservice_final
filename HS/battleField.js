@@ -26,11 +26,11 @@ class battleField {
         let actionCard = player.getMinion(card);
         let targetCard = opponent.getMinion(target);
         let attArr = [];
+        //actionCard.beforeAtk(this,targetCard,attArr);
+        actionCard.attack(targetCard);
         attArr.push(actionCard);
         attArr.push(targetCard);
-        actionCard.beforeAtk(this,targetCard,attArr);
-        actionCard.attack(targetCard);
-        actionCard.afterAtk(this,targetCard,attArr);
+        //actionCard.afterAtk(this,targetCard,attArr);
         return {"cards":attArr};
     }
     BattlecryInvoke(player,card,target){

@@ -22,7 +22,8 @@ Action.Type = {
     Attack:5,
     Heropower:6,
     Hero:7,
-    Dual:8
+    Dual:8,
+    Start:9
 };
 
 module.exports = Action;
