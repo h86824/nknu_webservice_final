@@ -57,7 +57,7 @@ this.HS = this.HS || {};
         this.addChild(this.hpText);
         this.addChild(this.mpTextOutLine);
         this.addChild(this.mpText);
-        this.cristal = 6;
+        this.cristal = 0;
         this.hp = 40;
     }
 
@@ -67,6 +67,7 @@ this.HS = this.HS || {};
             this.hpTextOutLine.text = this.hpText.text = "HP: " + value;
         },
         set cristal(value){
+            this._crystal = value;
             this.cristalList.forEach(cristal => {
                 this.removeChild(cristal);
             })
@@ -88,6 +89,9 @@ this.HS = this.HS || {};
                 this.addChild(cristal);
             }
             
+        },
+        get crystal(){
+            return this._crystal;
         }
     }
     

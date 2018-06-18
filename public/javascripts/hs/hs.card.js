@@ -121,9 +121,13 @@ this.HS = this.HS || {};
             setText(this , this.atkTextOutline , this.atkText)(value);
         } ,
         set cost(value){
+            this._cost = value;
             setText(this , this.costTextOutline , this.costText)(value);
         } ,
-        set def ( value){
+        get cost(){
+            return this._cost;
+        },
+        set def ( value ){
             setText(this , this.defTextOutline , this.defText)(value);
         },
         set name( value ){

@@ -115,6 +115,9 @@ this.HS = this.HS || {};
             break;
         case HS.Action.Type.Discard:
             handleDiscard(action);
+            break;
+        case HS.Action.Type.Start:
+            handleStart(action);
             break
         }
     }
@@ -180,6 +183,7 @@ this.HS = this.HS || {};
         
         if(action.obj){
             let card = action.obj.cards;
+            HS.Alert(action.msg);
 
             if(action.player == playerId && card){
                 let mycard = battleField.findCardWithId(card.cardID);
@@ -188,11 +192,19 @@ this.HS = this.HS || {};
                     battleField.selfHandArea.removeCard(mycard);
                     battleField.selfBattleArea.addCard(mycard , action.obj.position);
                     mycard.cost = card.cost;
-                    mycard.atk = card.originAtk;
-                    mycard.def = card.originDef;
+                    mycard.atk = card.newAtk;
+                    mycard.def = card.newDef;
                     mycard.moveable = false;
-                    mycard.assignable = false;
+                    mycard.assignable = true;
+                    mycard.active = card.attackable;
                 }
+                battleField.selfHandArea.cards.forEach( card => {
+                    if(card.cost <= battleField.selfHero.crystal){
+                        card.active = true;
+                    }else{
+                        card.active = false;
+                    }
+                });
             }else if(action.player != playerId && card){
                 let mycard = battleField.findCardWithId( -1 );
                 battleField.opponentHandArea.removeCard(mycard);
@@ -200,8 +212,8 @@ this.HS = this.HS || {};
                 if(mycard){
                     mycard = new HS.Card(card.cardID);
                     mycard.cost = card.cost;
-                    mycard.atk = card.originAtk;
-                    mycard.def = card.originDef;
+                    mycard.atk = card.newAtk;
+                    mycard.def = card.newDef;
                     mycard.moveable = false;
                     mycard.assignable = false;
                     battleField.opponentBattleArea.addCard(mycard , card.position);
@@ -209,6 +221,35 @@ this.HS = this.HS || {};
             }
         }
 
+    }
+
+    function handleStart(action){
+        if(action.player == playerId){
+            HS.Alert("你的回合");
+            battleField.btn.enable = true;
+            battleField.selfHero.cristal = action.obj.crystal;
+
+            battleField.selfHandArea.cards.forEach( card => {
+                if(card.cost <= battleField.selfHero.crystal){
+                    card.active = true;
+                }else{
+                    card.active = false;
+                }
+            });
+            battleField.selfBattleArea.cards.forEach( card => {
+                card.active = true;
+            });
+        }else{
+            HS.Alert("對方的回合");
+            battleField.btn.enable = false;
+            battleField.opponentHero.cristal = action.obj.crystal;
+            battleField.selfHandArea.cards.forEach( card => {
+                card.active = false;
+            });
+            battleField.selfBattleArea.cards.forEach( card => {
+                card.active = false;
+            });
+        }
     }
 
     function handleEndTurn(event){

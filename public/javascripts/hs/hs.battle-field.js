@@ -54,8 +54,6 @@ this.HS = this.HS || {};
         this.addChild(this.btn);
 
         this.findCard = (target) => {
-            //console.log(this.selfBattleArea.cards[i]);
-            
             for(let i = 0 ; i < this.selfBattleArea.cards.length ; i++){
                 let pt = target.localToLocal( 0 , 0 , this.selfBattleArea.cards[i] );
                 if( this.selfBattleArea.cards[i].hitTest(pt.x , pt.y) )

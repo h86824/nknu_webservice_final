@@ -27,7 +27,8 @@ this.HS.Action = this.HS.Action || {};
         Attack:5,
         Heropower:6,
         Hero:7,
-        Dual:8
+        Dual:8,
+        Start:9
     };    
 
     HS.Action.Action = Action;
