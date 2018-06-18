@@ -72,8 +72,8 @@ class GameCore {
                     this._sendBF(EndArr);
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
-                    this.currentPlayer.socket.emit("match" , new endTurn(this.actionCount++,this.currentPlayer.socket));//回合Msg
                     this.currentPlayer.cost++;//水晶增加
+                    this.currentPlayer.socket.emit("match" , new endTurn(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
                     this._sendBF(beginArr);
                     let drawtemp = this.currentPlayer.draw();

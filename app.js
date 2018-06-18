@@ -53,6 +53,7 @@ io.sockets.on('connection', function (client) {
   playersList.push(client);
   console.log(client.id+" has connected!");
   client.on('dual',function(data){
+    console.log("get dual msg");
     if(matchList.length){
       let opponent=matchList.splice(0,1)[0];
       let card = new creatCard();

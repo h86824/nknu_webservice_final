@@ -75,16 +75,16 @@ class player{
                     if(temp.cardType=="minion"){
                         this.minushand(i);
                         this.addallayList(temp,position);
-                        return {"cards":temp};
+                        return {"cards":temp,"crystal":this.cost};
                     }
                     else if(temp.cardType=="spell"){
                         this.minushand(i);
-                        return {"cards":temp};
+                        return {"cards":temp,"crystal":this.cost};
                     }
                 }
             }
             else{
-                return false;
+                return {"cards":[],"crystal":this.cost};
             }
         }
     }
