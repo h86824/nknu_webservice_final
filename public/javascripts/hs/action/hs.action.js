@@ -1,6 +1,6 @@
 
 this.HS = this.HS || {};
-this.HS.Actin = this.HS.Actin || {};
+this.HS.Action = this.HS.Action || {};
 
 (function(){
 

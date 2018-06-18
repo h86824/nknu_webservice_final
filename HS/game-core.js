@@ -11,9 +11,10 @@ class GameCore {
     constructor(playerA , playerB){
         this.players = [];
         this.players.push(playerA);
-        this.players.push(playerB)
+        this.players.push(playerB);
         this.actionCount = 0;
-        
+        this._gameLoop();
+        console.log("gameLoop OK!!");
     }
 
     start() {
@@ -38,29 +39,31 @@ class GameCore {
             player.socket.emit("match" , new attack(this.actionCount++ , player.socket,actionCard,targetCard) );
             
         });*/
-        this._gameLoop();
         this.players.forEach( player => { player.socket.on("match", data => this._handlePlayerMessage(player, data) ) });
-        
+        console.log("Listener OK!!");
     }
 
     _gameLoop() {
         this.currentPlayer = this.players[0];
-        let draw3;
-        for(draw3=0;draw3<3;){//起手排
+        this.opponent = this.players[1];
+        this.playernumber = 0;
+        
+        for(let draw3=0;draw3<3;draw3++){//起手排
             let drawArr = this.currentPlayer.draw();
-            this._sendDraw(drawArr);
-
+            this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
+            this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.opponent.socket , {}));
         }
         this.currentPlayer.cost++;//水晶增加
-        this.playernumber = 0;
-        this.opponent = this.players[1]
-        let draw4;
-        for(draw4=0;draw4<4;){//起手排
-            let drawArr = this.opponent.draw();
-            this._sendDraw(drawArr);
+        
+        
+        for(let draw4=0;draw4<4;draw4++){//起手排
+            let drawArr2 = this.opponent.draw();
+            this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,drawArr2));
+            this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{}));
+
         }
-        this.currentPlayer.emit("match", new Setting(this.actionCount++ , player.socket));//回合Msg
-        this.opponent.emit("match",new Setting(this.actionCount++ , player.socket));//回合Msg
+        this.currentPlayer.socket.emit("match", new Setting(this.actionCount++ , this.currentPlayer.socket));//回合Msg
+        this.opponent.socket.emit("match",new Setting(this.actionCount++ , this.opponent.socket));//回合Msg
     }
 
     _handlePlayerMessage(player , data){
@@ -143,7 +146,7 @@ class GameCore {
         });
     }
     _createGame(){
-        this.bf = new battlefield(players[0],players[1]);
+        this.bf = new battlefield(this.players[0],this.players[1]);
     }
     _sendDiscard(cards){
         this.players.forEach( player => {

@@ -15,8 +15,9 @@ this.HS = this.HS || {};
 
     function start(){
         socket = io('http://localhost:3001');
-
+        
         socket.emit("dual" , new HS.Action.Dual());
+        socket.emit("match", new HS.Action.Drainage());
         socket.on('dual', function (data) {
             handleAction(data);
         });

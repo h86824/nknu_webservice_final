@@ -1,24 +1,25 @@
-var WinTingLee = require("./card/WinTingLee")
+var WinTingLee = require("./card/WinTingLee");
 
+    
 
-
-const classes = {
-    WinTingLee
-};
 class creatCard{
     constructor(){
         this.cardID =0;
     }
-    creat(className) {
-        let temp= new classes[className](cardID);
-        this.cardID++;
-        return temp;
+    creat(str) {
+        let temp;
+        switch(str){
+            case 'WinTingLee':
+                temp = new WinTingLee(this.cardID);
+                this.cardID++;
+        }
+
     }
     creatDeck(id){
         let deckList=[];
         if(id==1){
             while(deckList.length<30){
-                deckList.push(new classes[className](cardID));
+                deckList.push(new WinTingLee(this.cardID));
                 this.cardID++;
             }
         }

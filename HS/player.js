@@ -12,12 +12,6 @@ class player{
         this.drawDamage;
         this.socket = socket;
     }
-    get allayList(){
-        return this.addallayList;
-    }
-    get hero(){
-        return hero;
-    }
     addallayList(card,position){
         if(this.allayList.length<7){
             this.allayList.splice(position,0,card);
@@ -51,8 +45,8 @@ class player{
         }
     }
     draw(){
-        if(deck.length>0){
-            let ramdomInt = Math.floor(Math.random()*cardNumbers);
+        if(this.deck.length>0){
+            let ramdomInt = Math.floor(Math.random()*this.cardNumbers);
             let temp =this.deck[ramdomInt];
             this.addhand(temp);
             this.cardNumbers--;
@@ -67,8 +61,8 @@ class player{
     }
     discard(card,position){
         let i;
-        for(i=0;i<hand.length;i++){
-            if(hand[i].cardID==card){
+        for(i=0;i<this.hand.length;i++){
+            if(this.hand[i].cardID==card){
                 let temp = this.hand[i];
                 if(temp.cost<=this.cost){
                     this.cost-=temp.cost;
@@ -90,7 +84,7 @@ class player{
     }
     getMinion(card){
         let i;
-        for(i=0;i<allayList.length;i++){
+        for(i=0;i<this.allayList.length;i++){
             if(this.allayList[i].cardID==card){
                 this.addallayList.splice(i,1);
                 return this.addallayList[i];
@@ -99,13 +93,13 @@ class player{
                 return this.hero;
             }
             else{
-                return null;
+                return {};
             }
         }
 
     }
     herodead(){
-        if(hero.newDef<=0){
+        if(this.hero.newDef<=0){
             return true;
         }
         else{
@@ -121,7 +115,7 @@ class player{
              }
         }
         this.playorder.splice(i,1);
-        let tempindex =playersList.indexOf(this.playorder[i]);
+        let tempindex =this.playersList.indexOf(this.playorder[i]);
         this.allayList.splice(tempindex,1);
         return deadArr;
     }

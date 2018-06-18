@@ -7,13 +7,17 @@ var logger = require('morgan');
 var UUID = require('uuid/v4');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var Player = require("./HS/player")
+var Player = require("./HS/player");
+var creatCard = require("./HS/creatCard");
+var setting =require("./HS/action/action.setting");
+
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var playersList = [];
 var matchList = [];
-var creatCard = require("./HS/creatCard")
+var card = new creatCard();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,10 +60,12 @@ io.sockets.on('connection', function (client) {
     console.log("get dual msg");
     if(matchList.length){
       let opponent=matchList.splice(0,1)[0];
-      let card = new creatCard();
+      console.log(opponent.socket.id+" VS "+client.id+" start");
+      client.emit("dual",new setting(0.1,opponent.socket));
+      opponent.socket.emit("dual",new setting(0.1,client));
       let game = new GameCore(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)),opponent);
       game.start();
-      console.log(opponent.socket.id+" VS "+client.id+" start");
+      opponent=null;
     }
     else{
       matchList.push(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)));
