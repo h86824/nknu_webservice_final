@@ -138,7 +138,7 @@ class GameCore {
     }
     _sendDiscard(cards){
         this.players.forEach( player => {
-            player.socket.emit("match" , new Discard(this.actionCount++,player.socket,cards));
+            player.socket.emit("match" , new Discard(this.actionCount++,this.currentPlayer.socket,cards));
         });
     }
 }

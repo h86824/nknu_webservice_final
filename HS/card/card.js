@@ -7,8 +7,8 @@ class card {
         this.armor=0;
         this.originAtk=0;
         this.originDef=0;
-        this.newAtk=originAtk;
-        this.newDef= originDef;
+        this.newAtk=this.originAtk;
+        this.newDef= this.originDef;
         this.StatusList = [];
         this.cardType="";
         this.race="";

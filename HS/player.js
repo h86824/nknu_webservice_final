@@ -34,9 +34,8 @@ class player{
     }
     minushand(card){
         if(this.hand.length>0){
-            let i;
-            for(i=0;i<this.hand.length;i++){
-                if(this.hand[i].cardID==card){
+            for(let i=0;i<this.hand.length;i++){
+                if(this.hand[i].cardID==card.cardID){
                     this.hand.splice(i,1);
                     return true;
                 }
@@ -60,16 +59,15 @@ class player{
         }
     }
     discard(card,position){
-        let i;
         console.log(this.hand);
         for(let i=0;i<this.hand.length;i++){
-            
             if(this.hand[i].cardID==card){
                 let temp = this.hand[i];
                 if(temp.cost<=this.cost){
                     this.cost-=temp.cost;
                     if(temp.cardType=="minion"){
-                        this.minushand(i);
+                        this.minushand(temp);
+                        console.log(this.hand);
                         this.addallayList(temp,position);
                         return {"cards":temp,"crystal":this.cost,"position":position};
                     }
