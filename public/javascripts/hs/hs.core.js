@@ -16,12 +16,17 @@ this.HS = this.HS || {};
     function start(){
         socket = io('http://localhost:3001');
 
+        socket.emit("dual" , new HS.Action.Dual());
+        socket.on('dual', function (data) {
+            handleAction(data);
+        });
+
         socket.on('match', function (data) {
             handleAction(data);
         });
         
         stage = new createjs.Stage("battlefield");
-        stage.enableMouseOver(6.5);
+        stage.enableMouseOver(10);
 
         battleField = new HS.BattleField();
         battleField.x = HS.Global.battleFieldX;
@@ -38,7 +43,7 @@ this.HS = this.HS || {};
         fpsLabel.y = 10;
         let ts = ["溫聽力大怪獸" , "精英溫聽力" , "溫聽力史萊姆"];
         for(let i = 0 ; i < 10 ; i++){
-            let card = new HS.Card(0 , HS.Global.Source.getResult("CardBack"));
+            let card = new HS.Card.DMYeh(0);
             battleField.selfHandArea.addCard(card); 
             card.cost = i + 1;
             card.moveable = true;
