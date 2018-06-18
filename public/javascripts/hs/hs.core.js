@@ -16,8 +16,13 @@ this.HS = this.HS || {};
     function start(){
         socket = io('http://localhost:3001');
         
+<<<<<<< HEAD
         socket.emit("dual" , new HS.Action.Dual());
         socket.emit("match", new HS.Action.Drainage());
+=======
+        let bgm = new HS.BGM();
+        bgm.start();
+>>>>>>> e4f3fb74adc402daf26a6cb8dd6409755d1b37da
         socket.on('dual', function (data) {
             handleAction(data);
         });
@@ -32,7 +37,12 @@ this.HS = this.HS || {};
         battleField = new HS.BattleField();
         battleField.x = HS.Global.battleFieldX;
         battleField.y = HS.Global.battleFieldY;
-        stage.addChild(battleField);
+        //stage.addChild(battleField);
+
+        let matchScreen = stage.addChild(new HS.MatchScreen());
+        matchScreen.onmatch(() => {
+            HS.MessageBox.show("配對中...");
+        });
 
         createjs.Ticker.addEventListener("tick", handleTick);
         createjs.Ticker.setFPS(63);
@@ -65,10 +75,12 @@ this.HS = this.HS || {};
             });
         }
 
+
         var arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
 
-        stage.addChild(new HS.Alert());
+        stage.addChild(HS.AlertBox);
+        stage.addChild(HS.MessageBox);
     };
 
     HS.Core = Core;

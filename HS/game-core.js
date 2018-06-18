@@ -81,23 +81,13 @@ class GameCore {
                     let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
                     this._sendBF(beginArr);
                     let drawtemp = this.currentPlayer.draw();
-                    if(drawtemp==null){
+                    if(!drawtemp.cards.length){
                        this. _sendHero(this.currentPlayer.hero);
                     }
                     else{
                         this._sendDraw(drawtemp);
                     }
                     this.opponent = this.players[(this.playernumber+1)%2];
-                    break;
-                case Action.Type.Drainage:
-                    let drawtemp1 = this.currentPlayer.draw();
-                    if(drawtemp1==null){
-                       this._sendHero(this.currentPlayer.hero);
-                    }
-                    else{
-                        this._sendDraw(drawtemp1);
-                    }
-                    
                     break;
                 case  Action.Type.Setting:
                     break;
