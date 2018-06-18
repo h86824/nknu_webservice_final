@@ -32,14 +32,21 @@ this.HS = this.HS || {};
                 this.background.graphics.beginFill("#388E3C").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
         });
         this.on("click" , () => {
-            if(this.enable)
+            if(this.enable){
                 this.background.graphics.beginFill("#2E7D32").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
+                if(this._onclick)
+                    this._onclick();
+            }
+                
         });
         this.on("mouseout" , () => {
             if(this.enable)
                 this.background.graphics.beginFill("#2E7D32").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
         });
         this.enable = true;
+        this.onclick = (cb) => {
+            this._onclick = cb;
+        };
     }
 
     Button.prototype = {

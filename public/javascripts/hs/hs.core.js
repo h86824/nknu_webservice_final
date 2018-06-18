@@ -31,6 +31,9 @@ this.HS = this.HS || {};
         battleField.y = HS.Global.battleFieldY;
         stage.addChild(battleField);
         battleField.visible = false;
+        battleField.onendturn( ()=>{
+            socket.emit('match', new HS.Action.EndTurn() );
+        } );
 
         matchScreen = stage.addChild(new HS.MatchScreen());
         
@@ -103,6 +106,7 @@ this.HS = this.HS || {};
 
     function handleAction(action){
         console.log(action);
+        HS.Alert( action.msg );
         switch(action.type){
         case HS.Action.Type.Setting:
             handleSetting(action);

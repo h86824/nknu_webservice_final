@@ -111,7 +111,7 @@ this.HS = this.HS || {};
             
             {src:"/javascripts/hs/action/hs.action.js"},
             {src:"/javascripts/hs/action/hs.action.dual.js"},
-            {src:"/javascripts/hs/action/hs.action.endturn.js"},
+            {src:"/javascripts/hs/action/hs.action.end-turn.js"},
             {src:"/javascripts/hs/action/hs.action.play-card.js"},
 
             {src:"/javascripts/hs/card/hs.card.tinlee.js"},

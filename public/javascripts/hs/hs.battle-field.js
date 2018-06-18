@@ -38,20 +38,20 @@ this.HS = this.HS || {};
 
         this.opponentHero = new HS.Hero();
         this.opponentHandArea.hero = this.opponentHero ;
-        /*this.opponentHero.x = HS.Global.handCardDistance * 5;
-        this.opponentHero.y = 0;
-        this.addChild(this.opponentHero);*/
 
         this.selfHero = new HS.Hero();
         this.selfHandArea.hero = this.selfHero ;
-        /*this.selfHero.x = HS.Global.handCardDistance * 5;
-        this.selfHero.y = HS.Global.selfHandAreaY;
-        this.addChild(this.selfHero);*/
 
         this.btn = new HS.Button("結束回合");
         this.btn.x = HS.Global.battleAreaWidth - HS.Global.buttonWidth;
         this.btn.y = HS.Global.selfBattleAreaY - HS.Global.buttonHeight / 2;
         this.addChild(this.btn);
+        this.onendturn = ( cb ) => {
+            this.btn.onclick( () => {
+                cb();
+            });
+        };
+        
 
         this.findCard = (target) => {
             for(let i = 0 ; i < this.selfBattleArea.cards.length ; i++){
