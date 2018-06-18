@@ -4,6 +4,7 @@ this.HS = this.HS || {};
 (function(){
     let socket;
     let battleField;
+    let matchScreen;
     let stage;
     let playerId;
     
@@ -15,31 +16,30 @@ this.HS = this.HS || {};
 
     function start(){
         socket = io('http://localhost:3001');
-        
-        socket.emit("dual" , new HS.Action.Dual());
-        socket.emit("match", new HS.Action.Endturn());
+        stage = new createjs.Stage("battlefield");
+        stage.enableMouseOver(10);
 
         let bgm = new HS.BGM();
         bgm.start();
-        socket.on('dual', function (data) {
-            handleAction(data);
-        });
 
         socket.on('match', function (data) {
             handleAction(data);
         });
         
-        stage = new createjs.Stage("battlefield");
-        stage.enableMouseOver(10);
-
         battleField = new HS.BattleField();
         battleField.x = HS.Global.battleFieldX;
         battleField.y = HS.Global.battleFieldY;
-        //stage.addChild(battleField);
+        stage.addChild(battleField);
+        battleField.visible = false;
 
-        let matchScreen = stage.addChild(new HS.MatchScreen());
+        matchScreen = stage.addChild(new HS.MatchScreen());
+        
         matchScreen.onmatch(() => {
+            socket.emit("dual" , new HS.Action.Dual());
             HS.MessageBox.show("配對中...");
+        });
+        socket.on('dual', function (data) {
+            handleDualAction(data);
         });
 
         createjs.Ticker.addEventListener("tick", handleTick);
@@ -50,7 +50,7 @@ this.HS = this.HS || {};
         stage.addChild(fpsLabel);
         fpsLabel.x = 10;
         fpsLabel.y = 10;
-        let ts = ["溫聽力大怪獸" , "精英溫聽力" , "溫聽力史萊姆"];
+        /*let ts = ["溫聽力大怪獸" , "精英溫聽力" , "溫聽力史萊姆"];
         for(let i = 0 ; i < 10 ; i++){
             let card = new HS.Card.DMYeh(0);
             battleField.selfHandArea.addCard(card); 
@@ -71,9 +71,7 @@ this.HS = this.HS || {};
                     handleDiscard(event);
                 }
             });
-        }
-
-
+        }*/
         var arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
 
@@ -87,6 +85,19 @@ this.HS = this.HS || {};
         stage.update();
         fpsLabel.text = Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
         if (!event.paused) {
+        }
+    }
+
+    function handleDualAction(action){
+        console.log(action);
+        switch(action.type){
+        case HS.Action.Type.Setting:
+            HS.MessageBox.show("配對成功");
+            playerId = action.player;
+            matchScreen.visible = false;
+            battleField.visible = true;
+            HS.MessageBox.hide();
+            break;
         }
     }
 
@@ -108,12 +119,20 @@ this.HS = this.HS || {};
     function handleSetting(action){
         playerId = action.player;
     }
+
     let count = 0;
     function handleDrainage(action){
-
+        count = action.id;
         if(playerId === action.player){
-            let card = new HS.Card(count++ , HS.Global.Source.getResult("CardBack"));
-            battleField.selfHandArea.addCard(card); 
+            if(!action.obj || !action.obj.cards.length){
+                return;
+            }
+            let cardInfo = action.obj.cards[0];
+            let card = new HS.Card(cardInfo.cardID);
+            card.moveable = true;
+            card.active = true;
+            battleField.selfHandArea.addCard(card);
+
             card.onmoving = function(event){
                 if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
                     battleField.selfBattleArea.relocate(card.getStageX());
@@ -121,11 +140,17 @@ this.HS = this.HS || {};
                     battleField.selfBattleArea.relocate();
                 }
             };
+
             card.onmoved = (function(event){
                 if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
                     handleDiscard(event);
                 }
             });
+            
+        }else{
+            let card = new HS.Card( -1 );
+            card.isCardBack = true;
+            battleField.opponentHandArea.addCard(card);
         }
             
     }
@@ -136,14 +161,15 @@ this.HS = this.HS || {};
             return;
         }
         let card = event.currentTarget;
-        console.log({type:HS.Action.discard ,msg:"出牌" , obj:card.information});
+        console.log(new HS.Action.PlayCard(card.information.id));
         
-        battleField.selfHandArea.removeCard(card);
+        /*battleField.selfHandArea.removeCard(card);
         battleField.selfBattleArea.addCard(card , battleField.selfBattleArea.getInsertIndex(event.stageX));
         card.moveable = false;
-        card.assignable = true;
-        socket.emit('match', {type:HS.Action.discard ,msg:"出牌" , obj:card.information});
+        card.assignable = true;*/
+        socket.emit('match', new HS.Action.PlayCard(card.information.id));
     }
+    
     function handleEndTurn(event){
         console.log({type:HS.Action.endturn ,msg:"結束回合"});
         socket.emit('match',{type:HS.Action.endturn ,msg:"結束回合"})
