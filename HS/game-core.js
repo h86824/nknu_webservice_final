@@ -21,7 +21,7 @@ class GameCore {
     start() {
         this._createGame();
 
-        this.players.forEach( player => {
+        /*this.players.forEach( player => {
             player.socket.emit("match" , new Setting(this.actionCount++ , player.socket) );
         });
 
@@ -49,7 +49,7 @@ class GameCore {
         this.opponent = this.players[1];
         this.playernumber = 0;
         
-        for(let draw3=0;draw3<3;draw3++){//起手排
+        for(let draw3=0;draw3<4;draw3++){//起手排
             let drawArr = this.currentPlayer.draw();
             this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
             this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {}));
