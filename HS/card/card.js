@@ -2,16 +2,16 @@ class card {
     
     constructor (ID){
         this.cardID = ID;
-        this.classes;
-        this.cost;
-        this.armor ;
-        this.originAtk;
-        this.originDef;
+        this.classes="";
+        this.cost=0;
+        this.armor=0;
+        this.originAtk=0;
+        this.originDef=0;
         this.newAtk=originAtk;
         this.newDef= originDef;
         this.StatusList = [];
-        this.cardType;
-        this.race;
+        this.cardType="";
+        this.race="";
         this.attackable = false;
         this.beforeAtkList = [];
         this.afterAtkList = [];

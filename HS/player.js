@@ -57,7 +57,7 @@ class player{
             this.addhand(temp);
             this.cardNumbers--;
             this.deck[ramdomInt]=this.deck[this.cardNumbers];
-            return temp;
+            return {"cards":[temp]};
         }
         else{
             this.hero.originDef-=drawDamage;
@@ -75,11 +75,11 @@ class player{
                     if(temp.cardType=="minion"){
                         this.minushand(i);
                         this.addallayList(temp,position);
-                        return {};
+                        return {"cards":temp};
                     }
                     else if(temp.cardType=="spell"){
                         this.minushand(i);
-                        return true;
+                        return {"cards":temp};
                     }
                 }
             }
