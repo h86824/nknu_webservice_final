@@ -5,6 +5,7 @@ var Discard = require("./action/action.discard");
 var battlefield = require("./battleField");
 var endTurn = require("./action/action.endturn");
 var hero = require("./action/action.hero");
+var Action = require("./action/action");
 
 class GameCore {
     
@@ -70,7 +71,7 @@ class GameCore {
         if(this.currentPlayer === player){
             console.log(data);
             switch(data.type){
-                case HS.Action.Endturn:
+                case Action.Type.Endturn:
                     let EndArr = this.bf.EndTurnInvoke(this.currentPlayer)
                     this._sendBF(EndArr);
                     this.playernumber++;
@@ -88,7 +89,7 @@ class GameCore {
                     }
                     this.opponent = this.players[(this.playernumber+1)%2];
                     break;
-                case HS.Action.Drainage:
+                case Action.Type.Drainage:
                     let drawtemp1 = this.currentPlayer.draw();
                     if(drawtemp1==null){
                        this._sendHero(this.currentPlayer.hero);
@@ -98,9 +99,9 @@ class GameCore {
                     }
                     
                     break;
-                case  HS.Action.Setting:
+                case  Action.Type.Setting:
                     break;
-                case HS.Action.Discard:
+                case Action.Type.Discard:
                     let cardArr = this.currentPlayer.discard(data.obj.cardID);
                     this._sendDiscard(cardArr);
                     let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
@@ -108,13 +109,13 @@ class GameCore {
                     let DeathArr=this.bf.DeathrattleInvoke();
                     this._sendBF(DeathArr);
                     break;
-                case HS.Action.Attack:
+                case Action.Type.Attack:
                     let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
                     this._sendBF(attackTemp);
                     let DeadArr = this.bf.DeathrattleInvoke();
                     this._sendBF(DeadArr);
                     break;
-                case HS.Action.Heropower:
+                case Action.Type.Heropower:
                     let heroArr = this.bf.HeropowerInvoke(this.currentPlayer,data.to);
                     this._sendBF(heroArr);
                     let DArr = this.bf.DeathrattleInvoke();
@@ -133,7 +134,7 @@ class GameCore {
     }
     _sendDraw(cards){
         this.players.forEach( player => {
-            if(player===this.currentPlayer){player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket , cards));}
+            if(player==this.currentPlayer){player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket , cards));}
             else{
                 player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket , {}));
             }
