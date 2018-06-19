@@ -56,7 +56,7 @@ class battleField {
         }
         else{
             console.log("沒結束 A:"+this.player1.hero.newDef+"，B:"+this.player2.hero.newDef);
-            return "";
+            return false;
         }
     }
     BattlecryInvoke(allayplayer,enemy,card){

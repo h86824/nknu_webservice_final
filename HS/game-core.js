@@ -128,7 +128,9 @@ class GameCore {
                         let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
                         this._sendBF(attackTemp,data.from,data.to);
                         let winYet= this.bf.isWin();
-                        if(winYet!=""){
+                        if(!winYet){
+                        }
+                        else{
                             this.currentPlayer.socket.emit("dual",new EndGame(this.actionCount++,winYet));
                             this.opponent.socket.emit("dual",new EndGame(this.actionCount++,winYet));
                         }
