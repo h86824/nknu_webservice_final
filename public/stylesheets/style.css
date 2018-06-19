@@ -1,6 +1,7 @@
 body {
-  padding: 50px;
+  padding:15px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*background-color: #6473c3;*/
 }
 
 a {
@@ -49,4 +50,10 @@ a {
     2px -2px 0 #000,
     -2px 2px 0 #000,
     2px 2px 0 #000;  */
+}
+
+#title{
+  color: orange;
+  font-size: 500%;
+  text-align: center;
 }

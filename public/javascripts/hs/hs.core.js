@@ -22,6 +22,13 @@ this.HS = this.HS || {};
         let bgm = HS.BGM;
         bgm.start();
 
+        socket.on("disconnect", function(){
+            HS.Alert("連線中斷");
+            playerId = null;
+            matchScreen.visible = true;
+            battleField.visible = false;
+        });
+
         socket.on('match', function (data) {
             handleAction(data);
         });
@@ -58,6 +65,7 @@ this.HS = this.HS || {};
         var arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
+            console.log(new HS.Action.Attack( from.information.id , to.information.id) );
             socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
         });
 

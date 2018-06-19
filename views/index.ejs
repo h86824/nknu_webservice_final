@@ -23,8 +23,12 @@
       <p id="progressText"></p>
     </div>
     <canvas width="1920" height="1080" id="battlefield" style="display:none;width:1440px;background-color:#FFF;margin:0 auto;"></canvas>
-
     <script>
+      $(document).ready(() => {
+        window.onresize = function(event){
+          
+        };
+      });
 
       var loader = new HS.Loader();
       loader.progress(function(event){
@@ -34,7 +38,13 @@
         var core = new HS.Core();
         document.getElementById("loadingDiv").style.display = "none";
         document.getElementById("battlefield").style.display = "initial";
+        document.getElementById("title").style.color = "#000";
+        document.getElementById("title").style.fontSize = "150%";
+        document.getElementById("title").style.textAlign = "left";
+        
         core.start();
+
+        
         /*var resolutions = [
           {width:1920 , height:1080},
           {width:1440 , height:900},
