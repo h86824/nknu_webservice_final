@@ -32,7 +32,7 @@ this.HS = this.HS || {};
         stage.addChild(battleField);
         battleField.visible = false;
         battleField.onendturn( ()=>{
-            socket.emit('match', new HS.Action.EndTurn() );
+            sendEndTurn();
         } );
 
         matchScreen = stage.addChild(new HS.MatchScreen());
@@ -236,7 +236,7 @@ this.HS = this.HS || {};
             battleField.btn.enable = true;
             battleField.selfHero.cristal = action.obj.crystal;
             battleField.setTimer( () => {
-                socket.emit('match', new HS.Action.EndTurn() );
+                sendEndTurn();
             } , 60);
 
             battleField.selfHandArea.cards.forEach( card => {
@@ -264,6 +264,11 @@ this.HS = this.HS || {};
 
     function handleEndTurn(event){
         socket.emit('match',{type:HS.Action.endturn ,msg:"結束回合"})
+    }
+
+    function sendEndTurn(){
+        socket.emit('match', new HS.Action.EndTurn() );
+        battleField.stopTimer();
     }
 
 }());
