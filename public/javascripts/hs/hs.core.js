@@ -19,7 +19,7 @@ this.HS = this.HS || {};
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
 
-        let bgm = new HS.BGM();
+        let bgm = HS.BGM();
         bgm.start();
 
         socket.on('match', function (data) {
