@@ -32,7 +32,7 @@ this.HS = this.HS || {};
         stage.addChild(battleField);
         battleField.visible = false;
         battleField.onendturn( ()=>{
-            socket.emit('match', new HS.Action.EndTurn() );
+            sendEndTurn();
         } );
 
         matchScreen = stage.addChild(new HS.MatchScreen());
@@ -78,6 +78,9 @@ this.HS = this.HS || {};
         }*/
         var arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
+        arrowsManager.onassign( (from , to) => {
+            socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
+        });
 
         stage.addChild(HS.AlertBox);
         stage.addChild(HS.MessageBox);
@@ -233,6 +236,9 @@ this.HS = this.HS || {};
             HS.Alert("你的回合");
             battleField.btn.enable = true;
             battleField.selfHero.cristal = action.obj.crystal;
+            battleField.setTimer( () => {
+                sendEndTurn();
+            } , 60);
 
             battleField.selfHandArea.cards.forEach( card => {
                 if(card.cost <= battleField.selfHero.crystal){
@@ -260,6 +266,11 @@ this.HS = this.HS || {};
     function handleEndTurn(event){
         console.log({type:HS.Action.endturn ,msg:"結束回合"});
         socket.emit('match',{type:HS.Action.endturn ,msg:"結束回合"})
+    }
+
+    function sendEndTurn(){
+        socket.emit('match', new HS.Action.EndTurn() );
+        battleField.stopTimer();
     }
 
 }());

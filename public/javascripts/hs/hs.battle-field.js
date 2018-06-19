@@ -52,7 +52,6 @@ this.HS = this.HS || {};
             });
         };
         
-
         this.findCard = (target) => {
             for(let i = 0 ; i < this.selfBattleArea.cards.length ; i++){
                 let pt = target.localToLocal( 0 , 0 , this.selfBattleArea.cards[i] );
@@ -106,12 +105,12 @@ this.HS = this.HS || {};
         timerCircle.y = this.btn.y + HS.Global.buttonHeight * 0.25 ;
 
         this.addChild(timerCircle);
-
+        let listener;
         this.setTimer = ( ontime , sec ) => {
             sec = sec * 1000;
             now = new Date();
             timerCircle.visible = true;
-            let listener = createjs.Ticker.addEventListener("tick", () => {
+            listener = createjs.Ticker.addEventListener("tick", () => {
                 let time = new Date().getTime() - now.getTime();
                 let angle = 360 - (time / sec * 360);
                 timerCircle.graphics.clear().beginFill("#5C6BC0").arc(15, 15, 15, 0, angle * (Math.PI / 180), false).lineTo(15, 15).closePath();
@@ -122,6 +121,11 @@ this.HS = this.HS || {};
                         ontime();
                 }
             });
+        }
+
+        this.stopTimer = () => {
+            createjs.Ticker.removeEventListener( "tick" , listener );
+            timerCircle.visible = false;
         }
     }
 
