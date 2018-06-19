@@ -29,7 +29,8 @@ this.HS.Action = this.HS.Action || {};
         Hero:7,
         Dual:8,
         Start:9,
-        Disconnect:10
+        Disconnect:10,
+        EndGame:11
     };    
 
     HS.Action.Action = Action;
