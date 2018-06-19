@@ -17,6 +17,7 @@ var io = require('socket.io').listen(server);
 var playersList = [];
 var matchList = [];
 var card = new creatCard();
+var gameList =[];
 
 
 // view engine setup
@@ -64,8 +65,8 @@ io.sockets.on('connection', function (client) {
       client.emit("dual",new setting(0.1,client));
       opponent.socket.emit("dual",new setting(0.1,opponent.socket));
       let game = new GameCore(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)),opponent);
+      gameList.push(game);
       game.start();
-      opponent=null;
     }
     else{
       matchList.push(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)));
@@ -81,7 +82,6 @@ io.sockets.on('connection', function (client) {
       }
     }
     playersList.splice(tempindex,1);
-    console.log(playersList);
     console.log(client.id+" has disconnected!");
   });
 });

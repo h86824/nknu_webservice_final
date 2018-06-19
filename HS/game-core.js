@@ -7,6 +7,7 @@ var battlefield = require("./battleField");
 var hero = require("./action/action.hero");
 var Action = require("./action/action");
 var start = require("./action/action.start");
+var disconnect = require("./action/action.disconnect");
 
 class GameCore {
     
@@ -43,6 +44,7 @@ class GameCore {
             
         });*/
         this.players.forEach( player => { player.socket.on("match", data => this._handlePlayerMessage(player, data) ) });
+        this.players.forEach( player => { player.socket.on("disconnect", data =>this._handleDisconnect(player) ) });
         console.log("Listener OK!!");
     }
 
@@ -114,8 +116,10 @@ class GameCore {
                     //this._sendBF(DeathArr);
                     break;
                 case Action.Type.Attack:
-                    let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
-                    this._sendBF(attackTemp,data.from,data.to);
+                    if(data.from!=data.to){
+                        let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
+                        this._sendBF(attackTemp,data.from,data.to);
+                    }
                     break;
                 case Action.Type.Heropower:
                     //let heroArr = this.bf.HeropowerInvoke(this.currentPlayer,data.to);
@@ -127,6 +131,14 @@ class GameCore {
                 
             
         }
+    }
+    _handleDisconnect(player){
+        let tempPlayer = this.players.indexOf(player);
+        this.players.splice(tempPlayer,1);
+        this.players.forEach(leftplayer=>{
+            leftplayer.socket.emit("dual",new disconnect(this.actionCount++));
+        })
+        console.log(this.players);
     }
     _sendHero(herocard){
         this.players.forEach( player => {

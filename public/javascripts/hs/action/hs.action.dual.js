@@ -7,7 +7,7 @@ this.HS.Action = this.HS.Action || {};
         HS.Action.Action.call(this);
         
         this.type = HS.Action.Type.Dual;
-        this.obj={hero:'WinTingLin',deckID:1};
+        this.obj={hero:'WinTingLee',deckID:1};
     }
 
     Dual.prototype = {

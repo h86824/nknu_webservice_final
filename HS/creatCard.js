@@ -12,8 +12,9 @@ class creatCard{
             case 'WinTingLee':
                 temp = new WinTingLee(this.cardID);
                 this.cardID++;
+                break;
         }
-        return temp
+        return temp;
     }
     creatDeck(id){
         let deckList=[];
