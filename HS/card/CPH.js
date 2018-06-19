@@ -1,8 +1,8 @@
-﻿var card = require("./card")
-var myBattleCry;
+﻿var card=require("./card")
+var myBattleCry = require("../skill/CPH.BattleCry");
 
-class CPH extends card {
-    constructor(ID) {
+class CPH extends card{
+    constructor(ID){
         super(ID);
         this.name = "CPH";
         this.race = "教授";

@@ -53,7 +53,13 @@ class GameCore {
         this.opponent = this.players[1];
         this.playernumber = 0;
         
-        
+        this.currentPlayer.socket.emit("match",new hero(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.hero));
+        this.opponent.socket.emit("match",new hero(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.hero));
+        this.currentPlayer.socket.emit("match",new hero(this.actionCount++,this.opponent.socket,this.opponent.hero));
+        this.opponent.socket.emit("match",new hero(this.actionCount++,this.opponent.socket,this.opponent.hero));
+
+
+
         let drawArr = this.currentPlayer.draw(3);
         this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
         this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:3}));
@@ -110,7 +116,7 @@ class GameCore {
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
                     console.log("這是:"+cardArr.card.cardID);
                     this._sendDiscard(cardArr);
-                    let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
+                    //let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
                     //this._sendBF(BattleArr);
                     //let DeathArr=this.bf.DeathrattleInvoke();
                     //this._sendBF(DeathArr);
