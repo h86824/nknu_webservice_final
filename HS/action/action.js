@@ -20,11 +20,12 @@ Action.Type = {
     Endturn:3,
     Battlefield:4,
     Attack:5,
-    Heropower:6,
+    Heropower:11,
     Hero:7,
     Dual:8,
     Start:9,
-    Disconnect:10
+    Disconnect:10,
+    EndGame:6
 };
 
 module.exports = Action;

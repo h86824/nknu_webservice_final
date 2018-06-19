@@ -8,7 +8,7 @@ var hero = require("./action/action.hero");
 var Action = require("./action/action");
 var start = require("./action/action.start");
 var disconnect = require("./action/action.disconnect");
-var EndGame = require("./action/action.endgame");
+var Endgame = require("./action/action.endgame");
 
 class GameCore {
     
@@ -131,8 +131,8 @@ class GameCore {
                         if(!winYet){
                         }
                         else{
-                            this.currentPlayer.socket.emit("dual",new EndGame(this.actionCount++,winYet));
-                            this.opponent.socket.emit("dual",new EndGame(this.actionCount++,winYet));
+                            this.currentPlayer.socket.emit("dual",new Endgame(this.actionCount++,winYet));
+                            this.opponent.socket.emit("dual",new Endgame(this.actionCount++,winYet));
                         }
                     }
                     break;

@@ -25,12 +25,12 @@ this.HS.Action = this.HS.Action || {};
         Endturn:3,
         Battlefield:4,
         Attack:5,
-        Heropower:6,
+        Heropower:11,
         Hero:7,
         Dual:8,
         Start:9,
         Disconnect:10,
-        EndGame:11
+        EndGame:6
     };    
 
     HS.Action.Action = Action;
