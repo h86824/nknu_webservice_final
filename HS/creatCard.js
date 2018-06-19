@@ -2,7 +2,12 @@ var WinTingLee = require("./card/WinTingLee");
 var CPH = require("./card/CPH");
 var GAYA = require("./card/GAYA");
 var Magic = require("./card/card.magic");
-    
+var JianAn = require("./card/JianAn");
+var JiungHan = require("./card/JiungHan");
+var Justin = require("./card/Justin");
+var Kuo = require("./card/Kuo");
+var Lily = require("./card/Lily");
+var LiWei = require("./card/LiWei");
 
 class creatCard{
     constructor(){

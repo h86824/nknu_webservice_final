@@ -70,7 +70,6 @@ this.HS = this.HS || {};
         arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
-            console.log("pass" );
             console.log(new HS.Action.Attack( from.information.id , to.information.id) );
             socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
         });
@@ -91,6 +90,7 @@ this.HS = this.HS || {};
     }
 
     function handleDualAction(action){
+        console.log(action);
         switch(action.type){
         case HS.Action.Type.Setting:
             HS.MessageBox.show("配對成功");
@@ -102,6 +102,16 @@ this.HS = this.HS || {};
             break;
         case HS.Action.Type.Disconnect:
             HS.Alert("對手離開");
+            playerId = null;
+            matchScreen.visible = true;
+            battleField.visible = false;
+            break;
+        case HS.Action.Type.EndGame:
+            if(action.player == playerId){
+                HS.Alert("失敗");
+            }else{
+                HS.Alert("勝利");
+            }
             playerId = null;
             matchScreen.visible = true;
             battleField.visible = false;

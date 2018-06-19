@@ -41,10 +41,15 @@ this.HS = this.HS || {};
                 this._onmatch();
         })
 
+        let deck = new HS.Deck();
+        deck.x = HS.Global.width / 2;
+        deck.y = HS.Global.height * 0.5;
+
         this.addChild(matchBackground);
         this.addChild(background);
         this.addChild(textOutLine);
         this.addChild(text);
+        this.addChild(deck);
         this.addChild(btn);
 
         HS.Alert("歡迎來到心の石的世界");
@@ -57,7 +62,7 @@ this.HS = this.HS || {};
             this._onmatch = onmatch;
         }
     }
-
+    
     function Button(content){
         createjs.Container.call(this);
         let width = HS.Global.width * 0.3;

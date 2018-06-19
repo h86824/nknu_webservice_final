@@ -8,6 +8,7 @@ var hero = require("./action/action.hero");
 var Action = require("./action/action");
 var start = require("./action/action.start");
 var disconnect = require("./action/action.disconnect");
+var EndGame = require("./action/action.endgame");
 
 class GameCore {
     
@@ -126,6 +127,11 @@ class GameCore {
                     if(data.from!=data.to){
                         let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
                         this._sendBF(attackTemp,data.from,data.to);
+                        let winYet= this.bf.isWin();
+                        if(winYet!=""){
+                            this.currentPlayer.socket.emit("dual",new EndGame(this.actionCount++,winYet));
+                            this.opponent.socket.emit("dual",new EndGame(this.actionCount++,winYet));
+                        }
                     }
                     break;
                 case Action.Type.Heropower:

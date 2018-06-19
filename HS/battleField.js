@@ -45,6 +45,20 @@ class battleField {
         //actionCard.afterAtk(this,targetCard,attArr);
         return {"cards":attArr};
     }
+    isWin(){
+        if(this.player1.hero.newDef<=0){
+            console.log("結束了");
+            return this.player1.socket;
+        }
+        else if(this.player2.hero.newDef<=0){
+            console.log("結束了");
+            return this.player2.socket;
+        }
+        else{
+            console.log("沒結束 A:"+this.player1.hero.newDef+"，B:"+this.player2.hero.newDef);
+            return "";
+        }
+    }
     BattlecryInvoke(allayplayer,enemy,card){
         let actionCard =player.getMinion (card);
         let BattleArr = [];
