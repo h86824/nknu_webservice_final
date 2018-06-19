@@ -33,8 +33,9 @@ this.HS = this.HS || {};
         }
         this.addChild(item);
         this.cards.push(item);
-
+        item.alpha = 0;
         this.relocate();
+        HS.Anime.appear(item , ()=>{});
     }
 
     function removeCard(item){

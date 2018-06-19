@@ -29,7 +29,9 @@ this.HS = this.HS || {};
         this.cards.splice(index , 0 , item);
         
         this.addChild(item);
+        item.alpha = 0;
         this.relocate();
+        HS.Anime.appear(item , ()=>{});
     }
 
     function removeCard(item){

@@ -75,14 +75,20 @@ this.HS = this.HS || {};
     }
 
     function handleDualAction(action){
-        console.log(action);
         switch(action.type){
         case HS.Action.Type.Setting:
             HS.MessageBox.show("配對成功");
             playerId = action.player;
             matchScreen.visible = false;
+            battleField.clear();
             battleField.visible = true;
             HS.MessageBox.hide();
+            break;
+        case HS.Action.Type.Disconnect:
+            HS.Alert("對手離開");
+            playerId = null;
+            matchScreen.visible = true;
+            battleField.visible = false;
             break;
         }
     }
@@ -120,36 +126,40 @@ this.HS = this.HS || {};
     function handleDrainage(action){
         count = action.id;
         if(playerId === action.player){
-            if(!action.obj || !action.obj.cards.length){
+            if(!action.obj || !action.obj.cards){
                 return;
             }
-            let cardInfo = action.obj.cards[0];
-            let card = new HS.Card(cardInfo.cardID);
-            card.atk = cardInfo.originAtk;
-            card.def = cardInfo.originDef;
-            card.cost = cardInfo.cost;
-            card.moveable = true;
-            card.active = true;
-            battleField.selfHandArea.addCard(card);
+            
+            action.obj.cards.forEach( cardInfo => {
+                let card = new HS.Card(cardInfo.cardID);
+                card.atk = cardInfo.originAtk;
+                card.def = cardInfo.originDef;
+                card.cost = cardInfo.cost;
+                card.moveable = true;
+                card.active = true;
+                battleField.selfHandArea.addCard(card);
 
-            card.onmoving = function(event){
-                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
-                    battleField.selfBattleArea.relocate(card.getStageX());
-                }else{
-                    battleField.selfBattleArea.relocate();
-                }
-            };
+                card.onmoving = function(event){
+                    if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
+                        battleField.selfBattleArea.relocate(card.getStageX());
+                    }else{
+                        battleField.selfBattleArea.relocate();
+                    }
+                };
 
-            card.onmoved = (function(event){
-                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
-                    handleSelfDiscard(event);
-                }
-            });
+                card.onmoved = (function(event){
+                    if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
+                        handleSelfDiscard(event);
+                    }
+                });
+            })
             
         }else{
-            let card = new HS.Card( -1 );
-            card.isCardBack = true;
-            battleField.opponentHandArea.addCard(card);
+            for(let i =0 ; i < action.obj.number ; i++){
+                let card = new HS.Card( -1 );
+                card.isCardBack = true;
+                battleField.opponentHandArea.addCard(card);
+            }
         }
 
     }
@@ -262,13 +272,19 @@ this.HS = this.HS || {};
                 HS.Anime.attack(from , to , () => {
                     action.obj.cards.forEach( item => {
                         let card = battleField.findCardWithId( item.cardID );
-                        card.atk = item.newAtk;
-                        card.def = item.newDef;
-                        card.cost = item.cost;
-                        card.active = item.attackable;
-                        if(item.newDef <= 0){
-                            
-                            console.log(battleField.removeCard(card));
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                    action.obj.cards.forEach( item => {
+                        let card = battleField.findCardWithId( item.cardID );
+                        if(card){
+                            card.atk = item.newAtk;
+                            card.def = item.newDef;
+                            card.cost = item.cost;
+                            card.active = item.attackable;
                         }
                     })
                 });

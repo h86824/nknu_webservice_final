@@ -17,11 +17,11 @@ this.HS = this.HS || {};
             let distanceX = fromTp.x - toTp.x;
             let distanceY = fromTp.y - toTp.y;
 
-            let offset = from.globalToLocal( distanceX + fromTp.x ,  - distanceY + fromTp.y);
+            let offset = from.globalToLocal( -distanceX + fromTp.x ,  - distanceY + fromTp.y);
             
             from.toTop();
             createjs.Tween.get(from, {override:true}).to({
-                x: offset.x + (offset.x - from.x) * 0.5 ,
+                x: offset.x - ( from.x - offset.x )*0.5 ,
                 y: offset.y * 0.5
             } , 100).to({
                 x: offset.x ,
@@ -39,7 +39,17 @@ this.HS = this.HS || {};
             
             createjs.Tween.get(target, {override:true}).to({
                 alpha:0
-            } , 200).call(cb);
+            } , 300).call(cb);
+        }
+
+        this.appear = ( target , cb ) => {
+            if(!target instanceof HS.Card){
+                throw new HS.Error.TypeError("attacker" , "HS.Card");
+            }
+            
+            createjs.Tween.get(target, {override:true}).to({
+                alpha:1
+            } , 700).call(cb);
         }
     }
 

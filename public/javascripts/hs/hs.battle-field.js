@@ -51,6 +51,7 @@ this.HS = this.HS || {};
                 cb();
             });
         };
+        this.clear = clear;
         
         this.findCard = (target) => {
             for(let i = 0 ; i < this.selfBattleArea.cards.length ; i++){
@@ -203,11 +204,26 @@ this.HS = this.HS || {};
         });
     }
 
+    
+    function clear(){
+        this.opponentBattleArea.cards.length = 0;
+        this.selfBattleArea.cards.length = 0;
+        this.selfHandArea.cards.length = 0;
+        this.opponentHandArea.cards.length = 0;
+
+        this.opponentBattleArea.relocate();
+        this.selfBattleArea.relocate();
+        this.selfHandArea.relocate();
+        this.opponentHandArea.relocate();
+    }
+
     BattleField.prototype = {
         opponentHandArea: undefined,
         selfHandArea: undefined,
         findCard:undefined,
+        clear:undefined,
     }
+
 
     extend(BattleField , createjs.Container);
     HS.BattleField = BattleField;
