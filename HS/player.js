@@ -64,18 +64,18 @@ class player{
     discard(card,position){
         for(let i=0;i<this.hand.length;i++){
             if(this.hand[i].cardID==card){
-                let temp = this.hand[i];
-                if(temp.cost<=this.newCost){
-                    this.newCost-=temp.cost;
+                let temp1 = this.hand[i];
+                if(temp1.cost<=this.newCost){
+                    this.newCost-=temp1.cost;
                     
-                    if(temp.cardType=="minion"){
-                        this.minushand(temp);
-                        this.addallayList(temp,position);
-                        return {"cards":temp,"crystal":this.newCost,"position":position};
+                    if(temp1.cardType=="minion"){
+                        this.minushand(temp1);
+                        this.addallayList(temp1,position);
+                        return {"cards":temp1,"crystal":this.newCost,"position":position};
                     }
                     else if(temp.cardType=="spell"){
                         this.minushand(i);
-                        return {"cards":temp,"crystal":this.newCost};
+                        return {"cards":temp1,"crystal":this.newCost};
                     }
                     else{
                         return {"cards":null,"crystal":this.cost};
