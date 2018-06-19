@@ -84,6 +84,9 @@ this.HS = this.HS || {};
 
             alertWidth: width * 0.4,
             alertHeight: height * 0.2,
+
+            deckWidth: width * 0.1,
+            deckHeight: height * 0.2
         }
     }
 
