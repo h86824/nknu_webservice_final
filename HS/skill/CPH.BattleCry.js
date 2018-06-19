@@ -17,3 +17,4 @@ class CPH_battleCry{
 
     }
 }
+module.exports = CPH_battleCry;
