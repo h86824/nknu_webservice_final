@@ -70,7 +70,6 @@ this.HS = this.HS || {};
         arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
-            console.log("pass" );
             console.log(new HS.Action.Attack( from.information.id , to.information.id) );
             socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
         });
@@ -106,6 +105,12 @@ this.HS = this.HS || {};
             matchScreen.visible = true;
             battleField.visible = false;
             break;
+       /* case HS.Action.Type.EndGame:
+            HS.Alert("遊戲結束");
+            playerId = null;
+            matchScreen.visible = true;
+            battleField.visible = false;
+            break;*/
         }
     }
 
