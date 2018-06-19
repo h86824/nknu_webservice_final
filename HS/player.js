@@ -85,8 +85,7 @@ class player{
     getMinion(card){
         for(let i=0;i<this.allayList.length;i++){
             if(this.allayList[i].cardID==card){
-                let temp=this.allayList.splice(i,1);
-                return temp[0];
+                return this.allayList[i];
             }
             else if(this.hero.cardID==card){
                 return this.hero;
