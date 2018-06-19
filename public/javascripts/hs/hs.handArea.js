@@ -43,12 +43,12 @@ this.HS = this.HS || {};
         for(let i = 0 ; i < this.cards.length ; i++){
             if(this.cards[i].id === item.id){
                 index = i;
-                break;
+                this.cards.splice(index , 1);
+                this.relocate();
+                return true;
             }
         }
-        this.cards.splice(index , 1);
-
-        this.relocate();
+        return false;
     }
 
     function relocate(){

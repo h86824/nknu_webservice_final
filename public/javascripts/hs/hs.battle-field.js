@@ -73,9 +73,15 @@ this.HS = this.HS || {};
             }
         }
 
+        this.removeCard = ( card ) => {
+            return this.selfBattleArea.removeCard(card) ||
+             this.opponentBattleArea.removeCard(card) ||
+             this.selfHandArea.removeCard(card) ||
+             this.opponentHandArea.removeCard(card);
+        }
+
         this.findCardWithId = ( id ) => {
             for(let i = 0 ; i < this.selfBattleArea.cards.length ; i++){
-                console.log(this.selfBattleArea.cards[i].information.id);
                 if( this.selfBattleArea.cards[i].information.id == id )
                     return this.selfBattleArea.cards[i];
             }

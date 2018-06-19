@@ -18,6 +18,7 @@ this.HS = this.HS || {};
         addCard: addCard,
         relocate: relocate,
         getInsertIndex: getInsertIndex,
+        removeCard: removeCard,
     }
 
     function addCard(item , index){
@@ -29,6 +30,24 @@ this.HS = this.HS || {};
         
         this.addChild(item);
         this.relocate();
+    }
+
+    function removeCard(item){
+        let index = -1;
+
+        for(let i = 0 ; i < this.cards.length ; i++){
+            if(this.cards[i].information.id === item.information.id){
+                index = i;
+                this.cards.splice(index , 1);
+                HS.Anime.disappear(item , () => {
+                    this.removeChild(item);
+                });
+                this.relocate();
+                return true;
+            }
+        }
+        return false;
+
     }
 
     function relocate( blankX ){

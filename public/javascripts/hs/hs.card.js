@@ -158,6 +158,9 @@ this.HS = this.HS || {};
             }
         },
         assignable: false,
+        toTop: function(){
+            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
+        }
     }
 
     function setText(self , ... targets){
@@ -210,7 +213,7 @@ this.HS = this.HS || {};
     function mouseOver(event){
         event.currentTarget.scaleX = event.currentTarget.scaleX * 1.045;
         event.currentTarget.scaleY = event.currentTarget.scaleY * 1.045;
-        event.currentTarget.parent.setChildIndex(event.currentTarget , event.currentTarget.parent.getNumChildren()-1);
+        event.currentTarget.stage.setChildIndex(event.currentTarget , event.currentTarget.stage.getNumChildren()-1);
     }
 
     function mouseOut(event){
