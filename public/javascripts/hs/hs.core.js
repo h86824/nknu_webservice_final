@@ -75,14 +75,20 @@ this.HS = this.HS || {};
     }
 
     function handleDualAction(action){
-        console.log(action);
         switch(action.type){
         case HS.Action.Type.Setting:
             HS.MessageBox.show("配對成功");
             playerId = action.player;
             matchScreen.visible = false;
+            battleField.clear();
             battleField.visible = true;
             HS.MessageBox.hide();
+            break;
+        case HS.Action.Type.Disconnect:
+            HS.Alert("對手離開");
+            playerId = null;
+            matchScreen.visible = true;
+            battleField.visible = false;
             break;
         }
     }
@@ -262,13 +268,19 @@ this.HS = this.HS || {};
                 HS.Anime.attack(from , to , () => {
                     action.obj.cards.forEach( item => {
                         let card = battleField.findCardWithId( item.cardID );
-                        card.atk = item.newAtk;
-                        card.def = item.newDef;
-                        card.cost = item.cost;
-                        card.active = item.attackable;
-                        if(item.newDef <= 0){
-                            
-                            console.log(battleField.removeCard(card));
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                    action.obj.cards.forEach( item => {
+                        let card = battleField.findCardWithId( item.cardID );
+                        if(card){
+                            card.atk = item.newAtk;
+                            card.def = item.newDef;
+                            card.cost = item.cost;
+                            card.active = item.attackable;
                         }
                     })
                 });
