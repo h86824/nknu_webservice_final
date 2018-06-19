@@ -27,20 +27,20 @@ class battleField {
         let targetCard = opponent.getMinion(target);
         let attArr = [];
         //actionCard.beforeAtk(this,targetCard,attArr);
-        actionCard.attack(targetCard);
-        attArr.push(actionCard);
-        attArr.push(targetCard);
+        if(actionCard.attack(targetCard)){
+            attArr.push(actionCard);
+            attArr.push(targetCard);
+        }
         //actionCard.afterAtk(this,targetCard,attArr);
         return {"cards":attArr};
     }
-    BattlecryInvoke(player,card,target){
-        let actionCard =player.getMinion (card);
-        let targetCard = this.player1.getMinion(target);
-        let BattleArr = [];
-        if(targetCard==null){
-            targetCard = this.player2.getMinion(target);
+    BattlecryInvoke(card){
+        let actionCard =this.player1.getMinion (card);
+        if(actionCard==null){
+            actionCard=this.player2.getMinion(card);
         }
-        actionCard.battleCry(this,targetCard,BattleArr);
+        let BattleArr = [];
+        actionCard.battleCry(this,null,BattleArr);
         return {"cards":BattleArr};
     }
     DeathrattleInvoke(){

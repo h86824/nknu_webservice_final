@@ -79,7 +79,7 @@ this.HS = this.HS || {};
         var arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
-            socket.emit('match', new HS.Action.Attack() );
+            socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
         });
 
         stage.addChild(HS.AlertBox);

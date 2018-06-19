@@ -124,6 +124,7 @@ this.HS = this.HS || {};
         _this.messageText.text = msg;
         _this.messageOutline.text = msg;
         HS.BGM.alert();
+        _this.visible = true;
         createjs.Tween.get(_this).to({alpha:1}, 300).wait(1200).to({alpha:0}, 300).call(handleComplete);
     }
 
@@ -133,6 +134,7 @@ this.HS = this.HS || {};
             msgQueue.splice(0,1);
         }
         runItem = null;
+        _this.visible = false;
     }
 
     extend(Alert , createjs.Container);

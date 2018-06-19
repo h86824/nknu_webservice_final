@@ -60,7 +60,7 @@ this.HS = this.HS || {};
                     return this.selfBattleArea.cards[i];
             }
             for(let i = 0 ; i < this.opponentBattleArea.cards.length ; i++){
-                let pt = target.localToLocal( 0 , 0 , this.selfBattleArea.cards[i] );
+                let pt = target.localToLocal( 0 , 0 , this.opponentBattleArea.cards[i] );
                 if( this.opponentBattleArea.cards[i].hitTest(pt.x , pt.y) )
                     return this.opponentBattleArea.cards[i];
             }

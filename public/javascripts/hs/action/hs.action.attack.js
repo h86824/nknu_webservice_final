@@ -1,14 +1,13 @@
-
 this.HS = this.HS || {};
 this.HS.Action = this.HS.Action || {};
 
 (function(){
-    function Attack(from , to){
+    function Attack(actionID,targetID){
         HS.Action.Action.call(this);
         
         this.type = HS.Action.Type.Attack;
-        this.from = from;
-        this.to = to;
+        this.from = actionID;
+        this.to = targetID;
     }
 
     Attack.prototype = {

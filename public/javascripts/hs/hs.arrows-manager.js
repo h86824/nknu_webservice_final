@@ -46,10 +46,9 @@ this.HS = this.HS || {};
                 if(isDragging){
                     removeArrow(event.stageX , event.stageY);
                     isDragging = false;
-
-                    let target = battleField.findCard(event.target , arrowHead);
+                    let target = battleField.findCard( arrowHead);
                     if(target){
-                        this._onassign(event.target.parent,target);
+                        this._onassign(event.target.parent , target);
                     }
                 }
             });
