@@ -76,6 +76,7 @@ io.sockets.on('connection', function (client) {
   client.on('disconnect', function () {
     let tempindex =playersList.indexOf(client);
     playersList.splice(tempindex,1);
+    console.log(playersList);
     console.log(client.id+" has disconnected!");
   });
 });
