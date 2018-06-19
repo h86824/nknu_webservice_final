@@ -53,26 +53,25 @@ class GameCore {
         this.opponent = this.players[1];
         this.playernumber = 0;
         
-        for(let draw3=0;draw3<3;draw3++){//起手排
-            let drawArr = this.currentPlayer.draw();
-            this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
-            this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {}));
-        }
+        
+        let drawArr = this.currentPlayer.draw(3);
+        this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
+        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:3}));
+        
         this.currentPlayer.cost++;//水晶增加
         this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
         
         
-        for(let draw4=0;draw4<4;draw4++){//起手排
-            let drawArr2 = this.opponent.draw();
-            this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,drawArr2));
-            this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,{}));
+        let drawArr2 = this.currentPlayer.draw(4);
+        this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,drawArr2));
+        this.currentPlayer.socket.emit("match", new Drainage(this.actionCount++ , this.opponent.socket , {cards:[],number:4}));
 
-        }
+
         this.currentPlayer.socket.emit("match", new start(this.actionCount++ , this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
         this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
-        let firstDraw =  this.currentPlayer.draw();
+        let firstDraw =  this.currentPlayer.draw(1);
         this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,firstDraw));
-        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {}));
+        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:1}));
     }
 
     _handlePlayerMessage(player , data){
@@ -85,7 +84,7 @@ class GameCore {
                     console.log(this.currentPlayer.allayList.length);
                     for(let j=0;j<this.currentPlayer.allayList.length;j++){
                         this.currentPlayer.allayList[j].attackable = true;
-                    }
+                    }//變成可以攻擊
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
                     this.opponent = this.players[(this.playernumber+1)%2];
@@ -95,13 +94,13 @@ class GameCore {
                     this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     //let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
                     //this._sendBF(beginArr);
-                    let drawtemp = this.currentPlayer.draw();
+                    let drawtemp = this.currentPlayer.draw(1);
                     if(!drawtemp.cards.length){
                        this. _sendHero(this.currentPlayer.hero);
                     }
                     else{
                         this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawtemp));
-                        this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{}));
+                        this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{cards:[],number:1}));
                     }
                     
                     break;
