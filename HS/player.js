@@ -44,20 +44,22 @@ class player{
 
         }
     }
-    draw(){
-        if(this.deck.length>0){
-            let ramdomInt = Math.floor(Math.random()*this.cardNumbers);
-            let temp =this.deck[ramdomInt];
-            this.addhand(temp);
-            this.cardNumbers--;
-            this.deck[ramdomInt]=this.deck[this.cardNumbers];
-            return {"cards":[temp]};
+    draw(numbers){
+        let temp=[];
+        for(let c = 0;c<numbers;c++){
+            if(this.cardNumbers>0){
+                let ramdomInt = Math.floor(Math.random()*this.cardNumbers);
+                temp.push(this.deck[ramdomInt]);
+                this.addhand(temp);
+                this.deck[ramdomInt]=this.deck[this.cardNumbers];
+                this.cardNumbers--;
+            }
+            else{
+                this.hero.originDef-=drawDamage;
+                drawDamage++;
+            }
         }
-        else{
-            this.hero.originDef-=drawDamage;
-            drawDamage++;
-            return null;
-        }
+        return {cards:temp,number:numbers};
     }
     discard(card,position){
         for(let i=0;i<this.hand.length;i++){
