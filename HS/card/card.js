@@ -24,13 +24,9 @@ class card {
     }
     attack(target){
         if(this.attackable){        
-            if(!this.DividShield){
-                this.newDef-=target.newAtk;
-                target.newDef-=this.newAtk;
-            }
-            else{
-                target.newDef-=this.newAtk;
-            }
+            this.newDef-=target.newAtk;
+            target.newDef-=this.newAtk;
+            return true;
         }
         else{
              return false;
