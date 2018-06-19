@@ -99,7 +99,30 @@ this.HS = this.HS || {};
             if(this.selfHero.information.id == id){
                 return this.selfHero;
             }*/
-        } 
+        }
+
+        let timerCircle = new createjs.Shape();
+        timerCircle.x = this.btn.x - 40;
+        timerCircle.y = this.btn.y + HS.Global.buttonHeight * 0.25 ;
+
+        this.addChild(timerCircle);
+
+        this.setTimer = ( ontime , sec ) => {
+            sec = sec * 1000;
+            now = new Date();
+            timerCircle.visible = true;
+            let listener = createjs.Ticker.addEventListener("tick", () => {
+                let time = new Date().getTime() - now.getTime();
+                let angle = 360 - (time / sec * 360);
+                timerCircle.graphics.clear().beginFill("#5C6BC0").arc(15, 15, 15, 0, angle * (Math.PI / 180), false).lineTo(15, 15).closePath();
+                if(time > sec){
+                    createjs.Ticker.removeEventListener( "tick" , listener );
+                    timerCircle.visible = false;
+                    if(ontime)
+                        ontime();
+                }
+            });
+        }
     }
 
     function setBackground(){

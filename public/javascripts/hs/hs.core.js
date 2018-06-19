@@ -19,7 +19,7 @@ this.HS = this.HS || {};
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
 
-        let bgm = new HS.BGM();
+        let bgm = HS.BGM;
         bgm.start();
 
         socket.on('match', function (data) {
@@ -78,6 +78,9 @@ this.HS = this.HS || {};
         }*/
         var arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
+        arrowsManager.onassign( (from , to) => {
+            socket.emit('match', new HS.Action.Attack() );
+        });
 
         stage.addChild(HS.AlertBox);
         stage.addChild(HS.MessageBox);
@@ -233,6 +236,9 @@ this.HS = this.HS || {};
             HS.Alert("你的回合");
             battleField.btn.enable = true;
             battleField.selfHero.cristal = action.obj.crystal;
+            battleField.setTimer( () => {
+                socket.emit('match', new HS.Action.EndTurn() );
+            } , 60);
 
             battleField.selfHandArea.cards.forEach( card => {
                 if(card.cost <= battleField.selfHero.crystal){
@@ -258,7 +264,6 @@ this.HS = this.HS || {};
     }
 
     function handleEndTurn(event){
-        console.log({type:HS.Action.endturn ,msg:"結束回合"});
         socket.emit('match',{type:HS.Action.endturn ,msg:"結束回合"})
     }
 

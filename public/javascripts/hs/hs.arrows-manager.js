@@ -47,13 +47,11 @@ this.HS = this.HS || {};
                     removeArrow(event.stageX , event.stageY);
                     isDragging = false;
 
-                    let target = battleField.findCard(arrowHead);
-                    
+                    let target = battleField.findCard(event.target , arrowHead);
                     if(target){
-                        target.active = false;
+                        this._onassign(event.target.parent,target);
                     }
                 }
-
             });
 
             createjs.Ticker.on("tick", () => {
@@ -82,6 +80,10 @@ this.HS = this.HS || {};
 
         let removeArrow = () => {
             stage.removeChild(arrowLine, arrowHead);
+        }
+
+        this.onassign = (assign) => {
+            this._onassign = assign;
         }
 
     }

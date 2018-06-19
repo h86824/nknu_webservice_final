@@ -103,6 +103,7 @@ this.HS = this.HS || {};
             this.messageText.text = msg;
             this.messageOutline.text = msg;
             this.visible = true;
+            HS.BGM.message();
             createjs.Tween.get(this).to({alpha:0.8}, 300);
         }
         this.hide = () => {
@@ -122,6 +123,7 @@ this.HS = this.HS || {};
     function showMessage(msg){
         _this.messageText.text = msg;
         _this.messageOutline.text = msg;
+        HS.BGM.alert();
         createjs.Tween.get(_this).to({alpha:1}, 300).wait(1200).to({alpha:0}, 300).call(handleComplete);
     }
 

@@ -23,10 +23,20 @@ this.HS = this.HS || {};
         }
 
         this.buttonClick = () => {
-            createjs.Sound.play("buttonClick");
+            instance = createjs.Sound.play("buttonClick");
+            instance.volume = 1;
+        }
+
+        this.alert = () => {
+            instance = createjs.Sound.play("alert");
+            instance.volume = 0.7;
+        }
+
+        this.message = () => {
+            createjs.Sound.play("message");
         }
         
     }
 
-    HS.BGM = BGM;
+    HS.BGM = new BGM();
 }())

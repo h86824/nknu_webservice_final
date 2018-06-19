@@ -2,12 +2,14 @@
 this.HS = this.HS || {};
 
 (function(){
+    let color = "#3949AB";
+    let colorPress = "#3F51B5";
 
     function Button(content){
         createjs.Container.call(this);
         
         this.background = new createjs.Shape();
-        this.background.graphics.beginFill("#4CAF50").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
+        this.background.graphics.beginFill(color).drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
         
         let text = new createjs.Text(content, HS.Global.TextFont, "#fff");
         text.set({
@@ -29,11 +31,12 @@ this.HS = this.HS || {};
 
         this.on("mousedown" , () => {
             if(this.enable)
-                this.background.graphics.beginFill("#388E3C").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
+                this.background.graphics.clear().beginFill(colorPress).drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
         });
         this.on("click" , () => {
             if(this.enable){
-                this.background.graphics.beginFill("#2E7D32").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
+                HS.BGM.buttonClick();
+                this.background.graphics.clear().beginFill(color).drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
                 if(this._onclick)
                     this._onclick();
             }
@@ -41,7 +44,7 @@ this.HS = this.HS || {};
         });
         this.on("mouseout" , () => {
             if(this.enable)
-                this.background.graphics.beginFill("#2E7D32").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
+                this.background.graphics.clear().beginFill(color).drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
         });
         this.enable = true;
         this.onclick = (cb) => {
@@ -54,10 +57,10 @@ this.HS = this.HS || {};
             this._enable = value;
             if(value){
                 this.textOutLine.color = "#20120c";
-                this.background.graphics.clear().beginFill("#2E7D32").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
+                this.background.graphics.clear().beginFill(color).drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
             }else{
                 this.textOutLine.color = "#616161";
-                this.background.graphics.clear().beginFill("#4CAF50").drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
+                this.background.graphics.clear().beginFill(colorPress).drawRoundRect(0, 0, HS.Global.buttonWidth, HS.Global.buttonHeight , 10);
             }
         },
         get enable(){

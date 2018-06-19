@@ -113,6 +113,7 @@ this.HS = this.HS || {};
             {src:"/javascripts/hs/action/hs.action.dual.js"},
             {src:"/javascripts/hs/action/hs.action.end-turn.js"},
             {src:"/javascripts/hs/action/hs.action.play-card.js"},
+            {src:"/javascripts/hs/action/hs.action.attack.js"},
 
             {src:"/javascripts/hs/card/hs.card.tinlee.js"},
             {src:"/javascripts/hs/card/hs.card.cclin.js"},
@@ -130,6 +131,8 @@ this.HS = this.HS || {};
             {id: "sound8", src: "/sounds/sound8.ogg"},
             {id: "sound9", src: "/sounds/sound9.ogg"},
             {id: "buttonClick", src: "/sounds/button-click.mp3"},
+            {id: "alert", src: "/sounds/alert.mp3"},
+            {id: "message", src: "/sounds/message.mp3"},
 
             {src:"/images/card-back.png", id:"CardBack"},
             {src:"/images/card-atk.png", id:"CardAtk"},
