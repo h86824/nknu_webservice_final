@@ -189,7 +189,6 @@ this.HS = this.HS || {};
         
         if(action.obj){
             let card = action.obj.cards;
-            HS.Alert(action.msg);
 
             if(action.player == playerId && card){
                 let mycard = battleField.findCardWithId(card.cardID);
