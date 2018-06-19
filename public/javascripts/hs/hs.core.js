@@ -90,6 +90,7 @@ this.HS = this.HS || {};
     }
 
     function handleDualAction(action){
+        console.log(action);
         switch(action.type){
         case HS.Action.Type.Setting:
             HS.MessageBox.show("配對成功");
@@ -105,12 +106,16 @@ this.HS = this.HS || {};
             matchScreen.visible = true;
             battleField.visible = false;
             break;
-       /* case HS.Action.Type.EndGame:
-            HS.Alert("遊戲結束");
+        case HS.Action.Type.EndGame:
+            if(action.player == playerId){
+                HS.Alert("失敗");
+            }else{
+                HS.Alert("勝利");
+            }
             playerId = null;
             matchScreen.visible = true;
             battleField.visible = false;
-            break;*/
+            break;
         }
     }
 

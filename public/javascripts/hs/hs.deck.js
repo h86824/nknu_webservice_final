@@ -39,13 +39,13 @@ this.HS = this.HS || {};
         this.deckTextNext = new createjs.Text("", HS.Global.TextFontLarge, "#FFF");
         this.deckTextNext.set({
             textAlign:"center",
-            x: HS.Global.deckWidth * 1.25 ,
+            x: HS.Global.deckWidth * 1.3 ,
             y: HS.Global.deckHeight * 0.9
         });
         this.deckTextNextOutline = new createjs.Text("", HS.Global.TextFontLarge, "#20120c");
         this.deckTextNextOutline.set({
             textAlign:"center",
-            x: HS.Global.deckWidth * 1.25 ,
+            x: HS.Global.deckWidth * 1.3 ,
             y: HS.Global.deckHeight * 0.9,
             outline:HS.Global.outline,
         });
@@ -53,13 +53,13 @@ this.HS = this.HS || {};
         this.deckTextPrevious = new createjs.Text("", HS.Global.TextFontLarge, "#FFF");
         this.deckTextPrevious.set({
             textAlign:"center",
-            x: HS.Global.deckWidth * -1.25 ,
+            x: HS.Global.deckWidth * -1.3 ,
             y: HS.Global.deckHeight * 0.9
         });
         this.deckTextPreviousOutline = new createjs.Text("", HS.Global.TextFontLarge, "#20120c");
         this.deckTextPreviousOutline.set({
             textAlign:"center",
-            x: HS.Global.deckWidth * -1.25 ,
+            x: HS.Global.deckWidth * -1.3 ,
             y: HS.Global.deckHeight * 0.9,
             outline:HS.Global.outline,
         });
