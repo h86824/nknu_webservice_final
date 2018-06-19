@@ -69,7 +69,9 @@ this.HS = this.HS || {};
 
     function handleTick(event) {
         stage.update();
-        fpsLabel.text = Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
+        fpsLabel.text = "測試版 v0.2018061901\n"+
+        "解析度 " + HS.Global.width + " x " + HS.Global.height + "\n"
+        +Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
         if (!event.paused) {
         }
     }
@@ -129,6 +131,7 @@ this.HS = this.HS || {};
             if(!action.obj || !action.obj.cards){
                 return;
             }
+            HS.Alert("抽牌(" + action.obj.number  +")");
             
             action.obj.cards.forEach( cardInfo => {
                 let card = new HS.Card(cardInfo.cardID);
@@ -155,6 +158,7 @@ this.HS = this.HS || {};
             })
             
         }else{
+            HS.Alert("對方抽牌(" + action.obj.number  +")");
             for(let i =0 ; i < action.obj.number ; i++){
                 let card = new HS.Card( -1 );
                 card.isCardBack = true;

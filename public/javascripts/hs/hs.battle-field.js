@@ -203,7 +203,6 @@ this.HS = this.HS || {};
             background3_2.rotation -= rotation;
         });
     }
-
     
     function clear(){
         this.opponentBattleArea.cards.length = 0;
