@@ -88,6 +88,8 @@ this.HS = this.HS || {};
         .beginStroke("#7CB342")
         .drawRoundRect(HS.Global.cardWidth * 0.05,  HS.Global.cardHeight * 0.1, HS.Global.cardWidth * 0.9 , HS.Global.cardHeight* 0.9 , 10);
 
+        this.cardContent = new createjs.Container();
+
         this.addChild(this.activeShape);
         this.addChild(this.sticker);
         this.addChild(this.template);
@@ -97,7 +99,7 @@ this.HS = this.HS || {};
         this.addChild(this.atkText);
         this.addChild(this.defTextOutline);
         this.addChild(this.defText);
-        //this.addChild(this.cardNameTextOutline);
+        this.addChild(this.cardContent);
         this.addChild(this.cardName);
 
         /*this.setAtk = setText(this.atkTextOutline , this.atkText);
@@ -161,6 +163,26 @@ this.HS = this.HS || {};
         toTop: function(){
             this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
             this.stage.setChildIndex(this , this.stage.getNumChildren()-1);
+        },
+        set content(text){
+            let cardContentText = new createjs.Text(text, HS.Global.TextFontVerySmall, "#fff");
+            cardContentText.set({
+                textAlign:"left",
+                x: HS.Global.cardWidth * 0.2,
+                y: HS.Global.cardHeight * 0.7,
+                outline:false,
+                lineWidth: HS.Global.cardWidth * 0.63,
+                maxWidth: HS.Global.cardWidth * 0.63,
+            });
+            let cardContentTextOutline = cardContentText.clone();
+            cardContentTextOutline.set({
+                color:"#20120c",
+                outline:HS.Global.outline - 1,
+            });
+
+            this.cardContent.removeAllChildren();
+            this.cardContent.addChild(cardContentTextOutline);
+            this.cardContent.addChild(cardContentText);
         }
     }
 

@@ -21,12 +21,16 @@ class creatCard{
     creatDeck(id){
         let deckList=[];
         if(id==1){
-            for(let i=0;i<15;i++){
+            for(let i=0;i<10;i++){
                 deckList.push(new GAYA(this.cardID));
                 this.cardID++;
             }
-            for(let j=0;j<15;j++){
+            for(let j=0;j<10;j++){
                 deckList.push(new WinTingLee(this.cardID));
+                this.cardID++;
+            }
+            for(let k=0;k<10;k++){
+                deckList.push(new CPH(this.cardID));
                 this.cardID++;
             }
             

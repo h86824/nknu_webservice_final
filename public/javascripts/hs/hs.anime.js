@@ -20,7 +20,7 @@ this.HS = this.HS || {};
             let offset = from.globalToLocal( -distanceX + fromTp.x ,  - distanceY + fromTp.y);
             from.toTop();
             createjs.Tween.get(from, {override:true}).to({
-                x: offset.x - ( offset.x - from.x ) * 0.5,
+                x: offset.x,
                 y: offset.y * 0.5
             } , 100).to({
                 x: offset.x ,

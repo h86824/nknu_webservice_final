@@ -98,13 +98,12 @@ this.HS = this.HS || {};
                 if( this.opponentHandArea.cards[i].information.id == id )
                     return this.opponentHandArea.cards[i];
             }
-            /*
             if(this.opponentHero.information.id == id){
                 return this.opponentHero;
             }
             if(this.selfHero.information.id == id){
                 return this.selfHero;
-            }*/
+            }
         }
 
         let timerCircle = new createjs.Shape();

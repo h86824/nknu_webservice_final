@@ -7,6 +7,7 @@ this.HS = this.HS || {};
     let matchScreen;
     let stage;
     let playerId;
+    var arrowsManager;
     
     function Core(){
         return {
@@ -22,8 +23,12 @@ this.HS = this.HS || {};
         let bgm = HS.BGM;
         bgm.start();
 
+        socket.on('connect', function() {
+            HS.MessageBox.hide();
+        });
+
         socket.on("disconnect", function(){
-            HS.Alert("連線中斷");
+            HS.MessageBox.show("連線中斷");
             playerId = null;
             matchScreen.visible = true;
             battleField.visible = false;
@@ -62,9 +67,10 @@ this.HS = this.HS || {};
         fpsLabel.x = 10;
         fpsLabel.y = 10;
 
-        var arrowsManager = new HS.ArrowsManager();
+        arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
+            console.log("pass" );
             console.log(new HS.Action.Attack( from.information.id , to.information.id) );
             socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
         });
@@ -105,7 +111,6 @@ this.HS = this.HS || {};
 
     function handleAction(action){
         console.log(action);
-        //HS.Alert( action.msg );
         switch(action.type){
         case HS.Action.Type.Setting:
             handleSetting(action);
@@ -124,6 +129,9 @@ this.HS = this.HS || {};
             break;
         case HS.Action.Type.Battlefield:
             handleAttack(action);
+            break;
+        case HS.Action.Type.Hero:
+            handleHero(action);
             break;
         }
     }
@@ -147,7 +155,9 @@ this.HS = this.HS || {};
                 card.def = cardInfo.originDef;
                 card.cost = cardInfo.cost;
                 card.moveable = true;
-                card.active = true;
+                if(cardInfo.cost <= battleField.selfHero.crystal){
+                    card.active = true;
+                }
                 battleField.selfHandArea.addCard(card);
 
                 card.onmoving = function(event){
@@ -164,6 +174,7 @@ this.HS = this.HS || {};
                     }
                 });
             })
+            battleField.selfHero.rc = action.obj.rc;
             
         }else{
             HS.Alert("對方抽牌(" + action.obj.number  +")");
@@ -172,6 +183,7 @@ this.HS = this.HS || {};
                 card.isCardBack = true;
                 battleField.opponentHandArea.addCard(card);
             }
+            battleField.opponentHero.rc = action.obj.rc;
         }
 
     }
@@ -300,6 +312,16 @@ this.HS = this.HS || {};
                         }
                     })
                 });
+        }
+    }
+
+    function handleHero(action){
+        if(action.player == playerId){
+            battleField.selfHero.information.id = action.obj.cardID;
+            battleField.selfHero.hp = action.obj.newDef;
+        }else if(action.player != playerId) {
+            battleField.opponentHero.information.id = action.obj.cardID;
+            battleField.opponentHero.hp = action.obj.newDef;
         }
     }
 

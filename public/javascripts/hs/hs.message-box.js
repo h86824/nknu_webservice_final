@@ -80,6 +80,7 @@ this.HS = this.HS || {};
             x: centerX,
             y: centerY
         });
+        this.messageText = new createjs.Container();
         this.messageOutline = new createjs.Text("123", HS.Global.TextFontVeryLarge, "#20120c");
         this.messageOutline.set({
             textAlign:"center",
@@ -91,17 +92,48 @@ this.HS = this.HS || {};
 
         this.x = HS.Global.width / 2 - HS.Global.alertWidth / 2;
         this.y = HS.Global.height / 2 - HS.Global.alertHeight / 2;
-
         this.addChild(template1);
         this.addChild(template2);
-        this.addChild(this.messageOutline);
+        //this.addChild(this.messageOutline);
         this.addChild(this.messageText);
         this.alpha = 0;
         this.false = true;
-        
         this.show = (msg) => {
-            this.messageText.text = msg;
-            this.messageOutline.text = msg;
+            this.messageText.removeAllChildren();
+            let startX = HS.Global.alertWidth / 2 - HS.Global.alertWidth * 0.05 * (msg.length / 2);
+            for(let i = 0 ; i < msg.length ; i++){
+                let cardNameTextConatiner = new createjs.Container();
+
+                cardNameTextConatiner.set({
+                    x: startX + HS.Global.alertWidth * 0.05 * (i + 0.5),
+                    y:HS.Global.alertHeight * 0.5
+                });
+                let cardNameText = new createjs.Text(msg.charAt(i), HS.Global.TextFontVeryLarge, "#fff");
+                cardNameText.set({
+                    textAlign:"center",
+                    textBaseline:"middle",
+                    outline:false,
+                });
+                let cardNameTextOutline = new createjs.Text(msg.charAt(i), HS.Global.TextFontVeryLarge, "#20120c");
+                cardNameTextOutline.set({
+                    textAlign:"center",
+                    textBaseline:"middle",
+                    outline:HS.Global.outline,
+                });
+                cardNameTextConatiner.addChild(cardNameTextOutline , cardNameText )
+                this.messageText.addChild( cardNameTextConatiner );
+            }
+            let count = 0;
+            createjs.Ticker.addEventListener("tick", (event) => {
+                count = (count + 5) % 360;
+                let temp = count;
+                this.messageText.children.forEach( child => {
+                    temp = (temp += 30) % 360;
+                    let scale = 0.5 + Math.sin( temp * 0.017453293 ) * 0.03;
+                    child.y = HS.Global.alertHeight * scale;
+                });
+            });
+
             this.visible = true;
             HS.BGM.message();
             createjs.Tween.get(this).to({alpha:0.8}, 300);

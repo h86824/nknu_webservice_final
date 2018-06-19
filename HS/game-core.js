@@ -62,7 +62,7 @@ class GameCore {
 
         let drawArr = this.currentPlayer.draw(3);
         this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
-        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:3}));
+        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:3,rc:this.currentPlayer.cardNumbers}));
         
         this.currentPlayer.cost++;//水晶增加
         this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
@@ -70,14 +70,14 @@ class GameCore {
         
         let drawArr2 = this.opponent.draw(4);
         this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,drawArr2));
-        this.currentPlayer.socket.emit("match", new Drainage(this.actionCount++ , this.opponent.socket , {cards:[],number:4}));
+        this.currentPlayer.socket.emit("match", new Drainage(this.actionCount++ , this.opponent.socket , {cards:[],number:4,rc:this.opponent.cardNumbers}));
 
 
         this.currentPlayer.socket.emit("match", new start(this.actionCount++ , this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
         this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
         let firstDraw =  this.currentPlayer.draw(1);
         this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,firstDraw));
-        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:1}));
+        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:1,rc:this.currentPlayer.cardNumbers}));
     }
 
     _handlePlayerMessage(player , data){
@@ -94,7 +94,9 @@ class GameCore {
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
                     this.opponent = this.players[(this.playernumber+1)%2];
-                    this.currentPlayer.cost++;//水晶增加
+                    if(this.currentPlayer.cost<10){
+                        this.currentPlayer.cost++;//水晶增加
+                    }
                     this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
                     this.currentPlayer.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
@@ -106,7 +108,7 @@ class GameCore {
                     }
                     else{
                         this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawtemp));
-                        this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{cards:[],number:1}));
+                        this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{cards:[],number:1,rc:this.currentPlayer.cardNumbers}));
                     }
                     
                     break;
@@ -114,7 +116,6 @@ class GameCore {
                     break;
                 case Action.Type.Discard:
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
-                    console.log("這是:"+cardArr.card.cardID);
                     this._sendDiscard(cardArr);
                     //let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
                     //this._sendBF(BattleArr);
