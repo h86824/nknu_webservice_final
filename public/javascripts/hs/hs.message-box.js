@@ -112,7 +112,6 @@ this.HS = this.HS || {};
     }
 
     addMessage = ( msg ) => {
-
         msgQueue.push(msg);
         if(!runItem){
             runItem = setTimeout( () => handleComplete(), 0);
@@ -124,17 +123,16 @@ this.HS = this.HS || {};
         _this.messageText.text = msg;
         _this.messageOutline.text = msg;
         HS.BGM.alert();
-        _this.visible = true;
         createjs.Tween.get(_this).to({alpha:1}, 300).wait(1200).to({alpha:0}, 300).call(handleComplete);
     }
 
     function handleComplete(){
         if(msgQueue.length){
-            showMessage(msgQueue[0]);
+            let msg = msgQueue[0];
             msgQueue.splice(0,1);
+            showMessage(msg);
         }
         runItem = null;
-        _this.visible = false;
     }
 
     extend(Alert , createjs.Container);
