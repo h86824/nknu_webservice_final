@@ -110,7 +110,7 @@ class GameCore {
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
                     console.log("這是:"+cardArr.card.cardID);
                     this._sendDiscard(cardArr);
-                   // let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
+                    let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
                     //this._sendBF(BattleArr);
                     //let DeathArr=this.bf.DeathrattleInvoke();
                     //this._sendBF(DeathArr);

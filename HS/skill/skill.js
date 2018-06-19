@@ -2,8 +2,7 @@ class skill{
     constructor(){
 
     }
-    invoke(bf,target){
-        
+    invoke(allayplayer,enemy,target,Array){
     }
 }
 module.exports = skill;

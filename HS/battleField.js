@@ -45,13 +45,10 @@ class battleField {
         //actionCard.afterAtk(this,targetCard,attArr);
         return {"cards":attArr};
     }
-    BattlecryInvoke(card){
-        let actionCard =this.player1.getMinion (card);
-        if(actionCard==null){
-            actionCard=this.player2.getMinion(card);
-        }
+    BattlecryInvoke(allayplayer,enemy,card){
+        let actionCard =player.getMinion (card);
         let BattleArr = [];
-        actionCard.battleCry(this,null,BattleArr);
+        actionCard.battleCry(allayplayer,enemy,null,BattleArr);
         return {"cards":BattleArr};
     }
     DeathrattleInvoke(){
