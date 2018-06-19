@@ -1,5 +1,6 @@
 var card=require("./card")
-var myBattleCry ;
+var myBattleCry = require("../skill/CPH.BattleCry");
+
 class CPH extends card{
     constructor(ID){
         super(ID);
@@ -9,7 +10,7 @@ class CPH extends card{
         this.cardType="minion";
         this.newAtk=this.originAtk;
         this.newDef= this.originDef;
-        this.battlecayList.push(myBattleCry);
+        this.battlecayList.push(new myBattleCry());
     }
     
 }
