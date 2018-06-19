@@ -27,14 +27,14 @@ this.HS = this.HS || {};
         this.hpText.set({
             textAlign:"left",
             x: HS.Global.handCardDistance * 0.55,
-            y: HS.Global.handCardDistance * 0.55,
+            y: HS.Global.handCardDistance * 0.50,
             outline:false,
         });
         this.hpTextOutLine = new createjs.Text("HP: ", HS.Global.TextFont, "#B71C1C");
         this.hpTextOutLine.set({
             textAlign:"left",
             x: HS.Global.handCardDistance * 0.55,
-            y: HS.Global.handCardDistance * 0.55,
+            y: HS.Global.handCardDistance * 0.50,
             outline:HS.Global.outline - 1,
         });
 
@@ -42,14 +42,29 @@ this.HS = this.HS || {};
         this.mpText.set({
             textAlign:"left",
             x: HS.Global.handCardDistance * 0.55,
-            y: HS.Global.handCardDistance * 0.8,
+            y: HS.Global.handCardDistance * 0.70,
             outline:false,
         });
         this.mpTextOutLine = new createjs.Text("MP: ", HS.Global.TextFont, "#0D47A1");
         this.mpTextOutLine.set({
             textAlign:"left",
             x: HS.Global.handCardDistance * 0.55,
-            y: HS.Global.handCardDistance * 0.8,
+            y: HS.Global.handCardDistance * 0.70,
+            outline:HS.Global.outline - 1,
+        });
+
+        this.rcText = new createjs.Text("RC: ", HS.Global.TextFont, "#8D6E63");
+        this.rcText.set({
+            textAlign:"left",
+            x: HS.Global.handCardDistance * 0.55,
+            y: HS.Global.handCardDistance * 0.90,
+            outline:false,
+        });
+        this.rcTextOutLine = new createjs.Text("RC: ", HS.Global.TextFont, "#0D47A1");
+        this.rcTextOutLine.set({
+            textAlign:"left",
+            x: HS.Global.handCardDistance * 0.55,
+            y: HS.Global.handCardDistance * 0.90,
             outline:HS.Global.outline - 1,
         });
 
@@ -57,6 +72,8 @@ this.HS = this.HS || {};
         this.addChild(this.hpText);
         this.addChild(this.mpTextOutLine);
         this.addChild(this.mpText);
+        this.addChild(this.rcTextOutLine);
+        this.addChild(this.rcText);
         this.cristal = 0;
         this.hp = 40;
     }
@@ -92,7 +109,11 @@ this.HS = this.HS || {};
         },
         get crystal(){
             return this._crystal;
-        }
+        },
+        set rc(value){
+            this._rc = value;
+            this.rcTextOutLine.text = this.rcText.text = "RC: " + value;
+        },
     }
     
     extend(Hero , createjs.Container);

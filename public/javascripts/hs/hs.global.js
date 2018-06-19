@@ -42,6 +42,7 @@ this.HS = this.HS || {};
             cardWidth: cardWidth,
             cardHeight: cardHeight,
 
+            TextFontVerySmall: 85 * (width / 1920) + "% Warnock",
             TextFontSmall: 100 * (width / 1920) + "% Warnock",
             TextFont: 160 * (width / 1920) + "% Warnock",
             TextFontLarge: 180 * (width / 1920) + "% Warnock",

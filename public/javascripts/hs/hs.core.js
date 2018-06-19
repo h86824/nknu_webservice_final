@@ -7,6 +7,7 @@ this.HS = this.HS || {};
     let matchScreen;
     let stage;
     let playerId;
+    var arrowsManager;
     
     function Core(){
         return {
@@ -22,8 +23,12 @@ this.HS = this.HS || {};
         let bgm = HS.BGM;
         bgm.start();
 
+        socket.on('connect', function() {
+            //HS.MessageBox.hide();
+        });
+
         socket.on("disconnect", function(){
-            HS.Alert("連線中斷");
+            HS.MessageBox.show("連線中斷");
             playerId = null;
             matchScreen.visible = true;
             battleField.visible = false;
@@ -62,7 +67,7 @@ this.HS = this.HS || {};
         fpsLabel.x = 10;
         fpsLabel.y = 10;
 
-        var arrowsManager = new HS.ArrowsManager();
+        arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
             console.log(new HS.Action.Attack( from.information.id , to.information.id) );
@@ -105,7 +110,6 @@ this.HS = this.HS || {};
 
     function handleAction(action){
         console.log(action);
-        //HS.Alert( action.msg );
         switch(action.type){
         case HS.Action.Type.Setting:
             handleSetting(action);

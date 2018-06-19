@@ -25,7 +25,7 @@ this.HS = this.HS || {};
                 let item = event.target.parent;
                 if(item instanceof HS.Card && item.active && item.assignable){
                     showArrow(item.getStageX() + HS.Global.cardWidth * 0.55 , item.getStageY() + HS.Global.cardHeight * 0.55);
-                    isDragging = true;
+                    isDragging = item;
                 }
 
             });
@@ -37,7 +37,7 @@ this.HS = this.HS || {};
                 }
                 else if(item instanceof HS.Card && item.active && item.assignable){
                     showArrow(item.getStageX() + HS.Global.cardWidth * 0.55 , item.getStageY() + HS.Global.cardHeight * 0.55);
-                    isDragging = true;
+                    isDragging = item;
                 }
 
             });
@@ -45,10 +45,27 @@ this.HS = this.HS || {};
             stage.on("pressup" , (event) => {
                 if(isDragging){
                     removeArrow(event.stageX , event.stageY);
-                    isDragging = false;
+                    isDragging = null;
                     let target = battleField.findCard( arrowHead);
                     if(target){
-                        this._onassign(event.target.parent , target);
+                        this._onassign(isDragging , target);
+                    }
+                }
+            });
+
+            stage.on("mousemove" , (event) => {
+                if(isDragging){
+                    moveArrow(event.stageX , event.stageY);
+                }
+            });
+
+            stage.on("click" , (event) => {
+                if(isDragging){
+                    removeArrow(event.stageX , event.stageY);
+                    isDragging = null;
+                    let target = battleField.findCard( arrowHead);
+                    if(target){
+                        this._onassign(isDragging , target);
                     }
                 }
             });
@@ -59,6 +76,9 @@ this.HS = this.HS || {};
                 }
             });
 
+            this.setArrow = (target) =>{
+                isDragging = target;
+            }
         }
 
         let showArrow = (x , y) => {
