@@ -155,7 +155,9 @@ this.HS = this.HS || {};
                 card.def = cardInfo.originDef;
                 card.cost = cardInfo.cost;
                 card.moveable = true;
-                card.active = true;
+                if(cardInfo.cost <= battleField.selfHero.crystal){
+                    card.active = true;
+                }
                 battleField.selfHandArea.addCard(card);
 
                 card.onmoving = function(event){
