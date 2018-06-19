@@ -46,20 +46,28 @@ class player{
     }
     draw(numbers){
         let temp=[];
+        let returnNumber = numbers;
         for(let c = 0;c<numbers;c++){
             if(this.cardNumbers>0){
                 let ramdomInt = Math.floor(Math.random()*this.cardNumbers);
-                temp.push(this.deck[ramdomInt]);
-                this.addhand(temp);
-                this.deck[ramdomInt]=this.deck[this.cardNumbers];
-                this.cardNumbers--;
+                if(this.deck[ramdomInt]!=null){
+                    temp.push(this.deck[ramdomInt]);
+                    this.addhand(temp);
+                    this.deck[ramdomInt]=this.deck[this.cardNumbers];
+                    this.cardNumbers--;
+                }
+                else{
+                    temp = [];
+                }
             }
             else{
+                returnNumber=0;
+                temp=[];
                 this.hero.originDef-=drawDamage;
                 drawDamage++;
             }
         }
-        return {cards:temp,number:numbers};
+        return {cards:temp,number:returnNumber};
     }
     discard(card,position){
         for(let i=0;i<this.hand.length;i++){
@@ -67,18 +75,17 @@ class player{
                 let temp1 = this.hand[i];
                 if(temp1.cost<=this.newCost){
                     this.newCost-=temp1.cost;
-                    
                     if(temp1.cardType=="minion"){
                         this.minushand(temp1);
                         this.addallayList(temp1,position);
-                        return {"cards":temp1,"crystal":this.newCost,"position":position};
+                        return {"card":temp1,"crystal":this.newCost,"position":position};
                     }
                     else if(temp.cardType=="spell"){
                         this.minushand(i);
-                        return {"cards":temp1,"crystal":this.newCost};
+                        return {"card":temp1,"crystal":this.newCost};
                     }
                     else{
-                        return {"cards":null,"crystal":this.cost};
+                        return {"card":null,"crystal":this.cost};
                     }
                 }
             }
