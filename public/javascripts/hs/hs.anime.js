@@ -21,7 +21,7 @@ this.HS = this.HS || {};
             
             from.toTop();
             createjs.Tween.get(from, {override:true}).to({
-                x: offset.x - ( from.x - offset.x )*0.5 ,
+                x: offset.x - ( offset.x - from.x * 0.5  ) ,
                 y: offset.y * 0.5
             } , 100).to({
                 x: offset.x ,
