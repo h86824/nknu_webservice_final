@@ -77,8 +77,12 @@ class GameCore {
             console.log(data);
             switch(data.type){
                 case Action.Type.Endturn:
-                    //let EndArr = this.bf.EndTurnInvoke(this.currentPlayer)
+                    //let EndArr = this.bf.EndTurnInvoke(this.currentPlayer);
                     //this._sendBF(EndArr);
+                    console.log(this.currentPlayer.allayList.length);
+                    for(let j=0;j<this.currentPlayer.allayList.length;j++){
+                        this.currentPlayer.allayList[j].attackable = true;
+                    }
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
                     this.opponent = this.players[(this.playernumber+1)%2];
@@ -102,7 +106,6 @@ class GameCore {
                     break;
                 case Action.Type.Discard:
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
-                    console.log(cardArr);
                     this._sendDiscard(cardArr);
                    // let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
                     //this._sendBF(BattleArr);
@@ -112,14 +115,12 @@ class GameCore {
                 case Action.Type.Attack:
                     let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
                     this._sendBF(attackTemp);
-                    let DeadArr = this.bf.DeathrattleInvoke();
-                    this._sendBF(DeadArr);
                     break;
                 case Action.Type.Heropower:
-                    let heroArr = this.bf.HeropowerInvoke(this.currentPlayer,data.to);
-                    this._sendBF(heroArr);
-                    let DArr = this.bf.DeathrattleInvoke();
-                    this._sendBF(DArr);
+                    //let heroArr = this.bf.HeropowerInvoke(this.currentPlayer,data.to);
+                    //this._sendBF(heroArr);
+                    //let DArr = this.bf.DeathrattleInvoke();
+                   // this._sendBF(DArr);
                 
             }
                 

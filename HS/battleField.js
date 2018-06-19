@@ -30,6 +30,14 @@ class battleField {
         if(actionCard.attack(targetCard)){
             attArr.push(actionCard);
             attArr.push(targetCard);
+            if(actionCard.newDef<=0){
+                let cardtemp = player.allayList.indexOf(actionCard);
+                player.allayList.splice(cardtemp,1);
+            }
+            if(targetCard.newDef<=0){
+                let cardtemp2 = opponent.allayList.indexOf(targetCard);
+                opponent.allayList.splice(cardtemp2,1);
+            }
         }
         //actionCard.afterAtk(this,targetCard,attArr);
         return {"cards":attArr};

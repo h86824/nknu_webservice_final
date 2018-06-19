@@ -65,7 +65,7 @@ class player{
                 let temp = this.hand[i];
                 if(temp.cost<=this.newCost){
                     this.newCost-=temp.cost;
-                    console.log(this.newCost);
+                    
                     if(temp.cardType=="minion"){
                         this.minushand(temp);
                         this.addallayList(temp,position);
