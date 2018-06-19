@@ -186,7 +186,7 @@ this.HS = this.HS || {};
     function handleDiscard(action){
         
         if(action.obj){
-            let card = action.obj.cards;
+            let card = action.obj.card;
 
             if(action.player == playerId && card){
                 let mycard = battleField.findCardWithId(card.cardID);
