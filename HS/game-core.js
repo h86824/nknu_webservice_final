@@ -108,6 +108,7 @@ class GameCore {
                     break;
                 case Action.Type.Discard:
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
+                    console.log("這是:"+cardArr);
                     this._sendDiscard(cardArr);
                    // let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
                     //this._sendBF(BattleArr);

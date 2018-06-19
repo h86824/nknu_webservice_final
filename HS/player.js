@@ -52,9 +52,10 @@ class player{
                 let ramdomInt = Math.floor(Math.random()*this.cardNumbers);
                 if(this.deck[ramdomInt]!=null){
                     temp.push(this.deck[ramdomInt]);
-                    this.addhand(temp);
-                    this.deck[ramdomInt]=this.deck[this.cardNumbers];
+                    this.addhand(this.deck[ramdomInt]);
                     this.cardNumbers--;
+                    this.deck[ramdomInt]=this.deck[this.cardNumbers];
+                    console.log("手牌:"+this.hand);
                 }
                 else{
                     temp = [];
@@ -78,15 +79,16 @@ class player{
                     if(temp1.cardType=="minion"){
                         this.minushand(temp1);
                         this.addallayList(temp1,position);
+                        console.log("卡片"+temp1);
                         return {"card":temp1,"crystal":this.newCost,"position":position};
                     }
                     else if(temp.cardType=="spell"){
                         this.minushand(i);
                         return {"card":temp1,"crystal":this.newCost};
                     }
-                    else{
-                        return {"card":null,"crystal":this.cost};
-                    }
+                }
+                else{
+                    return {"card":null,"crystal":this.cost};
                 }
             }
         }
