@@ -89,7 +89,7 @@ this.HS = this.HS || {};
 
     function handleAction(action){
         console.log(action);
-        HS.Alert( action.msg );
+        //HS.Alert( action.msg );
         switch(action.type){
         case HS.Action.Type.Setting:
             handleSetting(action);
@@ -214,7 +214,7 @@ this.HS = this.HS || {};
 
     function handleStart(action){
         if(action.player == playerId){
-            //HS.Alert("你的回合");
+            HS.Alert("你的回合");
             battleField.btn.enable = true;
             battleField.selfHero.cristal = action.obj.crystal;
             battleField.setTimer( () => {
@@ -232,7 +232,7 @@ this.HS = this.HS || {};
                 card.active = true;
             });
         }else{
-            //HS.Alert("對方的回合");
+            HS.Alert("對方的回合");
             battleField.btn.enable = false;
             battleField.opponentHero.cristal = action.obj.crystal;
             battleField.selfHandArea.cards.forEach( card => {

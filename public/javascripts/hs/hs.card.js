@@ -159,7 +159,7 @@ this.HS = this.HS || {};
         },
         assignable: false,
         toTop: function(){
-            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-2);
+            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
         }
     }
 
