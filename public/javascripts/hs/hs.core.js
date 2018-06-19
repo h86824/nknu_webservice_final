@@ -19,7 +19,7 @@ this.HS = this.HS || {};
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
 
-        let bgm = HS.BGM;
+        let bgm = new HS.BGM();
         bgm.start();
 
         socket.on('match', function (data) {
@@ -127,6 +127,7 @@ this.HS = this.HS || {};
         case HS.Action.Type.Start:
             handleStart(action);
             break
+            
         }
     }
 
@@ -263,6 +264,7 @@ this.HS = this.HS || {};
     }
 
     function handleEndTurn(event){
+        console.log({type:HS.Action.endturn ,msg:"結束回合"});
         socket.emit('match',{type:HS.Action.endturn ,msg:"結束回合"})
     }
 

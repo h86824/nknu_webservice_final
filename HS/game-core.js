@@ -3,10 +3,10 @@ var Setting = require("./action/action.setting");
 var bfSetting = require("./action/action.battleField")
 var Discard = require("./action/action.discard");
 var battlefield = require("./battleField");
-var endTurn = require("./action/action.endturn");
+//var endTurn = require("./action/action.endturn");
 var hero = require("./action/action.hero");
 var Action = require("./action/action");
-var start = require("./action/action.start")
+var start = require("./action/action.start");
 
 class GameCore {
     
@@ -16,6 +16,7 @@ class GameCore {
         this.players.push(playerB);
         this.actionCount = 0;
         this._gameLoop();
+        console.log(this.players);
         console.log("gameLoop OK!!");
     }
 
@@ -127,7 +128,6 @@ class GameCore {
             
         }
     }
-
     _sendHero(herocard){
         this.players.forEach( player => {
             player.socket.emit("match" , new hero(this.actionCount++ , player.socket , herocard));

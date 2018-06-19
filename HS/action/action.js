@@ -23,7 +23,8 @@ Action.Type = {
     Heropower:6,
     Hero:7,
     Dual:8,
-    Start:9
+    Start:9,
+    Disconnect:10
 };
 
 module.exports = Action;

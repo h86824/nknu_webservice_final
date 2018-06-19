@@ -75,6 +75,11 @@ io.sockets.on('connection', function (client) {
   });
   client.on('disconnect', function () {
     let tempindex =playersList.indexOf(client);
+    for(let u =0 ;u<matchList.length;u++){
+      if(matchList[u].socket == client){
+        matchList.splice(u,1);
+      }
+    }
     playersList.splice(tempindex,1);
     console.log(playersList);
     console.log(client.id+" has disconnected!");
