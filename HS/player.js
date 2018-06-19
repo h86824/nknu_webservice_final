@@ -17,10 +17,10 @@ class player{
         if(this.allayList.length<7){
             this.allayList.splice(position,0,card);
             this.playorder.push(card);
+            for(let x = 0;x<this.allayList.length;x++){
+                console.log("這是場上小兵:"+this.allayList[x].cardID);
+            }
             return true;
-        }
-        else{
-            return false;
         }
     }
     
@@ -55,7 +55,7 @@ class player{
                     this.addhand(this.deck[ramdomInt]);
                     this.cardNumbers--;
                     this.deck[ramdomInt]=this.deck[this.cardNumbers];
-                    console.log("手牌:"+this.hand);
+
                 }
                 else{
                     temp = [];
@@ -79,7 +79,7 @@ class player{
                     if(temp1.cardType=="minion"){
                         this.minushand(temp1);
                         this.addallayList(temp1,position);
-                        console.log("卡片"+temp1);
+                        console.log("卡片"+temp1.cardID);
                         return {"card":temp1,"crystal":this.newCost,"position":position};
                     }
                     else if(temp.cardType=="spell"){
@@ -94,18 +94,16 @@ class player{
         }
     }
     getMinion(card){
-        for(let i=0;i<this.allayList.length;i++){
-            if(this.allayList[i].cardID==card){
-                return this.allayList[i];
-            }
-            else if(this.hero.cardID==card){
-                return this.hero;
-            }
-            else{
-                return {};
+        if(this.hero.cardID==card){
+            return this.hero;
+        }
+        else{
+            for(let i=0;i<this.allayList.length;i++){
+                if(this.allayList[i].cardID==card){
+                    return this.allayList[i];
+                }
             }
         }
-
     }
     herodead(){
         if(this.hero.newDef<=0){

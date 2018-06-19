@@ -62,7 +62,7 @@ class GameCore {
         this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
         
         
-        let drawArr2 = this.currentPlayer.draw(4);
+        let drawArr2 = this.opponent.draw(4);
         this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,drawArr2));
         this.currentPlayer.socket.emit("match", new Drainage(this.actionCount++ , this.opponent.socket , {cards:[],number:4}));
 
@@ -108,7 +108,7 @@ class GameCore {
                     break;
                 case Action.Type.Discard:
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
-                    console.log("這是:"+cardArr);
+                    console.log("這是:"+cardArr.card.cardID);
                     this._sendDiscard(cardArr);
                    // let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,data.from,data.to);
                     //this._sendBF(BattleArr);

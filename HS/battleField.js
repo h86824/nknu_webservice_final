@@ -27,7 +27,7 @@ class battleField {
         let targetCard = opponent.getMinion(target);
         let attArr = [];
         //actionCard.beforeAtk(this,targetCard,attArr);
-        console.log(actionCard);
+        console.log("發動攻擊的卡:"+actionCard.cardID);
         if(actionCard!=undefined){
             if(actionCard.attack(targetCard)){
                 attArr.push(actionCard);
