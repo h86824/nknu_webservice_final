@@ -115,7 +115,7 @@ class GameCore {
                     break;
                 case Action.Type.Attack:
                     let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
-                    this._sendBF(attackTemp);
+                    this._sendBF(attackTemp,data.from,data.to);
                     break;
                 case Action.Type.Heropower:
                     //let heroArr = this.bf.HeropowerInvoke(this.currentPlayer,data.to);
@@ -133,9 +133,9 @@ class GameCore {
             player.socket.emit("match" , new hero(this.actionCount++ , player.socket , herocard));
         });
     }
-    _sendBF(cards){
+    _sendBF(cards,f,t){
         this.players.forEach( player => {
-            player.socket.emit("match" , new bfSetting(this.actionCount++ , player,cards));
+            player.socket.emit("match" , new bfSetting(this.actionCount++ , player,cards,f,t));
         });
     }
     _createGame(){
