@@ -126,36 +126,40 @@ this.HS = this.HS || {};
     function handleDrainage(action){
         count = action.id;
         if(playerId === action.player){
-            if(!action.obj || !action.obj.cards.length){
+            if(!action.obj || !action.obj.cards){
                 return;
             }
-            let cardInfo = action.obj.cards[0];
-            let card = new HS.Card(cardInfo.cardID);
-            card.atk = cardInfo.originAtk;
-            card.def = cardInfo.originDef;
-            card.cost = cardInfo.cost;
-            card.moveable = true;
-            card.active = true;
-            battleField.selfHandArea.addCard(card);
+            
+            action.obj.cards.forEach( cardInfo => {
+                let card = new HS.Card(cardInfo.cardID);
+                card.atk = cardInfo.originAtk;
+                card.def = cardInfo.originDef;
+                card.cost = cardInfo.cost;
+                card.moveable = true;
+                card.active = true;
+                battleField.selfHandArea.addCard(card);
 
-            card.onmoving = function(event){
-                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
-                    battleField.selfBattleArea.relocate(card.getStageX());
-                }else{
-                    battleField.selfBattleArea.relocate();
-                }
-            };
+                card.onmoving = function(event){
+                    if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
+                        battleField.selfBattleArea.relocate(card.getStageX());
+                    }else{
+                        battleField.selfBattleArea.relocate();
+                    }
+                };
 
-            card.onmoved = (function(event){
-                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
-                    handleSelfDiscard(event);
-                }
-            });
+                card.onmoved = (function(event){
+                    if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
+                        handleSelfDiscard(event);
+                    }
+                });
+            })
             
         }else{
-            let card = new HS.Card( -1 );
-            card.isCardBack = true;
-            battleField.opponentHandArea.addCard(card);
+            for(let i =0 ; i < action.obj.number ; i++){
+                let card = new HS.Card( -1 );
+                card.isCardBack = true;
+                battleField.opponentHandArea.addCard(card);
+            }
         }
 
     }
