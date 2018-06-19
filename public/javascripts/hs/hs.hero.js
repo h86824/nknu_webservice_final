@@ -5,6 +5,7 @@ this.HS = this.HS || {};
     function Hero(){
         this._hp = 0;
         this.cristalList = [];
+        this.information = {};
         createjs.Container.call(this);
 
         let template = new createjs.Shape();
@@ -53,7 +54,7 @@ this.HS = this.HS || {};
             outline:HS.Global.outline - 1,
         });
 
-        this.rcText = new createjs.Text("RC: ", HS.Global.TextFont, "#8D6E63");
+        this.rcText = new createjs.Text("RC: ", HS.Global.TextFont, "#BCAAA4");
         this.rcText.set({
             textAlign:"left",
             x: HS.Global.handCardDistance * 0.55,
@@ -82,6 +83,12 @@ this.HS = this.HS || {};
         set hp(value){
             this._hp = value;
             this.hpTextOutLine.text = this.hpText.text = "HP: " + value;
+        },
+        set def(value){
+            this.hp = value;
+        },
+        get def(){
+            return this.hp;
         },
         set cristal(value){
             this._crystal = value;

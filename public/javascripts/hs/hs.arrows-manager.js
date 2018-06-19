@@ -45,11 +45,11 @@ this.HS = this.HS || {};
             stage.on("pressup" , (event) => {
                 if(isDragging){
                     removeArrow(event.stageX , event.stageY);
-                    isDragging = null;
-                    let target = battleField.findCard( arrowHead);
+                    let target = battleField.findCard( arrowHead );
                     if(target){
                         this._onassign(isDragging , target);
                     }
+                    isDragging = null;
                 }
             });
 
