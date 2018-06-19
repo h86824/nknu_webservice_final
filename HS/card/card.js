@@ -26,6 +26,7 @@ class card {
         if(this.attackable){        
             this.newDef-=target.newAtk;
             target.newDef-=this.newAtk;
+            this.attackable=false;
             return true;
         }
         else{
