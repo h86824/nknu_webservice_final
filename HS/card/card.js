@@ -2,6 +2,7 @@ class card {
     
     constructor (ID){
         this.cardID = ID;
+		this.name = "";
         this.classes="";
         this.cost=0;
         this.armor=0;

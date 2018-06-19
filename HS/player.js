@@ -68,7 +68,7 @@ class player{
                 drawDamage++;
             }
         }
-        return {cards:temp,number:returnNumber};
+        return {cards:temp,number:returnNumber,rc:this.cardNumbers};
     }
     discard(card,position){
         for(let i=0;i<this.hand.length;i++){

@@ -1,8 +1,10 @@
-var card=require("./card")
+﻿var card=require("./card")
 
 class WinTingLee extends card{
     constructor(ID){
         super(ID);
+        this.name = "溫聽力";
+        this.race = "教授";
         this.cost = 1;
         this.originAtk=15;
         this.originDef=15;
