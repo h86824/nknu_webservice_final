@@ -129,6 +129,7 @@ this.HS = this.HS || {};
             {id: "sound7", src: "/sounds/sound7.ogg"},
             {id: "sound8", src: "/sounds/sound8.ogg"},
             {id: "sound9", src: "/sounds/sound9.ogg"},
+            {id: "buttonClick", src: "/sounds/button-click.mp3"},
 
             {src:"/images/card-back.png", id:"CardBack"},
             {src:"/images/card-atk.png", id:"CardAtk"},

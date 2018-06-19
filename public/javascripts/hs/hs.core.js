@@ -38,6 +38,7 @@ this.HS = this.HS || {};
         matchScreen = stage.addChild(new HS.MatchScreen());
         
         matchScreen.onmatch(() => {
+            bgm.buttonClick();
             socket.emit("dual" , new HS.Action.Dual());
             HS.MessageBox.show("配對中...");
         });

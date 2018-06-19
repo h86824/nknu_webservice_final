@@ -6,7 +6,7 @@ this.HS = this.HS || {};
     function BGM(){
         let now = 1;
         let instance;
-        let volume = 0.5;
+        let volume = 0.3;
         this.start = () => {
             this.play("sound2");
         }
@@ -21,6 +21,11 @@ this.HS = this.HS || {};
             instance.on("complete", this.handleComplete, this);
             instance.volume = volume;
         }
+
+        this.buttonClick = () => {
+            createjs.Sound.play("buttonClick");
+        }
+        
     }
 
     HS.BGM = BGM;
