@@ -131,8 +131,9 @@ this.HS = this.HS || {};
             let msg = msgQueue[0];
             msgQueue.splice(0,1);
             showMessage(msg);
+        }else{
+            runItem = null;
         }
-        runItem = null;
     }
 
     extend(Alert , createjs.Container);

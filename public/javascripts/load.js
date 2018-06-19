@@ -108,6 +108,7 @@ this.HS = this.HS || {};
             {src:"/javascripts/hs/hs.arrows-manager.js"},
             {src:"/javascripts/hs/hs.message-box.js"},
             {src:"/javascripts/hs/hs.bgm.js"},
+            {src:"/javascripts/hs/hs.anime.js"},
             
             {src:"/javascripts/hs/action/hs.action.js"},
             {src:"/javascripts/hs/action/hs.action.dual.js"},

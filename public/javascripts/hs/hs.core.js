@@ -54,28 +54,7 @@ this.HS = this.HS || {};
         stage.addChild(fpsLabel);
         fpsLabel.x = 10;
         fpsLabel.y = 10;
-        /*let ts = ["溫聽力大怪獸" , "精英溫聽力" , "溫聽力史萊姆"];
-        for(let i = 0 ; i < 10 ; i++){
-            let card = new HS.Card.DMYeh(0);
-            battleField.selfHandArea.addCard(card); 
-            card.cost = i + 1;
-            card.moveable = true;
-            card.active = true;
-           // card.isCardBack = true;
-            card.name = ts[i%ts.length];
-            card.onmoving = function(event){
-                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
-                    battleField.selfBattleArea.relocate(card.getStageX());
-                }else{
-                    battleField.selfBattleArea.relocate();
-                }
-            };
-            card.onmoved = (function(event){
-                if(HS.Method.isSelfBattleArea(event.stageX , event.stageY)){
-                    handleDiscard(event);
-                }
-            });
-        }*/
+
         var arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
@@ -126,8 +105,10 @@ this.HS = this.HS || {};
             break;
         case HS.Action.Type.Start:
             handleStart(action);
-            break
-            
+            break;
+        case HS.Action.Type.Battlefield:
+            handleAttack(action);
+            break;
         }
     }
 
@@ -233,7 +214,7 @@ this.HS = this.HS || {};
 
     function handleStart(action){
         if(action.player == playerId){
-            HS.Alert("你的回合");
+            //HS.Alert("你的回合");
             battleField.btn.enable = true;
             battleField.selfHero.cristal = action.obj.crystal;
             battleField.setTimer( () => {
@@ -251,7 +232,7 @@ this.HS = this.HS || {};
                 card.active = true;
             });
         }else{
-            HS.Alert("對方的回合");
+            //HS.Alert("對方的回合");
             battleField.btn.enable = false;
             battleField.opponentHero.cristal = action.obj.crystal;
             battleField.selfHandArea.cards.forEach( card => {
@@ -271,6 +252,27 @@ this.HS = this.HS || {};
     function sendEndTurn(){
         socket.emit('match', new HS.Action.EndTurn() );
         battleField.stopTimer();
+    }
+
+    function handleAttack(action){
+        if(action){
+            let from = battleField.findCardWithId( action.from );
+            let to = battleField.findCardWithId( action.to );
+            if(from && to)
+                HS.Anime.attack(from , to , () => {
+                    action.obj.cards.forEach( item => {
+                        let card = battleField.findCardWithId( item.cardID );
+                        card.atk = item.newAtk;
+                        card.def = item.newDef;
+                        card.cost = item.cost;
+                        card.active = item.attackable;
+                        if(item.newDef <= 0){
+                            
+                            console.log(battleField.removeCard(card));
+                        }
+                    })
+                });
+        }
     }
 
 }());
