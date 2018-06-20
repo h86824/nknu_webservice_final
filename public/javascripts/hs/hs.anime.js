@@ -25,7 +25,8 @@ this.HS = this.HS || {};
             } , 100).to({
                 x: offset.x ,
                 y: offset.y
-            } , 50).to({
+            } , 50).call( HS.BGM.attack )
+            .to({
                 x: from.x ,
                 y: from.y
             } , 150).call(cb);

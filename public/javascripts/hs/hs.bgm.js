@@ -35,6 +35,10 @@ this.HS = this.HS || {};
         this.message = () => {
             createjs.Sound.play("message");
         }
+
+        this.attack = () => {
+            createjs.Sound.play("attack");
+        }
         
     }
 

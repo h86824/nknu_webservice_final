@@ -84,9 +84,9 @@ this.HS = this.HS || {};
 
         this.activeShape = new createjs.Shape();
         this.activeShape.graphics
-        .setStrokeStyle(7)
+        .setStrokeStyle(8 * HS.Global.rate)
         .beginStroke("#7CB342")
-        .drawRoundRect(HS.Global.cardWidth * 0.05,  HS.Global.cardHeight * 0.1, HS.Global.cardWidth * 0.9 , HS.Global.cardHeight* 0.9 , 10);
+        .drawRoundRect(HS.Global.cardWidth * 0.05,  HS.Global.cardHeight * 0.1, HS.Global.cardWidth * 0.9 , HS.Global.cardHeight* 0.9 , 22);
 
         this.cardContent = new createjs.Container();
 

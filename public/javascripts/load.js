@@ -135,6 +135,7 @@ this.HS = this.HS || {};
             {id: "buttonClick", src: "/sounds/button-click.mp3"},
             {id: "alert", src: "/sounds/alert.mp3"},
             {id: "message", src: "/sounds/message.mp3"},
+            {id: "attack", src: "/sounds/attack.mp3"},
 
             {src:"/images/card-back.png", id:"CardBack"},
             {src:"/images/card-atk.png", id:"CardAtk"},

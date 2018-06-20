@@ -3,8 +3,8 @@ this.HS = this.HS || {};
 
 (function(){
     let deckArray = [
-        {name:"預設牌組1" , cover:"DeckCover0"} , 
-        {name:"預設牌組2" , cover:"DeckCover1"} , 
+        {id: 1 ,name:"預設牌組1" , cover:"DeckCover0"} , 
+        {id: 2 ,name:"預設牌組2" , cover:"DeckCover1"} , 
         /*{name:"預設牌組3" , cover:"DeckCover1"}*/];
     let _index = 0;
 
@@ -110,6 +110,10 @@ this.HS = this.HS || {};
             }else{
                 target.graphics.clear().beginFill("orange").drawCircle(0 , 0 , HS.Global.deckWidth );
             }
+        }
+
+        this.getSelected = () => {
+            return deckArray[_index];
         }
     }
 

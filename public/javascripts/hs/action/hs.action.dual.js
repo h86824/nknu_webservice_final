@@ -3,11 +3,11 @@ this.HS = this.HS || {};
 this.HS.Action = this.HS.Action || {};
 
 (function(){
-    function Dual(){
+    function Dual( deckID ){
         HS.Action.Action.call(this);
         
         this.type = HS.Action.Type.Dual;
-        this.obj={hero:'WinTingLee',deckID:1};
+        this.obj={hero:'WinTingLee',deckID:deckID};
     }
 
     Dual.prototype = {
