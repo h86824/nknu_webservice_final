@@ -10,6 +10,7 @@ class DaMing extends card {
         this.originAtk = 2;
         this.originDef = 2;
         this.cardType = "minion";
+        this.msg = "戰吼:抽一張牌。";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;
         this.battlecayList.push(new myBattleCry);
