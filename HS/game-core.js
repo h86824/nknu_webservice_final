@@ -90,9 +90,7 @@ class GameCore {
                     //let EndArr = this.bf.EndTurnInvoke(this.currentPlayer);
                     //this._sendBF(EndArr);
                     console.log(this.currentPlayer.allayList.length);
-                    for(let j=0;j<this.currentPlayer.allayList.length;j++){
-                        this.currentPlayer.allayList[j].attackable = true;
-                    }//變成可以攻擊
+                  
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
                     this.opponent = this.players[(this.playernumber+1)%2];
@@ -102,6 +100,10 @@ class GameCore {
                     this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
                     this.currentPlayer.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
+                    for(let j=0;j<this.currentPlayer.allayList.length;j++){
+                        this.currentPlayer.allayList[j].attackable = true;
+                    }//變成可以攻擊
+                    
                     //let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
                     //this._sendBF(beginArr);
                     let drawtemp = this.currentPlayer.draw(1);
