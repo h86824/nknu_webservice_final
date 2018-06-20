@@ -16,7 +16,7 @@ this.HS = this.HS || {};
     }
 
     function start(){
-        socket = io('http://127.0.0.1:3001');
+        socket = io('http://localhost:3000');
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
         createjs.Touch.enable(stage);
@@ -26,6 +26,14 @@ this.HS = this.HS || {};
 
         socket.on('connect', function() {
             HS.MessageBox.hide();
+        });
+
+        socket.on('connect', function() {
+            HS.MessageBox.hide();
+        });
+        
+        socket.on('connect_error', function() {
+            HS.MessageBox.show("連線中...");
         });
 
         socket.on('connecting', function() {
@@ -338,6 +346,27 @@ this.HS = this.HS || {};
                         }
                     })
                 });
+            else{
+                if(action.obj && action.obj.cards){
+                    action.obj.cards.forEach( item => {
+                        let card = battleField.findCardWithId( item.cardID );
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                    action.obj.cards.forEach( item => {
+                        let card = battleField.findCardWithId( item.cardID );
+                        if(card){
+                            card.atk = item.newAtk;
+                            card.def = item.newDef;
+                            card.cost = item.cost;
+                            card.active = item.attackable;
+                        }
+                    });
+                }
+            }
         }
     }
 

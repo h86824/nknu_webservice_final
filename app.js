@@ -51,7 +51,7 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-server.listen(3001);
+server.listen(3000);
 
 io.sockets.on('connection', function (client) {
   client.id = UUID();
