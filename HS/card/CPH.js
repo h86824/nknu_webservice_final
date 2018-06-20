@@ -7,13 +7,13 @@ class CPH extends card{
         this.name = "CPH";
         this.race = "教授";
         this.cost = 1;
-        this.originAtk = 1;
-        this.originDef = 1;
+        this.originAtk = 8;
+        this.originDef = 7;
         this.cardType = "minion";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;
+        this.msg = "戰吼:對一個隨機敵方手下造成8點傷害。";
         this.battlecayList.push(new myBattleCry());
-        console.log("戰吼柱列:"+this.battlecayList);
     }
 
 }

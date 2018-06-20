@@ -120,7 +120,7 @@ class GameCore {
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
                     this._sendDiscard(cardArr);
                     let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
-                    this._sendBattleCry(BattleArr);
+                    this._sendBattleCry(BattleArr,data.obj.cardID,null);
                     //let DeathArr=this.bf.DeathrattleInvoke();
                     //this._sendBF(DeathArr);
                     break;
@@ -148,9 +148,9 @@ class GameCore {
             
         }
     }
-    _sendBattleCry(cards){
+    _sendBattleCry(cards,from,to){
         this.players.forEach( player => {
-            player.socket.emit("match" , new battleCry(this.actionCount++ , player,cards,null,null));
+            player.socket.emit("match" , new battleCry(this.actionCount++ , player,cards,from,to));
         });
     }
     _handleDisconnect(player){
