@@ -77,6 +77,7 @@ this.HS = this.HS || {};
                 x: offset.x + HS.Global.cardWidth / 4,
                 y: offset.y + HS.Global.cardHeight / 4
             } , 300).wait(150).call(() => {
+                HS.BGM.play("explosion");
                 item.stage.removeChild(item);
             }).call(cb);
         }
