@@ -402,6 +402,11 @@ this.HS = this.HS || {};
                 }
             });
 
+            if(from){
+                if(from.hp <= 0){
+                    battleField.removeCard(from);
+                }
+            }
         }
     }
 
