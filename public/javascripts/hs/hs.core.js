@@ -258,6 +258,7 @@ this.HS = this.HS || {};
                     mycard.moveable = false;
                     mycard.assignable = true;
                     mycard.active = card.attackable;
+                    mycard.yield();
                 }
                 battleField.selfHandArea.cards.forEach( card => {
                     if(card.cost <= battleField.selfHero.crystal){
@@ -278,6 +279,7 @@ this.HS = this.HS || {};
                     mycard.name = card.name;
                     mycard.moveable = false;
                     mycard.assignable = false;
+                    mycard.yield();
                     battleField.opponentBattleArea.addCard(mycard , card.position);
                 }
             }
@@ -390,9 +392,9 @@ this.HS = this.HS || {};
             let from = battleField.findCardWithId( action.from );
             
             action.obj.cards.forEach( item => {
+                from.battleCry();
                 let card = battleField.findCardWithId( item.cardID );
                 let image = HS.Global.Source.getResult("FireBall");
-                card.battleCry();
                 
                 if(card){
                     HS.Anime.itemAttack(from , card , image , () => {
