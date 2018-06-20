@@ -105,8 +105,8 @@ class creatCard{
             }*/
         }
         else if(id==2){
-            for(let i=0;i<3;i++){
-                deckList.push(new CPH(this.cardID));
+            for(let i=0;i<30;i++){
+                deckList.push(new WinTingLee(this.cardID));
                 this.cardID++;
             }
         }
