@@ -9,6 +9,7 @@ var Action = require("./action/action");
 var start = require("./action/action.start");
 var disconnect = require("./action/action.disconnect");
 var Endgame = require("./action/action.endgame");
+var battleCry = require("./action/action.battlecry");
 
 class GameCore {
     
@@ -119,7 +120,7 @@ class GameCore {
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
                     this._sendDiscard(cardArr);
                     let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
-                    this._sendBF(BattleArr,null,null);
+                    this._sendBattleCry(BattleArr);
                     //let DeathArr=this.bf.DeathrattleInvoke();
                     //this._sendBF(DeathArr);
                     break;
@@ -146,6 +147,11 @@ class GameCore {
                 
             
         }
+    }
+    _sendBattleCry(cards){
+        this.players.forEach( player => {
+            player.socket.emit("match" , new battleCry(this.actionCount++ , player,cards,null,null));
+        });
     }
     _handleDisconnect(player){
         let tempPlayer = this.players.indexOf(player);

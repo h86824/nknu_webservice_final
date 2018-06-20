@@ -30,7 +30,8 @@ this.HS.Action = this.HS.Action || {};
         Dual:8,
         Start:9,
         Disconnect:10,
-        EndGame:6
+        EndGame:6,
+        battleCry:12
     };    
 
     HS.Action.Action = Action;

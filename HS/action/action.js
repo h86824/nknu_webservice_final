@@ -25,7 +25,8 @@ Action.Type = {
     Dual:8,
     Start:9,
     Disconnect:10,
-    EndGame:6
+    EndGame:6,
+    battleCry:12
 };
 
 module.exports = Action;
