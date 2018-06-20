@@ -186,6 +186,9 @@ this.HS = this.HS || {};
         },
         battleCry: function(){
             HS.BGM.play("launcher");
+        },
+        yield: function(){
+            HS.BGM.play("playcard");
         }
     }
 

@@ -215,6 +215,13 @@ this.HS = this.HS || {};
         this.selfBattleArea.relocate();
         this.selfHandArea.relocate();
         this.opponentHandArea.relocate();
+
+        HS.Anime.appear(this.opponentHero , () => {
+            this.opponentHero.cristal = 0;
+        });
+        HS.Anime.appear(this.selfHero , () => {
+            this.opponentHero.cristal = 0;
+        });
     }
 
     BattleField.prototype = {
