@@ -19,32 +19,12 @@ class GameCore {
         this.players.push(playerB);
         this.actionCount = 0;
         this._gameLoop();
-        console.log(this.players);
         console.log("gameLoop OK!!");
     }
 
     start() {
         this._createGame();
 
-        /*this.players.forEach( player => {
-            player.socket.emit("match" , new Setting(this.actionCount++ , player.socket) );
-        });
-
-        this.players.forEach( player => {
-            player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket) );
-        });
-
-        this.players.forEach( player => {
-            player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket) );
-        });
-
-        this.players.forEach( player => {
-            player.socket.emit("match" , new Drainage(this.actionCount++ , player.socket) );
-        });
-        /*this.players.forEach(player => {
-            player.socket.emit("match" , new attack(this.actionCount++ , player.socket,actionCard,targetCard) );
-            
-        });*/
         this.players.forEach( player => { player.socket.on("match", data => this._handlePlayerMessage(player, data) ) });
         this.players.forEach( player => { player.socket.on("disconnect", data =>this._handleDisconnect(player) ) });
         console.log("Listener OK!!");
@@ -161,7 +141,6 @@ class GameCore {
         this.players.forEach(leftplayer=>{
             leftplayer.socket.emit("dual",new disconnect(this.actionCount++));
         })
-        console.log(this.players);
     }
     _sendHero(herocard){
         this.players.forEach( player => {

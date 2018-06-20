@@ -27,19 +27,14 @@ class battleField {
         let targetCard = opponent.getMinion(target);
         let attArr = [];
         //actionCard.beforeAtk(this,targetCard,attArr);
-        console.log("發動攻擊的卡:"+actionCard.cardID);
+        console.log("攻擊");
         if(actionCard!=undefined){
+            console.log("發動攻擊的卡:"+actionCard.cardID);
             if(actionCard.attack(targetCard)){
                 attArr.push(actionCard);
                 attArr.push(targetCard);
-                if(actionCard.newDef<=0){
-                    let cardtemp = player.allayList.indexOf(actionCard);
-                    player.allayList.splice(cardtemp,1);
-                }
-                if(targetCard.newDef<=0){
-                    let cardtemp2 = opponent.allayList.indexOf(targetCard);
-                    opponent.allayList.splice(cardtemp2,1);
-                }
+                player.deadyet();
+                opponent.deadyet();
             }
         }
         //actionCard.afterAtk(this,targetCard,attArr);
