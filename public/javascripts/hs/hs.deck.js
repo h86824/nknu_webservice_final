@@ -3,8 +3,8 @@ this.HS = this.HS || {};
 
 (function(){
     let deckArray = [
-        {id: 1 ,name:"預設牌組1" , cover:"DeckCover0"} , 
-        {id: 2 ,name:"預設牌組2" , cover:"DeckCover1"} , 
+        {id: 1 ,name:"一號卡牌" , cover:"DeckCover0"} , 
+        {id: 2 ,name:"二號卡牌" , cover:"DeckCover1"} , 
         /*{name:"預設牌組3" , cover:"DeckCover1"}*/];
     let _index = 0;
 
