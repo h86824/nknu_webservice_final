@@ -100,6 +100,13 @@ class GameCore {
                     this._sendDiscard(cardArr);
                     let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
                     this._sendBattleCry(BattleArr,data.obj.cardID,null);
+                    let winYet= this.bf.isWin();
+                    if(!winYet){
+                    }
+                    else{
+                        this.currentPlayer.socket.emit("dual",new Endgame(this.actionCount++,winYet));
+                        this.opponent.socket.emit("dual",new Endgame(this.actionCount++,winYet));
+                    }
                     //let DeathArr=this.bf.DeathrattleInvoke();
                     //this._sendBF(DeathArr);
                     break;
