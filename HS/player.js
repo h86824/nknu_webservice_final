@@ -120,8 +120,8 @@ class player{
             if(this.playorder[i].newDef<=0){
                 console.log(this.playorder[i].cardID+"死了");
                 deadArr.push(this.playorder[i]);
-                this.playorder.splice(i,1);
                 let tempindex =this.allayList.indexOf(this.playorder[i]);
+                this.playorder.splice(i,1);
                 this.allayList.splice(tempindex,1);
                 console.log(this.allayList);
                 
