@@ -9,7 +9,7 @@ class player{
         this.deck=mydeck;
         this.cardNumbers=30;
         this.hero = hero;
-        this.drawDamage;
+        this.drawDamage=0;
         this.socket = socket;
         this.newCost;
     }
