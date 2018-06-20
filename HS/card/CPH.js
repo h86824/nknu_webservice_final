@@ -6,7 +6,7 @@ class CPH extends card{
         super(ID);
         this.name = "CPH";
         this.race = "教授";
-        this.cost = 1;
+        this.cost = 8;
         this.originAtk = 8;
         this.originDef = 7;
         this.cardType = "minion";

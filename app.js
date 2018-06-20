@@ -17,7 +17,7 @@ var io = require('socket.io').listen(server);
 var playersList = [];
 var matchList = [];
 var card = new creatCard();
-var gameList =[];
+
 
 
 // view engine setup
@@ -77,7 +77,7 @@ io.sockets.on('connection', function (client) {
     }
     else{
       matchList.push(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)));
-      console.log(client.id+" start waiting");
+      console.log(client.id+" start waiting(new instance)");
     }
     
   });
