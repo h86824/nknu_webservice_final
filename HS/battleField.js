@@ -66,6 +66,12 @@ class battleField {
         let actionCard =allayplayer.getMinion (card);
         let BattleArr = [];
         actionCard.battleCry(allayplayer,enemy,null,BattleArr);
+        enemy.deadyet();
+        /*for(let i=0;i<enemy.allayList.length;i++){
+            if(enemy.allayList[i].newDef<=0){
+                enemy.allayList.splice(i,1);
+            }
+        }*/
         return {"cards":BattleArr};
     }
     DeathrattleInvoke(){
