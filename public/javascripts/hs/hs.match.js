@@ -34,14 +34,14 @@ this.HS = this.HS || {};
         });
 
         let btn = new Button("開始配對");
+        let deck = new HS.Deck();
         btn.x = HS.Global.width / 2 - btn.width / 2;
         btn.y = HS.Global.height * 0.8;
         btn.addEventListener("click" , () => {
             if(this._onmatch)
-                this._onmatch();
+                this._onmatch( deck.getSelected() );
         })
 
-        let deck = new HS.Deck();
         deck.x = HS.Global.width / 2;
         deck.y = HS.Global.height * 0.5;
 

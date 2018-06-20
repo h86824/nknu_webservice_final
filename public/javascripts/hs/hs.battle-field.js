@@ -107,8 +107,10 @@ this.HS = this.HS || {};
         }
 
         let timerCircle = new createjs.Shape();
-        timerCircle.x = this.btn.x - 40;
+        timerCircle.x = this.btn.x - 38 * HS.Global.rate;
         timerCircle.y = this.btn.y + HS.Global.buttonHeight * 0.25 ;
+        timerCircle.scaleX = HS.Global.rate;
+        timerCircle.scaleY = HS.Global.rate;
 
         this.addChild(timerCircle);
         let listener;

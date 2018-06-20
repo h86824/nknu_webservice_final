@@ -54,9 +54,9 @@ this.HS = this.HS || {};
 
         matchScreen = stage.addChild(new HS.MatchScreen());
         
-        matchScreen.onmatch(() => {
+        matchScreen.onmatch((deck) => {
             bgm.buttonClick();
-            socket.emit("dual" , new HS.Action.Dual());
+            socket.emit("dual" , new HS.Action.Dual(deck.id));
             HS.MessageBox.show("配對中...");
         });
         socket.on('dual', function (data) {
@@ -113,13 +113,24 @@ this.HS = this.HS || {};
             break;
         case HS.Action.Type.EndGame:
             if(action.player == playerId){
-                HS.Alert("失敗");
+                HS.Anime.disappear(battleField.selfHero , () => {
+                    HS.Alert("失敗");
+                    setTimeout( () => {
+                        playerId = null;
+                        matchScreen.visible = true;
+                        battleField.visible = false;
+                    }, 1500);
+                });
             }else{
-                HS.Alert("勝利");
+                HS.Anime.disappear(battleField.opponentHero , () => {
+                    HS.Alert("勝利");
+                    setTimeout( () => {
+                        playerId = null;
+                        matchScreen.visible = true;
+                        battleField.visible = false;
+                    }, 1500);
+                })
             }
-            playerId = null;
-            matchScreen.visible = true;
-            battleField.visible = false;
             break;
         }
     }
