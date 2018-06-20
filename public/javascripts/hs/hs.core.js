@@ -391,11 +391,11 @@ this.HS = this.HS || {};
             
             action.obj.cards.forEach( item => {
                 let card = battleField.findCardWithId( item.cardID );
-                let image = new HS.ImagePackage( HS.Global.Source.getResult("FireBall") );
-                stage.addChild(image);
+                let image = HS.Global.Source.getResult("FireBall");
+                card.battleCry();
+                
                 if(card){
                     HS.Anime.itemAttack(from , card , image , () => {
-                        stage.removeChild(image);
                         card.atk = item.newAtk;
                         card.def = item.newDef;
                         card.cost = item.cost;
