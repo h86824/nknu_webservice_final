@@ -5,6 +5,7 @@ class card {
 		this.name = "";
         this.classes="";
         this.cost=0;
+        this.msg="";
         this.armor=0;
         this.originAtk=0;
         this.originDef=0;
