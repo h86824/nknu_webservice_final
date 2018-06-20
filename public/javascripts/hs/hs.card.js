@@ -193,6 +193,9 @@ this.HS = this.HS || {};
         battleCry: function(){
             HS.BGM.play("launcher");
         },
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("FireBall");
+        },
         yield: function(){
             HS.BGM.play("playcard");
         }

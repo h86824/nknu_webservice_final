@@ -387,7 +387,7 @@ this.HS = this.HS || {};
             action.obj.cards.forEach( item => {
                 from.battleCry();
                 let card = battleField.findCardWithId( item.cardID );
-                let image = HS.Global.Source.getResult("FireBall");
+                let image = from.getBattleCryImage();
                 
                 if(card){
                     HS.Anime.itemAttack(from , card , image , () => {
@@ -402,6 +402,11 @@ this.HS = this.HS || {};
                 }
             });
 
+            if(from){
+                if(from.hp <= 0){
+                    battleField.removeCard(from);
+                }
+            }
         }
     }
 

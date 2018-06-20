@@ -194,6 +194,7 @@ this.HS = this.HS || {};
             {src:"/images/card_YYT.jpg", id:"CardYYT"},
             
             {src:"/images/dmyeh.jpg", id:"CardDMYeh"},
+            {src:"/images/card_WinTingLee_BattleCry.png", id:"BattleCryWinTingLee"},
         ];
 
         return manifest;
