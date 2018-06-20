@@ -167,6 +167,9 @@ this.HS = this.HS || {};
         case HS.Action.Type.Hero:
             handleHero(action);
             break;
+        case HS.Action.Type.battleCry:
+            handleBattleCry(action);
+            break;
         }
     }
 
@@ -189,6 +192,7 @@ this.HS = this.HS || {};
                 card.def = cardInfo.originDef;
                 card.cost = cardInfo.cost;
                 card.moveable = true;
+                card.name = cardInfo.name;
                 if(cardInfo.cost <= battleField.selfHero.crystal){
                     card.active = true;
                 }
@@ -377,6 +381,28 @@ this.HS = this.HS || {};
         }else if(action.player != playerId) {
             battleField.opponentHero.information.id = action.obj.cardID;
             battleField.opponentHero.hp = action.obj.newDef;
+        }
+    }
+
+    function handleBattleCry(action){
+        if(action.obj && action.obj.cards){
+            action.obj.cards.forEach( item => {
+                let card = battleField.findCardWithId( item.cardID );
+                if(card){
+                    if(item.newDef <= 0){
+                        battleField.removeCard(card);
+                    }
+                }
+            });
+            action.obj.cards.forEach( item => {
+                let card = battleField.findCardWithId( item.cardID );
+                if(card){
+                    card.atk = item.newAtk;
+                    card.def = item.newDef;
+                    card.cost = item.cost;
+                    card.active = item.attackable;
+                }
+            });
         }
     }
 

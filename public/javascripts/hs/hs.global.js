@@ -57,7 +57,7 @@ this.HS = this.HS || {};
             cardDefTextX: cardWidth * 0.87,
             cardDefTextY: cardHeight * 0.89,
             cardNameTextX: cardWidth * 0.58,
-            cardNameTextY: cardHeight * 0.55,
+            cardNameTextY: cardHeight * 0.53,
             cardNameScale: width / 1920,
             ellipseStickerX: cardWidth * 0.2,
             ellipseStickerY: cardHeight * 0.07,
