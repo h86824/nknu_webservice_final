@@ -27,8 +27,6 @@ this.HS = this.HS || {};
         this.on("pressmove", (e) => { if(this.moveable && this.active) pressMove(e) });
         this.on("pressup", (e) => { if(this.moveable && this.active) pressUp(e) });
         this.on("mousedown" , (e) => { if(this.moveable && this.active) pressDown(e) });
-        //this.snapToPixel = true;
-        //this.cache(0, 0, image.width, image.height);
 
         let templateImg = HS.Global.Source.getResult("CardTemplate");
         this.template = new createjs.Shape(); 
@@ -102,11 +100,7 @@ this.HS = this.HS || {};
         this.addChild(this.cardContent);
         this.addChild(this.cardName);
 
-        /*this.setAtk = setText(this.atkTextOutline , this.atkText);
-        this.setDef = setText(this.defTextOutline , this.defText);
-        this.setCost = setText(this.costTextOutline , this.costText);*/
         this.snapToPixel = true;
-        //this.cache(0, 0, HS.Global.cardWidth , HS.Global.cardHeight);
         this.active = false;
     }
 
@@ -173,7 +167,6 @@ this.HS = this.HS || {};
             for(let i = 10 ; i < text.length ; i += 11){
                 text = text.slice(0,i) + "\n" + text.slice(i,text.length-1);
             }
-            console.log(text);
             let cardContentText = new createjs.Text(text, HS.Global.TextFontVerySmall, "#fff");
             cardContentText.set({
                 textAlign:"left",
