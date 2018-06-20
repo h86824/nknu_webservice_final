@@ -25,6 +25,7 @@ var Blitzcrank = require("./card//Blitzcrank");
 var Braum = require("./card/Braum");
 var Caitlyn = require("./card/Caitlyn");
 var HauShiang = require("./card/HauShiang");
+var FireBall = require("./card/FireBall");
 
 class creatCard{
     constructor(){
@@ -68,7 +69,7 @@ class creatCard{
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
-                deckList.push(new Kuo(this.cardID));
+                deckList.push(new FireBall(this.cardID));
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
@@ -80,7 +81,7 @@ class creatCard{
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
-                deckList.push(new DyMing(this.cardID));
+                deckList.push(new FireBall(this.cardID));
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
@@ -130,7 +131,7 @@ class creatCard{
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
-                deckList.push(new Ashe(this.cardID));
+                deckList.push(new FireBall(this.cardID));
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
@@ -154,7 +155,7 @@ class creatCard{
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
-                deckList.push(new Braum(this.cardID));
+                deckList.push(new FireBall(this.cardID));
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
