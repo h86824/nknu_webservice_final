@@ -403,7 +403,7 @@ this.HS = this.HS || {};
             });
 
             if(from){
-                if(from.hp <= 0){
+                if(from.def <= 0){
                     battleField.removeCard(from);
                 }
             }

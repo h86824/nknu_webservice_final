@@ -130,7 +130,11 @@ this.HS = this.HS || {};
             return this._cost;
         },
         set def ( value ){
+            this._def = value;
             setText(this , this.defTextOutline , this.defText)(value);
+        },
+        get def(){
+            return this._def;
         },
         set name( value ){
             setName(this)(value);
