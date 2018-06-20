@@ -204,10 +204,10 @@ this.HS = this.HS || {};
     }
     
     function clear(){
-        this.opponentBattleArea.cards.length = 0;
-        this.selfBattleArea.cards.length = 0;
-        this.selfHandArea.cards.length = 0;
-        this.opponentHandArea.cards.length = 0;
+        this.opponentBattleArea.removeAllCard();
+        this.selfBattleArea.removeAllCard();
+        this.selfHandArea.removeAllCard();
+        this.opponentHandArea.removeAllCard();
 
         this.opponentBattleArea.relocate();
         this.selfBattleArea.relocate();

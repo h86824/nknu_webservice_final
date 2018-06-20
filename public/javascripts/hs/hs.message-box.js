@@ -128,8 +128,8 @@ this.HS = this.HS || {};
                 count = (count + 5) % 360;
                 let temp = count;
                 this.messageText.children.forEach( child => {
-                    temp = (temp += 30) % 360;
-                    let scale = 0.5 + Math.sin( temp * 0.017453293 ) * 0.03;
+                    temp = (temp += 330) % 360;
+                    let scale = 0.5 + Math.cos( temp * 0.017453293 ) * 0.03;
                     child.y = HS.Global.alertHeight * scale;
                 });
             });

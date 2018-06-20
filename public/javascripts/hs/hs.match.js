@@ -47,6 +47,7 @@ this.HS = this.HS || {};
 
         this.addChild(matchBackground);
         this.addChild(background);
+        star(this);
         this.addChild(textOutLine);
         this.addChild(text);
         this.addChild(deck);
@@ -61,8 +62,9 @@ this.HS = this.HS || {};
         this.onmatch = (onmatch) => {
             this._onmatch = onmatch;
         }
+
     }
-    
+
     function Button(content){
         createjs.Container.call(this);
         let width = HS.Global.width * 0.3;
@@ -107,6 +109,38 @@ this.HS = this.HS || {};
                 this.background.graphics.clear().beginFill(color).drawRoundRect(0, 0, width, height, 10);
         });
         this.enable = true;
+    }
+
+    function star(container){
+        let holder = new createjs.Container();
+        holder.x = HS.Global.width / 2;
+        holder.y = HS.Global.height / 2;
+        container.addChild(holder);
+
+        createjs.Ticker.addEventListener("tick", (event) => {
+            holder.rotation += 0.03;
+            holder.children.forEach( item => {
+                
+                item.y += item.ySpeed + Math.random() * 0.1;
+                item.x += item.xSpeed + Math.random() * 0.1;
+                item.alpha = Math.random() * 0.1  + 0.3;
+                if(item.y > holder.x ||　item.X > holder.x || Math.random() < 0.0001){
+                    item.y = 0;
+                    item.x = 0;
+                }
+
+            });
+            if(holder.children.length < 500){
+                var shape = new createjs.Shape();
+                shape.alpha = 1;
+                shape.graphics.clear().beginFill("#FFF").drawCircle(0 , 0 , Math.random() * 3 + 1 );
+                shape.x = (Math.random() - 0.5) * 80;
+                shape.y = (Math.random() - 0.5) * 80;
+                shape.xSpeed = (Math.random() - 0.5) * 0.5;
+                shape.ySpeed = (Math.random() - 0.5) * 0.5;
+                holder.addChild(shape);
+            }
+        });
     }
     
     extend(Button , createjs.Container);

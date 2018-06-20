@@ -16,15 +16,20 @@ this.HS = this.HS || {};
     }
 
     function start(){
-        socket = io('http://localhost:3001');
+        socket = io('http://127.0.0.1:3001');
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
+        createjs.Touch.enable(stage);
 
         let bgm = HS.BGM;
         bgm.start();
 
         socket.on('connect', function() {
             HS.MessageBox.hide();
+        });
+
+        socket.on('connecting', function() {
+            HS.MessageBox.show("連線中...");
         });
 
         socket.on("disconnect", function(){

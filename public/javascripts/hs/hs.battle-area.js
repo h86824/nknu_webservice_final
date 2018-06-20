@@ -19,6 +19,7 @@ this.HS = this.HS || {};
         relocate: relocate,
         getInsertIndex: getInsertIndex,
         removeCard: removeCard,
+        removeAllCard: removeAllCard
     }
 
     function addCard(item , index){
@@ -50,6 +51,14 @@ this.HS = this.HS || {};
         }
         return false;
 
+    }
+
+    function removeAllCard(){
+        for(let i = 0 ; i < this.cards.length ; i++){
+            this.removeChild(this.cards[i]);
+        }
+        this.cards.length = 0;
+        this.relocate();
     }
 
     function relocate( blankX ){

@@ -162,7 +162,7 @@ this.HS = this.HS || {};
         assignable: false,
         toTop: function(){
             this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
-            this.stage.setChildIndex(this , this.stage.getNumChildren()-1);
+            this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
         },
         set content(text){
             let cardContentText = new createjs.Text(text, HS.Global.TextFontVerySmall, "#fff");
