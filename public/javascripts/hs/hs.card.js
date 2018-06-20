@@ -183,7 +183,8 @@ this.HS = this.HS || {};
             this.cardContent.removeAllChildren();
             this.cardContent.addChild(cardContentTextOutline);
             this.cardContent.addChild(cardContentText);
-        }
+        },
+        battleCry: function(){}
     }
 
     function setText(self , ... targets){
