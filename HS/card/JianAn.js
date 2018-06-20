@@ -3,7 +3,7 @@ var myBattleBry = require("../skill/JianAn.BattleCry");
 class JianAn extends card {
     constructor(ID) {
         super(ID);
-        this.name = "叫雞王";
+        this.name = "建安";
         this.race = "同學";
         this.cost = 5;
         this.originAtk = 5;

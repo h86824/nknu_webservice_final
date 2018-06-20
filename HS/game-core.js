@@ -1,4 +1,4 @@
-var Drainage = require("./action/action.drainage");
+
 var Setting = require("./action/action.setting");
 var bfSetting = require("./action/action.battleField")
 var Discard = require("./action/action.discard");
@@ -40,36 +40,33 @@ class GameCore {
         this.currentPlayer.socket.emit("match",new hero(this.actionCount++,this.opponent.socket,this.opponent.hero));
         this.opponent.socket.emit("match",new hero(this.actionCount++,this.opponent.socket,this.opponent.hero));
 
-
-
-        let drawArr = this.currentPlayer.draw(3);
-        this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
-        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:3,rc:this.currentPlayer.cardNumbers}));
+    
+        this.currentPlayer.draw(3 ,this.opponent.socket);
+        //this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawArr));
+        //this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:3,rc:this.currentPlayer.cardNumbers}));
         
         this.currentPlayer.cost++;//水晶增加
         this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
         
         
-        let drawArr2 = this.opponent.draw(4);
-        this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,drawArr2));
-        this.currentPlayer.socket.emit("match", new Drainage(this.actionCount++ , this.opponent.socket , {cards:[],number:4,rc:this.opponent.cardNumbers}));
+        this.opponent.draw(4,this.currentPlayer.socket);
+        //this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.opponent.socket,drawArr2));
+        //this.currentPlayer.socket.emit("match", new Drainage(this.actionCount++ , this.opponent.socket , {cards:[],number:4,rc:this.opponent.cardNumbers}));
 
 
         this.currentPlayer.socket.emit("match", new start(this.actionCount++ , this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
         this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
-        let firstDraw =  this.currentPlayer.draw(1);
-        this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,firstDraw));
-        this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:1,rc:this.currentPlayer.cardNumbers}));
+        this.currentPlayer.draw(1,this.opponent.socket);
+        //this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,firstDraw));
+        //this.opponent.socket.emit("match", new Drainage(this.actionCount++ , this.currentPlayer.socket , {cards:[],number:1,rc:this.currentPlayer.cardNumbers}));
     }
 
     _handlePlayerMessage(player , data){
         if(this.currentPlayer === player){
-            console.log(data);
             switch(data.type){
                 case Action.Type.Endturn:
                     //let EndArr = this.bf.EndTurnInvoke(this.currentPlayer);
                     //this._sendBF(EndArr);
-                    console.log(this.currentPlayer.allayList.length);
                   
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
@@ -86,14 +83,14 @@ class GameCore {
                     
                     //let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
                     //this._sendBF(beginArr);
-                    let drawtemp = this.currentPlayer.draw(1);
-                    if(!drawtemp.cards.length){
+                    this.currentPlayer.draw(1,this.opponent.socket);
+                    /*if(!drawtemp.cards.length){
                        this. _sendHero(this.currentPlayer.hero);
                     }
                     else{
                         this.currentPlayer.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,drawtemp));
                         this.opponent.socket.emit("match",new Drainage(this.actionCount++,this.currentPlayer.socket,{cards:[],number:1,rc:this.currentPlayer.cardNumbers}));
-                    }
+                    }*/
                     
                     break;
                 case  Action.Type.Setting:

@@ -1,3 +1,4 @@
+var Drainage = require("./action/action.drainage");
 
 class player{
     
@@ -44,9 +45,11 @@ class player{
 
         }
     }
-    draw(numbers){
+    draw(numbers,enemy){
         let temp=[];
         let returnNumber = numbers;
+        console.log(this.socket);
+        console.log(enemy);
         for(let c = 0;c<numbers;c++){
             if(this.cardNumbers>0){
                 let ramdomInt = Math.floor(Math.random()*this.cardNumbers);
@@ -68,7 +71,8 @@ class player{
                 drawDamage++;
             }
         }
-        return {cards:temp,number:returnNumber,rc:this.cardNumbers};
+        this.socket.emit("match" , new Drainage(this.actionCount++,this.socket,{cards:temp,number:returnNumber,rc:this.cardNumbers}));
+        enemy.emit("match", new Drainage(this.actionCount++ ,this.socket , {cards:[],number:numbers,rc:this.cardNumbers}));
     }
     discard(card,position){
         for(let i=0;i<this.hand.length;i++){

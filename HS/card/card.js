@@ -35,9 +35,9 @@ class card {
              return false;
         }
     }
-    battleCry(allay,enemy,target,Arr){
+    battleCry(allay,enemy,target,Arr,ID){
         this.battlecayList.forEach(bci =>{
-            bci.invoke(allay,enemy,target,Arr);
+            bci.invoke(allay,enemy,target,Arr,ID);
         })
     }
     reiki(bf,target,Arr){

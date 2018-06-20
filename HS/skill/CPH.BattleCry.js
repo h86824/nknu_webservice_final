@@ -2,7 +2,7 @@ var skill = require("./skill");
 
 class CPH_battleCry{
     constructor(){}
-    invoke(allayplayer,enemy,target,Array){
+    invoke(allayplayer,enemy,target,Array,ID){
         if(target==null){
             if( enemy.allayList.length>0){
                 let ramdom = Math.floor(Math.random()* enemy.allayList.length);

@@ -60,7 +60,7 @@ class battleField {
         console.log(enemy.socket.id);
         let actionCard =allayplayer.getMinion (card);
         let BattleArr = [];
-        actionCard.battleCry(allayplayer,enemy,null,BattleArr);
+        actionCard.battleCry(allayplayer,enemy,null,BattleArr,card);
         enemy.deadyet();
         /*for(let i=0;i<enemy.allayList.length;i++){
             if(enemy.allayList[i].newDef<=0){
