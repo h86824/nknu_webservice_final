@@ -88,7 +88,9 @@ this.HS = this.HS || {};
             deckWidth: width * 0.07,
             deckHeight: height * 0.2,
 
-            rate:  width/1920
+            rate:  width/1920,
+            imagePackageWidth: width * 0.05,
+            imagePackageHeight: width * 0.05,
         }
     }
 

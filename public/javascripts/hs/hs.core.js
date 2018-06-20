@@ -20,7 +20,7 @@ this.HS = this.HS || {};
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
         createjs.Touch.enable(stage);
-
+        
         let bgm = HS.BGM;
         bgm.start();
 
@@ -275,6 +275,7 @@ this.HS = this.HS || {};
                     mycard.cost = card.cost;
                     mycard.atk = card.newAtk;
                     mycard.def = card.newDef;
+                    mycard.name = card.name;
                     mycard.moveable = false;
                     mycard.assignable = false;
                     battleField.opponentBattleArea.addCard(mycard , card.position);
@@ -386,6 +387,29 @@ this.HS = this.HS || {};
 
     function handleBattleCry(action){
         if(action.obj && action.obj.cards){
+            let from = battleField.findCardWithId( action.from );
+            
+            action.obj.cards.forEach( item => {
+                let card = battleField.findCardWithId( item.cardID );
+                let image = new HS.ImagePackage( HS.Global.Source.getResult("FireBall") );
+                stage.addChild(image);
+                if(card){
+                    HS.Anime.itemAttack(from , card , image , () => {
+                        stage.removeChild(image);
+                        card.atk = item.newAtk;
+                        card.def = item.newDef;
+                        card.cost = item.cost;
+                        card.active = item.attackable;
+                        
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                }
+            });
+/*
             action.obj.cards.forEach( item => {
                 let card = battleField.findCardWithId( item.cardID );
                 if(card){
@@ -393,16 +417,7 @@ this.HS = this.HS || {};
                         battleField.removeCard(card);
                     }
                 }
-            });
-            action.obj.cards.forEach( item => {
-                let card = battleField.findCardWithId( item.cardID );
-                if(card){
-                    card.atk = item.newAtk;
-                    card.def = item.newDef;
-                    card.cost = item.cost;
-                    card.active = item.attackable;
-                }
-            });
+            });*/
         }
     }
 

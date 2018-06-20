@@ -51,6 +51,31 @@ this.HS = this.HS || {};
                 alpha:1
             } , 700).call(cb);
         }
+
+        this.itemAttack = (from , to , item , cb) => {
+            if(!from instanceof HS.Card){
+                throw new HS.Error.TypeError("attacker" , "HS.Card");
+            }
+            if(!to instanceof HS.Card){
+                throw new HS.Error.TypeError("defensor" , "HS.Card");
+            }
+            let fromTp = from.localToGlobal(0 , 0);
+            let toTp = to.localToGlobal(0 , 0);
+            item.set({
+                x: fromTp.x + HS.Global.cardWidth / 4,
+                y: fromTp.y + HS.Global.cardHeight / 4
+            })
+            item.visibel = true;
+            let distanceX = fromTp.x - toTp.x;
+            let distanceY = fromTp.y - toTp.y;
+
+            let offset = {x: -distanceX + fromTp.x , y:  - distanceY + fromTp.y};
+
+            createjs.Tween.get(item, {override:true}).to({
+                x: offset.x + HS.Global.cardWidth / 4,
+                y: offset.y + HS.Global.cardHeight / 4
+            } , 300).wait(150).call(cb);
+        }
     }
 
     HS.Anime = new Anime();
