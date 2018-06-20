@@ -104,9 +104,9 @@ this.HS = this.HS || {};
             
             let image = HS.Global.Source.getResult(deck.cover);
             if(image){
-                image.scaleX =  HS.Global.deckWidth / image.width ;
-                image.scaleY =  HS.Global.deckWidth / image.height ;
-                target.graphics.clear().beginBitmapFill(image , "no-repeat" , new createjs.Matrix2D(1,0,0,1,-image.width/2,-image.height/2)).drawCircle(0 , 0 , HS.Global.deckWidth * rate );
+                image.scaleX =  image.width / HS.Global.deckWidth ;
+                image.scaleY =  image.height  / HS.Global.deckWidth ;
+                target.graphics.clear().beginBitmapFill(image , "no-repeat" , new createjs.Matrix2D(image.scaleX,0,0,image.scaleY,-image.width/2*image.scaleX,-image.height/2*image.scaleY)).drawCircle(0 , 0 , HS.Global.deckWidth * rate );
             }else{
                 target.graphics.clear().beginFill("orange").drawCircle(0 , 0 , HS.Global.deckWidth );
             }

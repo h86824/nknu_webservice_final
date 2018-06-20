@@ -123,21 +123,21 @@ this.HS = this.HS || {};
                 
                 item.y += item.ySpeed + Math.random() * 0.1;
                 item.x += item.xSpeed + Math.random() * 0.1;
-                item.alpha = Math.random() * 0.1  + 0.3;
-                if(item.y > holder.x ||　item.X > holder.x || Math.random() < 0.0001){
+                item.alpha = Math.sin( (item.alpha * 360 + 5) * 0.017453293 ) * 0.2 + 0.25;
+                if(-item.x > holder.x || -item.y > holder.x ||item.y > holder.x ||　item.x > holder.x || Math.random() < 0.0001){
                     item.y = 0;
                     item.x = 0;
                 }
 
             });
-            if(holder.children.length < 500){
+            if(holder.children.length < 750){
                 var shape = new createjs.Shape();
-                shape.alpha = 1;
-                shape.graphics.clear().beginFill("#FFF").drawCircle(0 , 0 , Math.random() * 3 + 1 );
-                shape.x = (Math.random() - 0.5) * 80;
-                shape.y = (Math.random() - 0.5) * 80;
-                shape.xSpeed = (Math.random() - 0.5) * 0.5;
-                shape.ySpeed = (Math.random() - 0.5) * 0.5;
+                shape.alpha = Math.random();
+                shape.graphics.clear().beginFill("#FFF").drawCircle(0 , 0 , (Math.random() * 3 + 1) * HS.Global.rate );
+                shape.x = (Math.random() - 0.5) * HS.Global.deckWidth;
+                shape.y = (Math.random() - 0.5) * HS.Global.deckWidth;
+                shape.xSpeed = (Math.random() - 0.5) * 0.5 * HS.Global.rate;
+                shape.ySpeed = (Math.random() - 0.5) * 0.5 * HS.Global.rate;
                 holder.addChild(shape);
             }
         });

@@ -86,9 +86,11 @@ this.HS = this.HS || {};
             alertHeight: height * 0.2,
 
             deckWidth: width * 0.07,
-            deckHeight: height * 0.2
+            deckHeight: height * 0.2,
+
+            rate:  width/1920
         }
     }
 
-    HS.Global = Global(1920,1080);
+    HS.Global = Global(3840,2160);
 }());
