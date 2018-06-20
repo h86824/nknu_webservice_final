@@ -110,6 +110,7 @@ this.HS = this.HS || {};
             {src:"/javascripts/hs/hs.bgm.js"},
             {src:"/javascripts/hs/hs.anime.js"},
             {src:"/javascripts/hs/hs.deck.js"},
+            {src:"/javascripts/hs/hs.image-package.js"},
             
             {src:"/javascripts/hs/action/hs.action.js"},
             {src:"/javascripts/hs/action/hs.action.dual.js"},
@@ -148,6 +149,7 @@ this.HS = this.HS || {};
             {src:"/images/match-background.jpg", id:"MatchBackground"},
             {src:"/images/deck1_cover.jpg", id:"DeckCover0"},
             {src:"/images/deck2_cover.png", id:"DeckCover1"},
+            {src:"/images/fire-ball.png", id:"FireBall"},
             
             {src:"/images/card-sticker.jpg", id:"CardSticker"},
             {src:"/images/cclin.jpg", id:"CardCCLin"},
