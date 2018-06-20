@@ -6,7 +6,7 @@ class Flower extends card {
         super(ID);
         this.name = "火球術";
         this.race = "法術";
-        this.cost = 4;
+        this.cost = 3;
         this.originAtk = 0;
         this.originDef =0;
         this.cardType = "minion";
