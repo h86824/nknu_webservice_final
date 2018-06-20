@@ -16,7 +16,6 @@ this.HS = this.HS || {};
     }
 
     function start(){
-        console.log(HS);
         socket = io('http://localhost:3000');
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
@@ -273,7 +272,7 @@ this.HS = this.HS || {};
                 battleField.opponentHandArea.removeCard(mycard);
                 battleField.opponentHero.cristal = action.obj.crystal;
                 if(mycard){
-                    mycard = new HS.Card(card.cardID);
+                    mycard = HS.CardFactory.create( card.name, card.cardID);
                     mycard.cost = card.cost;
                     mycard.atk = card.newAtk;
                     mycard.def = card.newDef;
