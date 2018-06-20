@@ -24,7 +24,7 @@ var Azir = require("./card/Azir");
 var Blitzcrank = require("./card//Blitzcrank");
 var Braum = require("./card/Braum");
 var Caitlyn = require("./card/Caitlyn");
-
+var HauShiang = require("./card/HauShiang");
 
 class creatCard{
     constructor(){
@@ -161,8 +161,12 @@ class creatCard{
                 deckList.push(new YYT(this.cardID));
                 this.cardID++;
             }
-            for(let j=0;j<2;j++){
+            for(let j=0;j<1;j++){
                 deckList.push(new Annie(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<1;j++){
+                deckList.push(new HauShiang(this.cardID));
                 this.cardID++;
             }
         }

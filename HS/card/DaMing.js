@@ -1,4 +1,5 @@
-﻿var card = require("./card")
+﻿var card = require("./card");
+var myBattleCry = require("../skill/DaMing.BattleCry");
 
 class DaMing extends card {
     constructor(ID) {
@@ -11,6 +12,7 @@ class DaMing extends card {
         this.cardType = "minion";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;
+        this.battlecayList.push(new myBattleCry);
     }
 }
 module.exports = DaMing;
