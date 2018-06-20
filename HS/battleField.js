@@ -62,6 +62,7 @@ class battleField {
         let BattleArr = [];
         actionCard.battleCry(allayplayer,enemy,null,BattleArr,card);
         enemy.deadyet();
+        allayplayer.deadyet();
         /*for(let i=0;i<enemy.allayList.length;i++){
             if(enemy.allayList[i].newDef<=0){
                 enemy.allayList.splice(i,1);

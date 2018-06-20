@@ -86,12 +86,13 @@ class player{
                         console.log("卡片"+temp1.cardID);
                         return {"card":temp1,"crystal":this.newCost,"position":position};
                     }
-                    else if(temp.cardType=="spell"){
+                    else if(temp1.cardType=="spell"){
                         this.minushand(i);
                         return {"card":temp1,"crystal":this.newCost};
                     }
                 }
                 else{
+                    this.deadyet();
                     return {"card":null,"crystal":this.cost};
                 }
             }

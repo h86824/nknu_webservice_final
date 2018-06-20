@@ -4,16 +4,15 @@ class FireBall{
     constructor(){}
     invoke(allayplayer,enemy,target,Array,ID){
         if(target==null){
-            if( enemy.allayList.length>0){
-                let ramdom = Math.floor(Math.random()* enemy.allayList.length);
-            
-                console.log("對手手下樹目"+enemy.allayList.length);
-                console.log("隨機數字"+ramdom);
-                console.log("目標"+enemy.allayList[ramdom].cardID+"血量:"+enemy.allayList[ramdom].newDef);
-                if(enemy.allayList[ramdom]!=undefined){
-                    enemy.allayList[ramdom].newDef-=6;
-                    Array.push(enemy.allayList[ramdom]);
-                }
+            let temp=[];
+            temp.push(enemy.hero);
+            for(let i=0;i<enemy.allayList.length;i++){
+                 temp.push(enemy.allayList[i]);
+            }
+            let ramdom = Math.floor(Math.random()* temp.length);
+            if(temp[ramdom]!=undefined){
+                temp[ramdom].newDef-=6;
+                Array.push(temp[ramdom]);
             }
         }
     }

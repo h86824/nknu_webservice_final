@@ -10,6 +10,7 @@ class Flower extends card {
         this.originAtk = 0;
         this.originDef =0;
         this.cardType = "minion";
+        this.msg = "造成6點傷害。";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;
         this.battlecayList.push(new fire());
