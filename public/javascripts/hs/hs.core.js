@@ -16,6 +16,7 @@ this.HS = this.HS || {};
     }
 
     function start(){
+        console.log(HS);
         socket = io('http://localhost:3000');
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
@@ -187,7 +188,7 @@ this.HS = this.HS || {};
             HS.Alert("抽牌(" + action.obj.number  +")");
             
             action.obj.cards.forEach( cardInfo => {
-                let card = new HS.Card(cardInfo.cardID);
+                let card = HS.CardFactory.create(cardInfo.name, cardInfo.cardID );
                 card.atk = cardInfo.originAtk;
                 card.def = cardInfo.originDef;
                 card.cost = cardInfo.cost;
