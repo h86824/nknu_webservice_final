@@ -16,15 +16,28 @@ this.HS = this.HS || {};
     }
 
     function start(){
-        socket = io('http://localhost:3001');
+        socket = io('http://localhost:3000');
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
-
+        createjs.Touch.enable(stage);
+        
         let bgm = HS.BGM;
         bgm.start();
 
         socket.on('connect', function() {
             HS.MessageBox.hide();
+        });
+
+        socket.on('connect', function() {
+            HS.MessageBox.hide();
+        });
+        
+        socket.on('connect_error', function() {
+            HS.MessageBox.show("連線中...");
+        });
+
+        socket.on('connecting', function() {
+            HS.MessageBox.show("連線中...");
         });
 
         socket.on("disconnect", function(){
@@ -49,9 +62,9 @@ this.HS = this.HS || {};
 
         matchScreen = stage.addChild(new HS.MatchScreen());
         
-        matchScreen.onmatch(() => {
+        matchScreen.onmatch((deck) => {
             bgm.buttonClick();
-            socket.emit("dual" , new HS.Action.Dual());
+            socket.emit("dual" , new HS.Action.Dual(deck.id));
             HS.MessageBox.show("配對中...");
         });
         socket.on('dual', function (data) {
@@ -108,13 +121,24 @@ this.HS = this.HS || {};
             break;
         case HS.Action.Type.EndGame:
             if(action.player == playerId){
-                HS.Alert("失敗");
+                HS.Anime.disappear(battleField.selfHero , () => {
+                    HS.Alert("失敗");
+                    setTimeout( () => {
+                        playerId = null;
+                        matchScreen.visible = true;
+                        battleField.visible = false;
+                    }, 1500);
+                });
             }else{
-                HS.Alert("勝利");
+                HS.Anime.disappear(battleField.opponentHero , () => {
+                    HS.Alert("勝利");
+                    setTimeout( () => {
+                        playerId = null;
+                        matchScreen.visible = true;
+                        battleField.visible = false;
+                    }, 1500);
+                })
             }
-            playerId = null;
-            matchScreen.visible = true;
-            battleField.visible = false;
             break;
         }
     }
@@ -143,6 +167,9 @@ this.HS = this.HS || {};
         case HS.Action.Type.Hero:
             handleHero(action);
             break;
+        case HS.Action.Type.battleCry:
+            handleBattleCry(action);
+            break;
         }
     }
 
@@ -165,6 +192,7 @@ this.HS = this.HS || {};
                 card.def = cardInfo.originDef;
                 card.cost = cardInfo.cost;
                 card.moveable = true;
+                card.name = cardInfo.name;
                 if(cardInfo.cost <= battleField.selfHero.crystal){
                     card.active = true;
                 }
@@ -247,6 +275,7 @@ this.HS = this.HS || {};
                     mycard.cost = card.cost;
                     mycard.atk = card.newAtk;
                     mycard.def = card.newDef;
+                    mycard.name = card.name;
                     mycard.moveable = false;
                     mycard.assignable = false;
                     battleField.opponentBattleArea.addCard(mycard , card.position);
@@ -322,6 +351,27 @@ this.HS = this.HS || {};
                         }
                     })
                 });
+            else{
+                if(action.obj && action.obj.cards){
+                    action.obj.cards.forEach( item => {
+                        let card = battleField.findCardWithId( item.cardID );
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                    action.obj.cards.forEach( item => {
+                        let card = battleField.findCardWithId( item.cardID );
+                        if(card){
+                            card.atk = item.newAtk;
+                            card.def = item.newDef;
+                            card.cost = item.cost;
+                            card.active = item.attackable;
+                        }
+                    });
+                }
+            }
         }
     }
 
@@ -332,6 +382,42 @@ this.HS = this.HS || {};
         }else if(action.player != playerId) {
             battleField.opponentHero.information.id = action.obj.cardID;
             battleField.opponentHero.hp = action.obj.newDef;
+        }
+    }
+
+    function handleBattleCry(action){
+        if(action.obj && action.obj.cards){
+            let from = battleField.findCardWithId( action.from );
+            
+            action.obj.cards.forEach( item => {
+                let card = battleField.findCardWithId( item.cardID );
+                let image = HS.Global.Source.getResult("FireBall");
+                card.battleCry();
+                
+                if(card){
+                    HS.Anime.itemAttack(from , card , image , () => {
+                        card.atk = item.newAtk;
+                        card.def = item.newDef;
+                        card.cost = item.cost;
+                        card.active = item.attackable;
+                        
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                }
+            });
+/*
+            action.obj.cards.forEach( item => {
+                let card = battleField.findCardWithId( item.cardID );
+                if(card){
+                    if(item.newDef <= 0){
+                        battleField.removeCard(card);
+                    }
+                }
+            });*/
         }
     }
 

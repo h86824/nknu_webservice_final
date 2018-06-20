@@ -57,7 +57,7 @@ this.HS = this.HS || {};
             cardDefTextX: cardWidth * 0.87,
             cardDefTextY: cardHeight * 0.89,
             cardNameTextX: cardWidth * 0.58,
-            cardNameTextY: cardHeight * 0.55,
+            cardNameTextY: cardHeight * 0.53,
             cardNameScale: width / 1920,
             ellipseStickerX: cardWidth * 0.2,
             ellipseStickerY: cardHeight * 0.07,
@@ -85,10 +85,14 @@ this.HS = this.HS || {};
             alertWidth: width * 0.4,
             alertHeight: height * 0.2,
 
-            deckWidth: width * 0.1,
-            deckHeight: height * 0.2
+            deckWidth: width * 0.07,
+            deckHeight: height * 0.2,
+
+            rate:  width/1920,
+            imagePackageWidth: width * 0.05,
+            imagePackageHeight: width * 0.05,
         }
     }
 
-    HS.Global = Global(1920,1080);
+    HS.Global = Global(3840,2160);
 }());

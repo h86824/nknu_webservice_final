@@ -5,6 +5,7 @@ class card {
 		this.name = "";
         this.classes="";
         this.cost=0;
+        this.msg="";
         this.armor=0;
         this.originAtk=0;
         this.originDef=0;
@@ -34,9 +35,9 @@ class card {
              return false;
         }
     }
-    battleCry(bf,target,Arr){
-        this.beforeAtkList.forEach(bci =>{
-            bci.invoke(bf,target,Arr);
+    battleCry(allay,enemy,target,Arr){
+        this.battlecayList.forEach(bci =>{
+            bci.invoke(allay,enemy,target,Arr);
         })
     }
     reiki(bf,target,Arr){

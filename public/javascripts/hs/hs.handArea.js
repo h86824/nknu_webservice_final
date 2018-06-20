@@ -24,6 +24,7 @@ this.HS = this.HS || {};
             value.y = 0;
             this.addChild(value);
         },
+        removeAllCard: removeAllCard
     }
 
     function addCard(item){
@@ -49,6 +50,14 @@ this.HS = this.HS || {};
             }
         }
         return false;
+    }
+
+    function removeAllCard(){
+        for(let i = 0 ; i < this.cards.length ; i++){
+            this.removeChild(this.cards[i]);
+        }
+        this.cards.length = 0;
+        this.relocate();
     }
 
     function relocate(){

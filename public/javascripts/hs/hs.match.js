@@ -34,19 +34,20 @@ this.HS = this.HS || {};
         });
 
         let btn = new Button("開始配對");
+        let deck = new HS.Deck();
         btn.x = HS.Global.width / 2 - btn.width / 2;
         btn.y = HS.Global.height * 0.8;
         btn.addEventListener("click" , () => {
             if(this._onmatch)
-                this._onmatch();
+                this._onmatch( deck.getSelected() );
         })
 
-        let deck = new HS.Deck();
         deck.x = HS.Global.width / 2;
         deck.y = HS.Global.height * 0.5;
 
         this.addChild(matchBackground);
         this.addChild(background);
+        star(this);
         this.addChild(textOutLine);
         this.addChild(text);
         this.addChild(deck);
@@ -61,8 +62,9 @@ this.HS = this.HS || {};
         this.onmatch = (onmatch) => {
             this._onmatch = onmatch;
         }
+
     }
-    
+
     function Button(content){
         createjs.Container.call(this);
         let width = HS.Global.width * 0.3;
@@ -107,6 +109,38 @@ this.HS = this.HS || {};
                 this.background.graphics.clear().beginFill(color).drawRoundRect(0, 0, width, height, 10);
         });
         this.enable = true;
+    }
+
+    function star(container){
+        let holder = new createjs.Container();
+        holder.x = HS.Global.width / 2;
+        holder.y = HS.Global.height / 2;
+        container.addChild(holder);
+
+        createjs.Ticker.addEventListener("tick", (event) => {
+            holder.rotation += 0.03;
+            holder.children.forEach( item => {
+                
+                item.y += item.ySpeed + Math.random() * 0.1;
+                item.x += item.xSpeed + Math.random() * 0.1;
+                item.alpha = Math.sin( (item.alpha * 360 + 5) * 0.017453293 ) * 0.2 + 0.25;
+                if(-item.x > holder.x || -item.y > holder.x ||item.y > holder.x ||　item.x > holder.x || Math.random() < 0.0001){
+                    item.y = 0;
+                    item.x = 0;
+                }
+
+            });
+            if(holder.children.length < 750){
+                var shape = new createjs.Shape();
+                shape.alpha = Math.random();
+                shape.graphics.clear().beginFill("#FFF").drawCircle(0 , 0 , (Math.random() * 3 + 1) * HS.Global.rate );
+                shape.x = (Math.random() - 0.5) * HS.Global.deckWidth;
+                shape.y = (Math.random() - 0.5) * HS.Global.deckWidth;
+                shape.xSpeed = (Math.random() - 0.5) * 0.5 * HS.Global.rate;
+                shape.ySpeed = (Math.random() - 0.5) * 0.5 * HS.Global.rate;
+                holder.addChild(shape);
+            }
+        });
     }
     
     extend(Button , createjs.Container);

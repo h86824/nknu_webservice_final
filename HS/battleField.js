@@ -56,13 +56,22 @@ class battleField {
         }
         else{
             console.log("沒結束 A:"+this.player1.hero.newDef+"，B:"+this.player2.hero.newDef);
-            return "";
+            return false;
         }
     }
     BattlecryInvoke(allayplayer,enemy,card){
-        let actionCard =player.getMinion (card);
+        console.log("戰吼觸發~~~");
+        console.log(allayplayer.socket.id);
+        console.log(enemy.socket.id);
+        let actionCard =allayplayer.getMinion (card);
         let BattleArr = [];
         actionCard.battleCry(allayplayer,enemy,null,BattleArr);
+        enemy.deadyet();
+        /*for(let i=0;i<enemy.allayList.length;i++){
+            if(enemy.allayList[i].newDef<=0){
+                enemy.allayList.splice(i,1);
+            }
+        }*/
         return {"cards":BattleArr};
     }
     DeathrattleInvoke(){

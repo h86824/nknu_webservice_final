@@ -51,26 +51,34 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-server.listen(3001);
+server.listen(3000);
 
 io.sockets.on('connection', function (client) {
-  client.id = UUID();
   playersList.push(client);
   console.log(client.id+" has connected!");
   client.on('dual',function(data){
     console.log("get dual msg");
     if(matchList.length){
       let opponent=matchList.splice(0,1)[0];
-      console.log(opponent.socket.id+" VS "+client.id+" start");
-      client.emit("dual",new setting(0.1,client));
-      opponent.socket.emit("dual",new setting(0.1,opponent.socket));
-      let game = new GameCore(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)),opponent);
-      gameList.push(game);
-      game.start();
+      if(opponent.socket===client){
+        console.log("同人");
+        matchList.push(opponent);
+      }
+      else{
+        console.log("不同人");
+        client.id = UUID();
+        console.log(opponent.socket.id+" VS "+client.id+" start");
+        client.emit("dual",new setting(0.1,client));
+        opponent.socket.emit("dual",new setting(0.1,opponent.socket));
+        let game = new GameCore(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)),opponent);
+        gameList.push(game);
+        game.start();
+      }
     }
     else{
+      client.id = UUID();
       matchList.push(new Player(client,card.creat(data.obj.hero),card.creatDeck(data.obj.deckID)));
-      console.log(client.id+" start waiting")
+      console.log(client.id+" start waiting");
     }
     
   });

@@ -8,7 +8,8 @@ var hero = require("./action/action.hero");
 var Action = require("./action/action");
 var start = require("./action/action.start");
 var disconnect = require("./action/action.disconnect");
-var EndGame = require("./action/action.endgame");
+var Endgame = require("./action/action.endgame");
+var battleCry = require("./action/action.battlecry");
 
 class GameCore {
     
@@ -89,9 +90,7 @@ class GameCore {
                     //let EndArr = this.bf.EndTurnInvoke(this.currentPlayer);
                     //this._sendBF(EndArr);
                     console.log(this.currentPlayer.allayList.length);
-                    for(let j=0;j<this.currentPlayer.allayList.length;j++){
-                        this.currentPlayer.allayList[j].attackable = true;
-                    }//變成可以攻擊
+                  
                     this.playernumber++;
                     this.currentPlayer = this.players[(this.playernumber)%2];
                     this.opponent = this.players[(this.playernumber+1)%2];
@@ -101,6 +100,10 @@ class GameCore {
                     this.currentPlayer.newCost=this.currentPlayer.cost;//設定水晶
                     this.currentPlayer.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
+                    for(let j=0;j<this.currentPlayer.allayList.length;j++){
+                        this.currentPlayer.allayList[j].attackable = true;
+                    }//變成可以攻擊
+                    
                     //let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
                     //this._sendBF(beginArr);
                     let drawtemp = this.currentPlayer.draw(1);
@@ -118,8 +121,8 @@ class GameCore {
                 case Action.Type.Discard:
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
                     this._sendDiscard(cardArr);
-                    //let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
-                    //this._sendBF(BattleArr);
+                    let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
+                    this._sendBattleCry(BattleArr,data.obj.cardID,null);
                     //let DeathArr=this.bf.DeathrattleInvoke();
                     //this._sendBF(DeathArr);
                     break;
@@ -128,9 +131,11 @@ class GameCore {
                         let attackTemp = this.bf.attackInvoke(this.currentPlayer,this.opponent,data.from,data.to);
                         this._sendBF(attackTemp,data.from,data.to);
                         let winYet= this.bf.isWin();
-                        if(winYet!=""){
-                            this.currentPlayer.socket.emit("dual",new EndGame(this.actionCount++,winYet));
-                            this.opponent.socket.emit("dual",new EndGame(this.actionCount++,winYet));
+                        if(!winYet){
+                        }
+                        else{
+                            this.currentPlayer.socket.emit("dual",new Endgame(this.actionCount++,winYet));
+                            this.opponent.socket.emit("dual",new Endgame(this.actionCount++,winYet));
                         }
                     }
                     break;
@@ -144,6 +149,11 @@ class GameCore {
                 
             
         }
+    }
+    _sendBattleCry(cards,from,to){
+        this.players.forEach( player => {
+            player.socket.emit("match" , new battleCry(this.actionCount++ , player,cards,from,to));
+        });
     }
     _handleDisconnect(player){
         let tempPlayer = this.players.indexOf(player);

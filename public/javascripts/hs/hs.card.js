@@ -84,9 +84,9 @@ this.HS = this.HS || {};
 
         this.activeShape = new createjs.Shape();
         this.activeShape.graphics
-        .setStrokeStyle(7)
+        .setStrokeStyle(8 * HS.Global.rate)
         .beginStroke("#7CB342")
-        .drawRoundRect(HS.Global.cardWidth * 0.05,  HS.Global.cardHeight * 0.1, HS.Global.cardWidth * 0.9 , HS.Global.cardHeight* 0.9 , 10);
+        .drawRoundRect(HS.Global.cardWidth * 0.05,  HS.Global.cardHeight * 0.1, HS.Global.cardWidth * 0.9 , HS.Global.cardHeight* 0.9 , 22);
 
         this.cardContent = new createjs.Container();
 
@@ -162,7 +162,7 @@ this.HS = this.HS || {};
         assignable: false,
         toTop: function(){
             this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
-            this.stage.setChildIndex(this , this.stage.getNumChildren()-1);
+            this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
         },
         set content(text){
             let cardContentText = new createjs.Text(text, HS.Global.TextFontVerySmall, "#fff");
@@ -183,6 +183,9 @@ this.HS = this.HS || {};
             this.cardContent.removeAllChildren();
             this.cardContent.addChild(cardContentTextOutline);
             this.cardContent.addChild(cardContentText);
+        },
+        battleCry: function(){
+            HS.BGM.play("launcher");
         }
     }
 
