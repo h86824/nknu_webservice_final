@@ -53,6 +53,7 @@ this.HS = this.HS || {};
         }
 
         this.itemAttack = (from , to , item , cb) => {
+            item = new HS.ImagePackage(item);
             if(!from instanceof HS.Card){
                 throw new HS.Error.TypeError("attacker" , "HS.Card");
             }
@@ -66,6 +67,7 @@ this.HS = this.HS || {};
                 y: fromTp.y + HS.Global.cardHeight / 4
             })
             item.visibel = true;
+            from.stage.addChild(item);
             let distanceX = fromTp.x - toTp.x;
             let distanceY = fromTp.y - toTp.y;
 
@@ -74,7 +76,10 @@ this.HS = this.HS || {};
             createjs.Tween.get(item, {override:true}).to({
                 x: offset.x + HS.Global.cardWidth / 4,
                 y: offset.y + HS.Global.cardHeight / 4
-            } , 300).wait(150).call(cb);
+            } , 300).wait(150).call(() => {
+                HS.BGM.play("explosion");
+                item.stage.removeChild(item);
+            }).call(cb);
         }
     }
 

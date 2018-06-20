@@ -184,7 +184,9 @@ this.HS = this.HS || {};
             this.cardContent.addChild(cardContentTextOutline);
             this.cardContent.addChild(cardContentText);
         },
-        battleCry: function(){}
+        battleCry: function(){
+            HS.BGM.play("launcher");
+        }
     }
 
     function setText(self , ... targets){
