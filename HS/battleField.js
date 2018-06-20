@@ -60,7 +60,10 @@ class battleField {
         }
     }
     BattlecryInvoke(allayplayer,enemy,card){
-        let actionCard =player.getMinion (card);
+        console.log("戰吼觸發~~~");
+        console.log(allayplayer.socket.id);
+        console.log(enemy.socket.id);
+        let actionCard =allayplayer.getMinion (card);
         let BattleArr = [];
         actionCard.battleCry(allayplayer,enemy,null,BattleArr);
         return {"cards":BattleArr};

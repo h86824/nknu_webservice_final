@@ -6,13 +6,14 @@ class CPH extends card{
         super(ID);
         this.name = "CPH";
         this.race = "教授";
-        this.cost = 8;
-        this.originAtk = 8;
-        this.originDef = 7;
+        this.cost = 1;
+        this.originAtk = 1;
+        this.originDef = 1;
         this.cardType = "minion";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;
         this.battlecayList.push(new myBattleCry());
+        console.log("戰吼柱列:"+this.battlecayList);
     }
 
 }
