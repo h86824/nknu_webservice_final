@@ -4,7 +4,7 @@ class WinTingBattleCry{
     constructor(){}
     invoke(allayplayer,enemy,target,Array,ID){
         if(target==null){
-            if( allayplayer.allayList.length>0){
+            if( allayplayer.allayList.length>1){
                 let ramdom = Math.floor(Math.random()* allayplayer.allayList.length);
                 while(allayplayer.allayList[ramdom].cardID ==ID){
                     ramdom=Math.floor(Math.random()* allayplayer.allayList.length);
