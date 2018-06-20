@@ -16,7 +16,7 @@ this.HS = this.HS || {};
     }
 
     function start(){
-        socket = io('http://localhost:3000');
+        socket = io('http://'+window.location.hostname+':3000');
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
         createjs.Touch.enable(stage);
@@ -79,6 +79,7 @@ this.HS = this.HS || {};
         stage.addChild(fpsLabel);
         fpsLabel.x = 10;
         fpsLabel.y = 10;
+        fpsLabel.visible = false;
 
         arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
