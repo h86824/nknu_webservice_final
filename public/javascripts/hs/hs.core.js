@@ -95,7 +95,7 @@ this.HS = this.HS || {};
 
     function handleTick(event) {
         stage.update();
-        fpsLabel.text = "測試版 v0.2018061901\n"+
+        fpsLabel.text = "測試版 v0.2018062001\n"+
         "解析度 " + HS.Global.width + " x " + HS.Global.height + "\n"
         +Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
         if (!event.paused) {
@@ -188,11 +188,12 @@ this.HS = this.HS || {};
             
             action.obj.cards.forEach( cardInfo => {
                 let card = HS.CardFactory.create(cardInfo.name, cardInfo.cardID );
-                card.atk = cardInfo.originAtk;
+                /*card.atk = cardInfo.originAtk;
                 card.def = cardInfo.originDef;
                 card.cost = cardInfo.cost;
+                card.name = cardInfo.name;*/
+                copyInfo(cardInfo , card);
                 card.moveable = true;
-                card.name = cardInfo.name;
                 if(cardInfo.cost <= battleField.selfHero.crystal){
                     card.active = true;
                 }
@@ -252,9 +253,7 @@ this.HS = this.HS || {};
                 if(mycard){
                     battleField.selfHandArea.removeCard(mycard);
                     battleField.selfBattleArea.addCard(mycard , action.obj.position);
-                    mycard.cost = card.cost;
-                    mycard.atk = card.newAtk;
-                    mycard.def = card.newDef;
+                    copyInfo(card , mycard);
                     mycard.moveable = false;
                     mycard.assignable = true;
                     mycard.active = card.attackable;
@@ -273,10 +272,7 @@ this.HS = this.HS || {};
                 battleField.opponentHero.cristal = action.obj.crystal;
                 if(mycard){
                     mycard = HS.CardFactory.create( card.name, card.cardID);
-                    mycard.cost = card.cost;
-                    mycard.atk = card.newAtk;
-                    mycard.def = card.newDef;
-                    mycard.name = card.name;
+                    copyInfo(card , mycard);
                     mycard.moveable = false;
                     mycard.assignable = false;
                     mycard.yield();
@@ -366,10 +362,7 @@ this.HS = this.HS || {};
                     action.obj.cards.forEach( item => {
                         let card = battleField.findCardWithId( item.cardID );
                         if(card){
-                            card.atk = item.newAtk;
-                            card.def = item.newDef;
-                            card.cost = item.cost;
-                            card.active = item.attackable;
+                            copyInfo(item , card);
                         }
                     });
                 }
@@ -398,10 +391,7 @@ this.HS = this.HS || {};
                 
                 if(card){
                     HS.Anime.itemAttack(from , card , image , () => {
-                        card.atk = item.newAtk;
-                        card.def = item.newDef;
-                        card.cost = item.cost;
-                        card.active = item.attackable;
+                        copyInfo(item , card);
                         
                         if(card){
                             if(item.newDef <= 0){
@@ -411,15 +401,18 @@ this.HS = this.HS || {};
                     });
                 }
             });
-/*
-            action.obj.cards.forEach( item => {
-                let card = battleField.findCardWithId( item.cardID );
-                if(card){
-                    if(item.newDef <= 0){
-                        battleField.removeCard(card);
-                    }
-                }
-            });*/
+
+        }
+    }
+
+    function copyInfo(cardServer , cardLocal){
+        cardLocal.atk = cardServer.newAtk;
+        cardLocal.def = cardServer.newDef;
+        cardLocal.cost = cardServer.cost;
+        cardLocal.active = cardServer.attackable;
+        cardLocal.name = cardServer.name;
+        if(cardServer.msg){
+            cardLocal.content = cardServer.msg;
         }
     }
 

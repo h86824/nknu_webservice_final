@@ -165,6 +165,11 @@ this.HS = this.HS || {};
             this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
         },
         set content(text){
+            
+            for(let i = 10 ; i < text.length ; i += 11){
+                text = text.slice(0,i) + "\n" + text.slice(i,text.length-1);
+            }
+            console.log(text);
             let cardContentText = new createjs.Text(text, HS.Global.TextFontVerySmall, "#fff");
             cardContentText.set({
                 textAlign:"left",
@@ -172,6 +177,7 @@ this.HS = this.HS || {};
                 y: HS.Global.cardHeight * 0.7,
                 outline:false,
                 lineWidth: HS.Global.cardWidth * 0.63,
+                lineHeight : 15 * HS.Global.rate,
                 maxWidth: HS.Global.cardWidth * 0.63,
             });
             let cardContentTextOutline = cardContentText.clone();
