@@ -5,7 +5,9 @@ this.HS.Card = this.HS.Card || {};
         HS.Card.call(this , id , 'CardWinTingLee' , new createjs.Matrix2D(1,0,0,1,20,0));
     }
     WinTingLee.prototype = {
-        
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("BattleCryWinTingLee");
+        },
     }
     extend(WinTingLee , HS.Card);
 

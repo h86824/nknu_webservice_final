@@ -9,7 +9,9 @@ this.HS.Card = this.HS.Card || {};
     }
 
     TinLee.prototype = {
-
+        getBattleCryImg: function(){
+            return HS.Global.Source.getResult("BattleCryWinTingLee");
+        },
     }
 
     extend(TinLee , HS.Card);
