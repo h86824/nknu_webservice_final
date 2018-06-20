@@ -8,6 +8,23 @@ var Justin = require("./card/Justin");
 var Kuo = require("./card/Kuo");
 var Lily = require("./card/Lily");
 var LiWei = require("./card/LiWei");
+var Maple = require("./card/Maple");
+var Poo = require("./card/Poo");
+var Yee = require("./card/Yee");
+var Yo = require("./card/Yo");
+var YYT = require("./card/YYT");
+var CCLin = require("./card/CCLin");
+var DaMing = require("./card/DaMing");
+var DyMing = require("./card/DyMing");
+var Flower = require("./card/Flower");
+var Ahri = require("./card/Ahri");
+var Annie = require("./card/Annie");
+var Ashe = require("./card/Ashe");
+var Azir = require("./card/Azir");
+var Blitzcrank = require("./card//Blitzcrank");
+var Braum = require("./card/Braum");
+var Caitlyn = require("./card/Caitlyn");
+
 
 class creatCard{
     constructor(){
@@ -26,19 +43,72 @@ class creatCard{
     creatDeck(id){
         let deckList=[];
         if(id==1){
-            for(let i=0;i<10;i++){
-                deckList.push(new GAYA(this.cardID));
-                this.cardID++;
-            }
-            for(let j=0;j<10;j++){
-                deckList.push(new WinTingLee(this.cardID));
-                this.cardID++;
-            }
-            for(let k=0;k<10;k++){
+            for(let i=0;i<30;i++){
                 deckList.push(new CPH(this.cardID));
                 this.cardID++;
             }
-            
+            /*for(let j=0;j<2;j++){
+                deckList.push(new WinTingLee(this.cardID));
+                this.cardID++;
+            }
+            for(let k=0;k<2;k++){
+                deckList.push(new CPH(this.cardID));
+                this.cardID++;
+            }
+            for(let i =0;i<2;i++){
+                deckList.push(new JianAn(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new JiungHan(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Justin(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Kuo(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Lily(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new LiWei(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Maple(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Poo(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Yee(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Yo(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new YYT(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new CCLin(this.cardID));
+                this.cardID++;
+            }*/
+        }
+        else if(id==2){
+            for(let i=0;i<3;i++){
+                deckList.push(new CPH(this.cardID));
+                this.cardID++;
+            }
         }
         return deckList;
     }

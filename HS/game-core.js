@@ -118,8 +118,8 @@ class GameCore {
                 case Action.Type.Discard:
                     let cardArr = this.currentPlayer.discard(data.obj.cardID,data.obj.position);
                     this._sendDiscard(cardArr);
-                    //let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
-                    //this._sendBF(BattleArr);
+                    let BattleArr = this.bf.BattlecryInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
+                    this._sendBF(BattleArr,null,null);
                     //let DeathArr=this.bf.DeathrattleInvoke();
                     //this._sendBF(DeathArr);
                     break;
