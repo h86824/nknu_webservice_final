@@ -5,10 +5,11 @@ this.HS = this.HS || {};
 
     function BGM(){
         let now = 1;
+        let bgm;
         let instance;
-        let volume = 0.3;
+        let volume = 0.8;
         this.start = () => {
-            this.play("sound2");
+            this.playBgm("sound2");
         }
 
         this.handleComplete = (event) => {
@@ -16,10 +17,15 @@ this.HS = this.HS || {};
             this.play("sound" + now);
         }
 
-        this.play = (id) => {
-            instance = createjs.Sound.play(id);  // play using id.  Could also use full sourcepath or event.src.
-            instance.on("complete", this.handleComplete, this);
-            instance.volume = volume;
+        this.playBgm = (id) => {
+            bgm = createjs.Sound.play(id);  // play using id.  Could also use full sourcepath or event.src.
+            bgm.on("complete", this.handleComplete, this);
+            bgm.on("failed", (e) => {
+                console.error(e);
+                this.handleComplete();
+            });
+            
+            bgm.volume = volume;
         }
 
         this.buttonClick = () => {
