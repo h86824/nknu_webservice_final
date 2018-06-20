@@ -7,7 +7,7 @@ this.HS = this.HS || {};
         let now = 1;
         let bgm;
         let instance;
-        let volume = 0.8;
+        let volume = 0.4;
         this.start = () => {
             this.playBgm("sound2");
         }

@@ -391,9 +391,8 @@ this.HS = this.HS || {};
                 let image = from.getBattleCryImage();
                 
                 if(card){
-                    HS.Anime.itemAttack(from , card , image , () => {
+                    HS.Anime.itemAttack(from , card , stage , image , () => {
                         copyInfo(item , card);
-                        
                         if(card){
                             if(item.newDef <= 0){
                                 battleField.removeCard(card);

@@ -190,6 +190,9 @@ this.HS = this.HS || {};
         battleCry: function(){
             HS.BGM.play("launcher");
         },
+        afterBattleCry:function(){
+            HS.BGM.play("explosion");
+        },
         getBattleCryImage: function(){
             return HS.Global.Source.getResult("FireBall");
         },
