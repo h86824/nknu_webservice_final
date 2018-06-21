@@ -144,7 +144,9 @@ this.HS = this.HS || {};
             {id: "playcard", src: "/sounds/putting_a_large_bag.mp3"},
             {id: "bell", src: "/sounds/bell.mp3"},
             {id: "angels", src: "/sounds/chorus_of_angels.mp3"},
-
+            {id: "heroafterbattlecry", src: "/sounds/strange_wave.mp3"},
+            {id: "herobattlecry", src: "/sounds/magic3.mp3"},
+            
             {src:"/images/card-back.png", id:"CardBack"},
             {src:"/images/card-atk.png", id:"CardAtk"},
             {src:"/images/card-def.png", id:"CardDef"},
@@ -188,6 +190,7 @@ this.HS = this.HS || {};
             {src:"/images/card_Yo.png", id:"CardYo"},
             {src:"/images/card_YYT.jpg", id:"CardYYT"},
             {src:"/images/card_Fireball.png", id:"CardFireBall"},
+            {src:"/images/card_Hero_BattleCry", id:"HeroBattleCry"},
             
             {src:"/images/dmyeh.jpg", id:"CardDMYeh"},
             {src:"/images/card_WinTingLee_BattleCry.png", id:"BattleCryWinTingLee"},
