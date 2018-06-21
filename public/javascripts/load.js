@@ -190,7 +190,7 @@ this.HS = this.HS || {};
             {src:"/images/card_Yo.png", id:"CardYo"},
             {src:"/images/card_YYT.jpg", id:"CardYYT"},
             {src:"/images/card_Fireball.png", id:"CardFireBall"},
-            {src:"/images/card_Hero_BattleCry", id:"HeroBattleCry"},
+            {src:"/images/card_Hero_BattleCry.png", id:"HeroBattleCry"},
             
             {src:"/images/dmyeh.jpg", id:"CardDMYeh"},
             {src:"/images/card_WinTingLee_BattleCry.png", id:"BattleCryWinTingLee"},
