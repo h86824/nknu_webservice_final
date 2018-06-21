@@ -457,6 +457,7 @@ this.HS = this.HS || {};
             });
 
             from.cristal = action.obj.crystal;
+            from.active = false;
         }
     }
 
