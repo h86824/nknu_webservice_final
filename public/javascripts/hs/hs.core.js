@@ -175,6 +175,9 @@ this.HS = this.HS || {};
         case HS.Action.Type.battleCry:
             handleBattleCry(action);
             break;
+        case HS.Action.Type.Heropower:
+            handleHeropower(action);
+            break;
         }
     }
 
@@ -429,6 +432,31 @@ this.HS = this.HS || {};
         cardLocal.name = cardServer.name;
         if(cardServer.msg){
             cardLocal.content = cardServer.msg;
+        }
+    }
+
+    function handleHeropower(action){
+        if(action.obj && action.obj.cards){
+            let from = battleField.findCardWithId( action.from );
+            
+            action.obj.cards.forEach( item => {
+                from.battleCry();
+                let card = battleField.findCardWithId( item.cardID );
+                let image = from.getBattleCryImage();
+                
+                if(card){
+                    HS.Anime.itemAttack(from , card , stage , image , () => {
+                        copyInfo(item , card);
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                }
+            });
+
+            from.cristal = action.obj.crystal;
         }
     }
 
