@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title%></title>
+    <meta charset="UTF-8">
+    <script src="/indexScripts/login.js"></script>
+    <link rel="stylesheet" href="/stylesheets/myStyleSheet.css">
+</head>
+<body style="background-color:#B388FF">
+    <div id="status">
+        FB帳號驗證中......
+    </div>
+    <br>
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+    </fb:login-button>
+    <br><br>
+    <button id="btn-back">返回</button>
+</body>
+</html>
