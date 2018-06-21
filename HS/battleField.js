@@ -59,7 +59,9 @@ class battleField {
         let actionCard =allayplayer.getMinion (card);
         let BattleArr = [];
         actionCard.battleCry(allayplayer,enemy,null,BattleArr,card);
-        //allayplayer.deadyet();
+        if(actionCard.race == "法術"){
+            allayplayer.deadyet();
+        }
         //enemy.deadyet();
         /*for(let i=0;i<enemy.allayList.length;i++){
             if(enemy.allayList[i].newDef<=0){

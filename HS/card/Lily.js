@@ -8,8 +8,8 @@ class Lily extends card {
         this.race = "黑";
         this.cost = 7;
         this.originAtk = 3;
-        this.originDef = 7;
-        this.msg="若你手中有教授，則獲得+4/+1。";
+        this.originDef = 5;
+        this.msg="若你手中有教授，則獲得+4/+1及衝鋒。";
         this.cardType = "minion";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;

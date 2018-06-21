@@ -108,7 +108,7 @@ class GameCore {
                         this.opponent.socket.emit("dual",new Endgame(this.actionCount++,winYet));
                     }
                     let DeathArr=this.bf.DeathrattleInvoke(this.currentPlayer,this.opponent,data.obj.cardID);
-                    this._sendBattleCry(DeathArr,data.obj.cardID,null);
+                    this._sendBattleCry(DeathArr,null,null);
                     break;
                 case Action.Type.Attack:
                     if(data.from!=data.to){
@@ -122,7 +122,7 @@ class GameCore {
                             this.opponent.socket.emit("dual",new Endgame(this.actionCount++,winYet));
                         }
                         let DeathArr=this.bf.DeathrattleInvoke(this.currentPlayer,this.opponent,data.from);
-                        this._sendBattleCry(DeathArr,data.from,null);
+                        this._sendBattleCry(DeathArr,null,null);
                     }
                     break;
                 case Action.Type.Heropower:
