@@ -23,7 +23,7 @@ this.HS = this.HS || {};
 
             stage.on("mousedown" , (event) =>{
                 let item = event.target.parent;
-                if(item instanceof HS.Card && item.active && item.assignable){
+                if((item instanceof HS.Card || item instanceof HS.Hero) && item.active && item.assignable){
                     showArrow(item.getStageX() + HS.Global.cardWidth * 0.55 , item.getStageY() + HS.Global.cardHeight * 0.55);
                     isDragging = item;
                 }
@@ -35,7 +35,7 @@ this.HS = this.HS || {};
                 if(isDragging){
                     moveArrow(event.stageX , event.stageY);
                 }
-                else if(item instanceof HS.Card && item.active && item.assignable){
+                else if((item instanceof HS.Card || item instanceof HS.Hero) && item.active && item.assignable){
                     showArrow(item.getStageX() + HS.Global.cardWidth * 0.55 , item.getStageY() + HS.Global.cardHeight * 0.55);
                     isDragging = item;
                 }

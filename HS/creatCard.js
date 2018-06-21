@@ -24,7 +24,8 @@ var Azir = require("./card/Azir");
 var Blitzcrank = require("./card//Blitzcrank");
 var Braum = require("./card/Braum");
 var Caitlyn = require("./card/Caitlyn");
-
+var HauShiang = require("./card/HauShiang");
+var FireBall = require("./card/FireBall");
 
 class creatCard{
     constructor(){
@@ -43,11 +44,11 @@ class creatCard{
     creatDeck(id){
         let deckList=[];
         if(id==1){
-            for(let i=0;i<30;i++){
+            for(let i=0;i<2;i++){
                 deckList.push(new CPH(this.cardID));
                 this.cardID++;
             }
-            /*for(let j=0;j<2;j++){
+            for(let j=0;j<2;j++){
                 deckList.push(new WinTingLee(this.cardID));
                 this.cardID++;
             }
@@ -68,7 +69,7 @@ class creatCard{
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
-                deckList.push(new Kuo(this.cardID));
+                deckList.push(new FireBall(this.cardID));
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
@@ -80,6 +81,68 @@ class creatCard{
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
+                deckList.push(new FireBall(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Poo(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Flower(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Yo(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Ahri(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new CCLin(this.cardID));
+                this.cardID++;
+            }
+        }
+        else if(id==2){
+            for(let i=0;i<2;i++){
+                deckList.push(new CPH(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new WinTingLee(this.cardID));
+                this.cardID++;
+            }
+            for(let k=0;k<2;k++){
+                deckList.push(new DaMing(this.cardID));
+                this.cardID++;
+            }
+            for(let i =0;i<2;i++){
+                deckList.push(new JianAn(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new JiungHan(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Justin(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new FireBall(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Caitlyn(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
+                deckList.push(new Azir(this.cardID));
+                this.cardID++;
+            }
+            for(let j=0;j<2;j++){
                 deckList.push(new Maple(this.cardID));
                 this.cardID++;
             }
@@ -88,25 +151,23 @@ class creatCard{
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
-                deckList.push(new Yee(this.cardID));
+                deckList.push(new Blitzcrank(this.cardID));
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
-                deckList.push(new Yo(this.cardID));
+                deckList.push(new FireBall(this.cardID));
                 this.cardID++;
             }
             for(let j=0;j<2;j++){
                 deckList.push(new YYT(this.cardID));
                 this.cardID++;
             }
-            for(let j=0;j<2;j++){
-                deckList.push(new CCLin(this.cardID));
+            for(let j=0;j<1;j++){
+                deckList.push(new Annie(this.cardID));
                 this.cardID++;
-            }*/
-        }
-        else if(id==2){
-            for(let i=0;i<30;i++){
-                deckList.push(new WinTingLee(this.cardID));
+            }
+            for(let j=0;j<1;j++){
+                deckList.push(new HauShiang(this.cardID));
                 this.cardID++;
             }
         }

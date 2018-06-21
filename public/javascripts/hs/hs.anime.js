@@ -52,8 +52,8 @@ this.HS = this.HS || {};
             } , 700).call(cb);
         }
 
-        this.itemAttack = (from , to , item , cb) => {
-            item = new HS.ImagePackage(item);
+        this.itemAttack = (from , to , stage , img , cb) => {
+            let item = new HS.ImagePackage(img);
             if(!from instanceof HS.Card){
                 throw new HS.Error.TypeError("attacker" , "HS.Card");
             }
@@ -67,18 +67,19 @@ this.HS = this.HS || {};
                 y: fromTp.y + HS.Global.cardHeight / 4
             })
             item.visibel = true;
-            from.stage.addChild(item);
+            stage.addChild(item);
             let distanceX = fromTp.x - toTp.x;
             let distanceY = fromTp.y - toTp.y;
-
+            
             let offset = {x: -distanceX + fromTp.x , y:  - distanceY + fromTp.y};
 
             createjs.Tween.get(item, {override:true}).to({
                 x: offset.x + HS.Global.cardWidth / 4,
                 y: offset.y + HS.Global.cardHeight / 4
             } , 300).wait(150).call(() => {
-                HS.BGM.play("explosion");
+                from.afterBattleCry();
                 item.stage.removeChild(item);
+                item.visibel = false;
             }).call(cb);
         }
     }

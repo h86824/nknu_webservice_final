@@ -16,7 +16,7 @@ this.HS = this.HS || {};
     }
 
     function start(){
-        socket = io('http://localhost:3000');
+        socket = io(window.location.protocol + '//'+ window.location.hostname + ":" + window.location.port);
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
         createjs.Touch.enable(stage);
@@ -79,12 +79,18 @@ this.HS = this.HS || {};
         stage.addChild(fpsLabel);
         fpsLabel.x = 10;
         fpsLabel.y = 10;
+        fpsLabel.visible = false;
 
         arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
-            console.log(new HS.Action.Attack( from.information.id , to.information.id) );
-            socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
+            if(from instanceof HS.Hero){
+                console.log(new HS.Action.HeroPower( from.information.id , to.information.id)  );
+                socket.emit('match', new HS.Action.HeroPower( from.information.id , to.information.id) );
+            }else{
+                console.log(new HS.Action.Attack( from.information.id , to.information.id) );
+                socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
+            }
         });
 
         stage.addChild(HS.AlertBox);
@@ -95,7 +101,7 @@ this.HS = this.HS || {};
 
     function handleTick(event) {
         stage.update();
-        fpsLabel.text = "測試版 v0.2018061901\n"+
+        fpsLabel.text = "測試版 v0.2018062001\n"+
         "解析度 " + HS.Global.width + " x " + HS.Global.height + "\n"
         +Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
         if (!event.paused) {
@@ -144,7 +150,6 @@ this.HS = this.HS || {};
     }
 
     function handleAction(action){
-        console.log(action);
         switch(action.type){
         case HS.Action.Type.Setting:
             handleSetting(action);
@@ -170,6 +175,9 @@ this.HS = this.HS || {};
         case HS.Action.Type.battleCry:
             handleBattleCry(action);
             break;
+        case HS.Action.Type.Heropower:
+            handleHeropower(action);
+            break;
         }
     }
 
@@ -187,12 +195,9 @@ this.HS = this.HS || {};
             HS.Alert("抽牌(" + action.obj.number  +")");
             
             action.obj.cards.forEach( cardInfo => {
-                let card = new HS.Card(cardInfo.cardID);
-                card.atk = cardInfo.originAtk;
-                card.def = cardInfo.originDef;
-                card.cost = cardInfo.cost;
+                let card = HS.CardFactory.create(cardInfo.name, cardInfo.cardID );
+                copyInfo(cardInfo , card);
                 card.moveable = true;
-                card.name = cardInfo.name;
                 if(cardInfo.cost <= battleField.selfHero.crystal){
                     card.active = true;
                 }
@@ -252,12 +257,11 @@ this.HS = this.HS || {};
                 if(mycard){
                     battleField.selfHandArea.removeCard(mycard);
                     battleField.selfBattleArea.addCard(mycard , action.obj.position);
-                    mycard.cost = card.cost;
-                    mycard.atk = card.newAtk;
-                    mycard.def = card.newDef;
+                    copyInfo(card , mycard);
                     mycard.moveable = false;
                     mycard.assignable = true;
                     mycard.active = card.attackable;
+                    mycard.yield();
                 }
                 battleField.selfHandArea.cards.forEach( card => {
                     if(card.cost <= battleField.selfHero.crystal){
@@ -266,18 +270,21 @@ this.HS = this.HS || {};
                         card.active = false;
                     }
                 });
+                if(battleField.selfHero.crystal >= 2){
+                    battleField.selfHero.active = true;
+                }else{
+                    battleField.selfHero.active = false;
+                }
             }else if(action.player != playerId && card){
                 let mycard = battleField.findCardWithId( -1 );
                 battleField.opponentHandArea.removeCard(mycard);
                 battleField.opponentHero.cristal = action.obj.crystal;
                 if(mycard){
-                    mycard = new HS.Card(card.cardID);
-                    mycard.cost = card.cost;
-                    mycard.atk = card.newAtk;
-                    mycard.def = card.newDef;
-                    mycard.name = card.name;
+                    mycard = HS.CardFactory.create( card.name, card.cardID);
+                    copyInfo(card , mycard);
                     mycard.moveable = false;
                     mycard.assignable = false;
+                    mycard.yield();
                     battleField.opponentBattleArea.addCard(mycard , card.position);
                 }
             }
@@ -304,6 +311,11 @@ this.HS = this.HS || {};
             battleField.selfBattleArea.cards.forEach( card => {
                 card.active = true;
             });
+            if(battleField.selfHero.crystal >= 2){
+                battleField.selfHero.active = true;
+            }else{
+                battleField.selfHero.active = false;
+            }
         }else{
             HS.Alert("對方的回合");
             battleField.btn.enable = false;
@@ -314,6 +326,7 @@ this.HS = this.HS || {};
             battleField.selfBattleArea.cards.forEach( card => {
                 card.active = false;
             });
+            battleField.selfHero.active = false;
         }
     }
 
@@ -364,10 +377,7 @@ this.HS = this.HS || {};
                     action.obj.cards.forEach( item => {
                         let card = battleField.findCardWithId( item.cardID );
                         if(card){
-                            card.atk = item.newAtk;
-                            card.def = item.newDef;
-                            card.cost = item.cost;
-                            card.active = item.attackable;
+                            copyInfo(item , card);
                         }
                     });
                 }
@@ -390,17 +400,13 @@ this.HS = this.HS || {};
             let from = battleField.findCardWithId( action.from );
             
             action.obj.cards.forEach( item => {
+                from.battleCry();
                 let card = battleField.findCardWithId( item.cardID );
-                let image = HS.Global.Source.getResult("FireBall");
-                card.battleCry();
+                let image = from.getBattleCryImage();
                 
                 if(card){
-                    HS.Anime.itemAttack(from , card , image , () => {
-                        card.atk = item.newAtk;
-                        card.def = item.newDef;
-                        card.cost = item.cost;
-                        card.active = item.attackable;
-                        
+                    HS.Anime.itemAttack(from , card , stage , image , () => {
+                        copyInfo(item , card);
                         if(card){
                             if(item.newDef <= 0){
                                 battleField.removeCard(card);
@@ -409,15 +415,49 @@ this.HS = this.HS || {};
                     });
                 }
             });
-/*
-            action.obj.cards.forEach( item => {
-                let card = battleField.findCardWithId( item.cardID );
-                if(card){
-                    if(item.newDef <= 0){
-                        battleField.removeCard(card);
-                    }
+
+            if(from){
+                if(from.def <= 0){
+                    battleField.removeCard(from);
                 }
-            });*/
+            }
+        }
+    }
+
+    function copyInfo(cardServer , cardLocal){
+        cardLocal.atk = cardServer.newAtk;
+        cardLocal.def = cardServer.newDef;
+        cardLocal.cost = cardServer.cost;
+        cardLocal.active = cardServer.attackable;
+        cardLocal.name = cardServer.name;
+        if(cardServer.msg){
+            cardLocal.content = cardServer.msg;
+        }
+    }
+
+    function handleHeropower(action){
+        if(action.obj && action.obj.cards){
+            let from = battleField.findCardWithId( action.from );
+            
+            action.obj.cards.forEach( item => {
+                from.battleCry();
+                let card = battleField.findCardWithId( item.cardID );
+                let image = from.getBattleCryImage();
+                
+                if(card){
+                    HS.Anime.itemAttack(from , card , stage , image , () => {
+                        copyInfo(item , card);
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                }
+            });
+
+            from.cristal = action.obj.crystal;
+            from.active = false;
         }
     }
 

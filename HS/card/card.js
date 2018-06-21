@@ -35,9 +35,9 @@ class card {
              return false;
         }
     }
-    battleCry(allay,enemy,target,Arr){
+    battleCry(allay,enemy,target,Arr,ID){
         this.battlecayList.forEach(bci =>{
-            bci.invoke(allay,enemy,target,Arr);
+            bci.invoke(allay,enemy,target,Arr,ID);
         })
     }
     reiki(bf,target,Arr){
@@ -55,9 +55,9 @@ class card {
             attr.invoke(bf,target,Arr);
         })
     }
-    Deathrattle(bf,target,Arr){
+    Deathrattle(allay,enemy,target,Arr,ID){
         this.DeathrattleList.forEach(dri=>{
-            dri.invoke(bf,target,Arr);
+            dri.invoke(allay,enemy,target,Arr,ID);
         })
     }
     endTurn(bf,target,Arr){
@@ -70,9 +70,9 @@ class card {
             bti.invoke(bf,target,Arr);
         })
     }
-    heroPower(bf,target,Arr){
+    heroPower(allay,enemy,target,Arr,ID){
         this.heroPowerList.forEach(hp=>{
-            hp.invoke(bf,target,Arr);
+            hp.invoke(allay,enemy,target,Arr,ID);
         })
     }
 }

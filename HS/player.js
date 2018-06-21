@@ -1,3 +1,4 @@
+var Drainage = require("./action/action.drainage");
 
 class player{
     
@@ -9,7 +10,7 @@ class player{
         this.deck=mydeck;
         this.cardNumbers=30;
         this.hero = hero;
-        this.drawDamage;
+        this.drawDamage=0;
         this.socket = socket;
         this.newCost;
     }
@@ -44,7 +45,7 @@ class player{
 
         }
     }
-    draw(numbers){
+    draw(numbers,enemy){
         let temp=[];
         let returnNumber = numbers;
         for(let c = 0;c<numbers;c++){
@@ -68,7 +69,8 @@ class player{
                 drawDamage++;
             }
         }
-        return {cards:temp,number:returnNumber,rc:this.cardNumbers};
+        this.socket.emit("match" , new Drainage(this.actionCount++,this.socket,{cards:temp,number:returnNumber,rc:this.cardNumbers}));
+        enemy.emit("match", new Drainage(this.actionCount++ ,this.socket , {cards:[],number:numbers,rc:this.cardNumbers}));
     }
     discard(card,position){
         for(let i=0;i<this.hand.length;i++){
@@ -82,12 +84,13 @@ class player{
                         console.log("卡片"+temp1.cardID);
                         return {"card":temp1,"crystal":this.newCost,"position":position};
                     }
-                    else if(temp.cardType=="spell"){
+                    else if(temp1.cardType=="spell"){
                         this.minushand(i);
                         return {"card":temp1,"crystal":this.newCost};
                     }
                 }
                 else{
+                    this.deadyet();
                     return {"card":null,"crystal":this.cost};
                 }
             }
@@ -120,13 +123,14 @@ class player{
             if(this.playorder[i].newDef<=0){
                 console.log(this.playorder[i].cardID+"死了");
                 deadArr.push(this.playorder[i]);
-                this.playorder.splice(i,1);
                 let tempindex =this.allayList.indexOf(this.playorder[i]);
+                this.playorder.splice(i,1);
                 this.allayList.splice(tempindex,1);
                 console.log(this.allayList);
                 
              }
         }
+        console.log(deadArr);
         return deadArr;
     }
     /*getdeck(mydeck){

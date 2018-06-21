@@ -7,6 +7,16 @@ this.HS = this.HS || {};
         this.cristalList = [];
         this.information = {};
         createjs.Container.call(this);
+        
+        this.activeCircle = new createjs.Shape();
+        this.activeCircle.graphics.clear().beginFill("#7CB342").drawCircle(0,0,HS.Global.handCardDistance * 0.6);
+        this.activeCircle.x = HS.Global.handCardDistance * 0.75;
+        this.activeCircle.y = HS.Global.handCardDistance * 0.75;
+        this.activeCircle.alpha = 0.4;
+        this.addChild(this.activeCircle);
+        createjs.Tween.get(this.activeCircle, { loop: -1 })
+            .to({alpha:0.75} , 2000)
+            .to({alpha:0.1} , 2000)
 
         let template = new createjs.Shape();
         templateImage = HS.Global.Source.getResult("HeroTemplate");
@@ -77,6 +87,7 @@ this.HS = this.HS || {};
         this.addChild(this.rcText);
         this.cristal = 0;
         this.hp = 40;
+        this.active = false;
     }
 
     Hero.prototype = {
@@ -121,6 +132,49 @@ this.HS = this.HS || {};
             this._rc = value;
             this.rcTextOutLine.text = this.rcText.text = "RC: " + value;
         },
+        set active(value){
+            this.isActive = value;
+            this.activeCircle.visible = value;
+        },
+        get active(){
+            return this.isActive;
+        },
+        assignable:true,
+        
+        getStageX: getStageX,
+        getStageY: getStageY,
+
+        toTop: function(){
+            this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
+            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
+        },
+        battleCry: function(){
+            HS.BGM.play("herobattlecry");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("heroafterbattlecry");
+        },
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("HeroBattleCry");
+        },
+        yield: function(){
+            HS.BGM.play("playcard");
+        }
+    }
+
+    function getStageX(){
+        return getParent(this , "x") + this.x;
+    }
+
+    function getStageY(){
+        return getParent(this , "y") + this.y;
+    }
+
+    function getParent(item , property){
+        if(!item.parent){
+            return 0;
+        }
+        return item.parent[property] + getParent(item.parent , property);
     }
     
     extend(Hero , createjs.Container);

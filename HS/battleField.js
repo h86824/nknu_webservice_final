@@ -27,19 +27,14 @@ class battleField {
         let targetCard = opponent.getMinion(target);
         let attArr = [];
         //actionCard.beforeAtk(this,targetCard,attArr);
-        console.log("發動攻擊的卡:"+actionCard.cardID);
+        console.log("攻擊");
         if(actionCard!=undefined){
+            console.log("發動攻擊的卡:"+actionCard.cardID);
             if(actionCard.attack(targetCard)){
                 attArr.push(actionCard);
                 attArr.push(targetCard);
-                if(actionCard.newDef<=0){
-                    let cardtemp = player.allayList.indexOf(actionCard);
-                    player.allayList.splice(cardtemp,1);
-                }
-                if(targetCard.newDef<=0){
-                    let cardtemp2 = opponent.allayList.indexOf(targetCard);
-                    opponent.allayList.splice(cardtemp2,1);
-                }
+                //player.deadyet();
+                //opponent.deadyet();
             }
         }
         //actionCard.afterAtk(this,targetCard,attArr);
@@ -61,12 +56,13 @@ class battleField {
     }
     BattlecryInvoke(allayplayer,enemy,card){
         console.log("戰吼觸發~~~");
-        console.log(allayplayer.socket.id);
-        console.log(enemy.socket.id);
         let actionCard =allayplayer.getMinion (card);
         let BattleArr = [];
-        actionCard.battleCry(allayplayer,enemy,null,BattleArr);
-        enemy.deadyet();
+        actionCard.battleCry(allayplayer,enemy,null,BattleArr,card);
+        if(actionCard.race == "法術"){
+            allayplayer.deadyet();
+        }
+        //enemy.deadyet();
         /*for(let i=0;i<enemy.allayList.length;i++){
             if(enemy.allayList[i].newDef<=0){
                 enemy.allayList.splice(i,1);
@@ -74,26 +70,29 @@ class battleField {
         }*/
         return {"cards":BattleArr};
     }
-    DeathrattleInvoke(){
-        let deadList1 = this.player1.deadyet();
-        let deadList2 = this.player2.deadyet();
+    DeathrattleInvoke(allayplayer,enemy,card){
+        let deadList1 = allayplayer.deadyet();
+        let deadList2 = enemy.deadyet();
+        console.log("死聲發動");
         let DeathArr = [];
         if(deadList1.length>0){
             let i;
             for(i=0;i<deadList1.length;i++){
-                deadList1[i].Deathrattle(this,null,DeathArr);
+                deadList1[i].Deathrattle(allayplayer,enemy,null,DeathArr,card);
             }
         }
         if(deadList2.length>0){
             let j;
             for(j=0;j<deadList2.length;j++){
-                deadList2[j].Deathrattle(this,null,DeathArr);
+                deadList2[j].Deathrattle(allayplayer,enemy,null,DeathArr,card);
             }
         }
         return {"cards":DeathArr};
     }
-    HeropowerInvoke(player,target){
-        player.hero.heroPower(this,target);
+    HeropowerInvoke(allayplayer,enemy,card,target){
+        let heroArr = [];
+        allayplayer.hero.heroPower(allayplayer,enemy,target,heroArr,card);
+        return {"cards":heroArr,"crystal":allayplayer.newCost};
     }
     EndTurnInvoke(player){
         let endArr = [];

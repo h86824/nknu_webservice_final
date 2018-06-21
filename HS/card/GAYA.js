@@ -9,6 +9,7 @@ class GAYA extends card {
         this.originAtk = 0;
         this.originDef = 20;
         this.cardType = "minion";
+        this.msg = "耍廢";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;
     }

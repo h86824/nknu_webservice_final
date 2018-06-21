@@ -118,6 +118,8 @@ this.HS = this.HS || {};
         container.addChild(holder);
 
         createjs.Ticker.addEventListener("tick", (event) => {
+            if(!container.visible)
+                return;
             holder.rotation += 0.03;
             holder.children.forEach( item => {
                 
@@ -134,8 +136,8 @@ this.HS = this.HS || {};
                 var shape = new createjs.Shape();
                 shape.alpha = Math.random();
                 shape.graphics.clear().beginFill("#FFF").drawCircle(0 , 0 , (Math.random() * 3 + 1) * HS.Global.rate );
-                shape.x = (Math.random() - 0.5) * HS.Global.deckWidth;
-                shape.y = (Math.random() - 0.5) * HS.Global.deckWidth;
+                shape.x = (Math.random() - 0.5) * HS.Global.deckWidth * 1.5;
+                shape.y = (Math.random() - 0.5) * HS.Global.deckWidth * 1.5;
                 shape.xSpeed = (Math.random() - 0.5) * 0.5 * HS.Global.rate;
                 shape.ySpeed = (Math.random() - 0.5) * 0.5 * HS.Global.rate;
                 holder.addChild(shape);

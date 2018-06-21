@@ -27,8 +27,6 @@ this.HS = this.HS || {};
         this.on("pressmove", (e) => { if(this.moveable && this.active) pressMove(e) });
         this.on("pressup", (e) => { if(this.moveable && this.active) pressUp(e) });
         this.on("mousedown" , (e) => { if(this.moveable && this.active) pressDown(e) });
-        //this.snapToPixel = true;
-        //this.cache(0, 0, image.width, image.height);
 
         let templateImg = HS.Global.Source.getResult("CardTemplate");
         this.template = new createjs.Shape(); 
@@ -102,11 +100,7 @@ this.HS = this.HS || {};
         this.addChild(this.cardContent);
         this.addChild(this.cardName);
 
-        /*this.setAtk = setText(this.atkTextOutline , this.atkText);
-        this.setDef = setText(this.defTextOutline , this.defText);
-        this.setCost = setText(this.costTextOutline , this.costText);*/
         this.snapToPixel = true;
-        //this.cache(0, 0, HS.Global.cardWidth , HS.Global.cardHeight);
         this.active = false;
     }
 
@@ -130,7 +124,11 @@ this.HS = this.HS || {};
             return this._cost;
         },
         set def ( value ){
+            this._def = value;
             setText(this , this.defTextOutline , this.defText)(value);
+        },
+        get def(){
+            return this._def;
         },
         set name( value ){
             setName(this)(value);
@@ -161,10 +159,14 @@ this.HS = this.HS || {};
         },
         assignable: false,
         toTop: function(){
-            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
             this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
+            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
         },
         set content(text){
+            
+            for(let i = 10 ; i < text.length ; i += 11){
+                text = text.slice(0,i) + "\n" + text.slice(i,text.length-1);
+            }
             let cardContentText = new createjs.Text(text, HS.Global.TextFontVerySmall, "#fff");
             cardContentText.set({
                 textAlign:"left",
@@ -172,6 +174,7 @@ this.HS = this.HS || {};
                 y: HS.Global.cardHeight * 0.7,
                 outline:false,
                 lineWidth: HS.Global.cardWidth * 0.63,
+                lineHeight : 15 * HS.Global.rate,
                 maxWidth: HS.Global.cardWidth * 0.63,
             });
             let cardContentTextOutline = cardContentText.clone();
@@ -186,6 +189,15 @@ this.HS = this.HS || {};
         },
         battleCry: function(){
             HS.BGM.play("launcher");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("explosion");
+        },
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("FireBall");
+        },
+        yield: function(){
+            HS.BGM.play("playcard");
         }
     }
 
