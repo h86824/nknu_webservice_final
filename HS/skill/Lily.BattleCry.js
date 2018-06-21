@@ -12,6 +12,7 @@ class Lily_BattleCry{
                 let temp = allayplayer.getMinion(ID);
                 temp.newAtk+=4;
                 temp.newDef+=1;
+                temp.attackable=true;
                 Array.push(temp);
             }
         }
