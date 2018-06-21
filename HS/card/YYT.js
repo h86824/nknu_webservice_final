@@ -7,7 +7,7 @@ class YYT extends card {
         this.race = "教授";
         this.cost = 2;
         this.originAtk = 2;
-        this.originDef = 4;
+        this.originDef = 3;
         this.cardType = "minion";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;
