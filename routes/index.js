@@ -30,9 +30,9 @@ router.get('/team', function(req, res, next) {
   res.render('team', { title: '心の石 Heart Stone-遊戲官網' , header: '組員及分工'});
 });
 
-router.get('/login', function(req, res, next) {
+/*router.get('/login', function(req, res, next) {
   res.render('login', { title: '心の石 Heart Stone'});
-});
+});*/
 
 router.get('/game', function(req, res, next) {
   res.render('game', { title: '心の石 Heart Stone'});
