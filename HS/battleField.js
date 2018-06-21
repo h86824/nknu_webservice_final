@@ -90,7 +90,9 @@ class battleField {
         return {"cards":DeathArr};
     }
     HeropowerInvoke(allayplayer,enemy,card,target){
-        player.hero.heroPower(allayplayer,enemy,target,Arr,card);
+        let heroArr = [];
+        allayplayer.hero.heroPower(allayplayer,enemy,target,heroArr,card);
+        return {"cards":heroArr};
     }
     EndTurnInvoke(player){
         let endArr = [];
