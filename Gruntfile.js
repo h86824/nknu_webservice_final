@@ -65,6 +65,7 @@ module.exports = function(grunt) {
                     "public/javascripts/hs/action/hs.action.end-turn.js",
                     "public/javascripts/hs/action/hs.action.play-card.js",
                     "public/javascripts/hs/action/hs.action.attack.js",
+                    "public/javascripts/hs/action/hs.action.hero-power.js",
                     "public/javascripts/hs/card/hs.card.tinlee.js",
                     "public/javascripts/hs/card/hs.card.cclin.js",
                     "public/javascripts/hs/error/hs.error.type-error.js",

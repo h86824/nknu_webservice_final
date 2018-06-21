@@ -84,8 +84,13 @@ this.HS = this.HS || {};
         arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
-            console.log(new HS.Action.Attack( from.information.id , to.information.id) );
-            socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
+            if(from instanceof HS.Hero){
+                console.log(new HS.Action.HeroPower( from.information.id , to.information.id)  );
+                socket.emit('match', new HS.Action.HeroPower( from.information.id , to.information.id) );
+            }else{
+                console.log(new HS.Action.Attack( from.information.id , to.information.id) );
+                socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
+            }
         });
 
         stage.addChild(HS.AlertBox);
@@ -189,10 +194,6 @@ this.HS = this.HS || {};
             
             action.obj.cards.forEach( cardInfo => {
                 let card = HS.CardFactory.create(cardInfo.name, cardInfo.cardID );
-                /*card.atk = cardInfo.originAtk;
-                card.def = cardInfo.originDef;
-                card.cost = cardInfo.cost;
-                card.name = cardInfo.name;*/
                 copyInfo(cardInfo , card);
                 card.moveable = true;
                 if(cardInfo.cost <= battleField.selfHero.crystal){
@@ -267,6 +268,11 @@ this.HS = this.HS || {};
                         card.active = false;
                     }
                 });
+                if(battleField.selfHero.crystal >= 2){
+                    battleField.selfHero.active = true;
+                }else{
+                    battleField.selfHero.active = false;
+                }
             }else if(action.player != playerId && card){
                 let mycard = battleField.findCardWithId( -1 );
                 battleField.opponentHandArea.removeCard(mycard);
@@ -303,6 +309,11 @@ this.HS = this.HS || {};
             battleField.selfBattleArea.cards.forEach( card => {
                 card.active = true;
             });
+            if(battleField.selfHero.crystal >= 2){
+                battleField.selfHero.active = true;
+            }else{
+                battleField.selfHero.active = false;
+            }
         }else{
             HS.Alert("對方的回合");
             battleField.btn.enable = false;
@@ -313,6 +324,7 @@ this.HS = this.HS || {};
             battleField.selfBattleArea.cards.forEach( card => {
                 card.active = false;
             });
+            battleField.selfHero.active = false;
         }
     }
 
