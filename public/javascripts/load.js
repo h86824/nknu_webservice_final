@@ -149,6 +149,8 @@ this.HS = this.HS || {};
             {id: "explosion", src: "/sounds/explosion.mp3"},
             {id: "launcher", src: "/sounds/launcher.mp3"},
             {id: "playcard", src: "/sounds/putting_a_large_bag.mp3"},
+            {id: "bell", src: "/sounds/bell.mp3"},
+            {id: "angels", src: "/sounds/chorus_of_angels.mp3"},
 
             {src:"/images/card-back.png", id:"CardBack"},
             {src:"/images/card-atk.png", id:"CardAtk"},

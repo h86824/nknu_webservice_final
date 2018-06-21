@@ -8,6 +8,12 @@ this.HS.Card = this.HS.Card || {};
         getBattleCryImage: function(){
             return HS.Global.Source.getResult("BattleCryWinTingLee");
         },
+        battleCry: function(){
+            HS.BGM.play("bell");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("angels");
+        },
     }
     extend(WinTingLee , HS.Card);
 
