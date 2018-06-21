@@ -10,6 +10,7 @@ var start = require("./action/action.start");
 var disconnect = require("./action/action.disconnect");
 var Endgame = require("./action/action.endgame");
 var battleCry = require("./action/action.battlecry");
+var heroPower1 = require("./action/action.heropower");
 
 class GameCore {
     
@@ -127,7 +128,7 @@ class GameCore {
                     break;
                 case Action.Type.Heropower:
                     let heroArr = this.bf.HeropowerInvoke(this.currentPlayer,this.opponent,data.from,data.to);
-                    this._sendBattleCry(heroArr,data.from,null);
+                    this._sendHeroPower(heroArr,data.from,data.to);
                     let DArr = this.bf.DeathrattleInvoke(this.currentPlayer,this.opponent,data.from);
                     this._sendBattleCry(DArr,data.from,null);
                 
@@ -135,6 +136,11 @@ class GameCore {
                 
             
         }
+    }
+    _sendBattleCry(cards,from,to){
+        this.players.forEach( player => {
+            player.socket.emit("match" , new heroPower1(this.actionCount++ , player,cards,from,to));
+        });
     }
     _sendBattleCry(cards,from,to){
         this.players.forEach( player => {

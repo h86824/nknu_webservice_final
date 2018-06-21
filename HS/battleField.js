@@ -92,7 +92,7 @@ class battleField {
     HeropowerInvoke(allayplayer,enemy,card,target){
         let heroArr = [];
         allayplayer.hero.heroPower(allayplayer,enemy,target,heroArr,card);
-        return {"cards":heroArr};
+        return {"cards":heroArr,"crystal":allayplayer.newCost};
     }
     EndTurnInvoke(player){
         let endArr = [];
