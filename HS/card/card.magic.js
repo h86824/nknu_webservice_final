@@ -1,4 +1,5 @@
-var card=require("./card")
+var card=require("./card");
+var heropoert = require("../skill/MagicHeroPower");
 
 class Magic extends card{
     constructor(ID){
@@ -9,6 +10,7 @@ class Magic extends card{
         this.cardType="hero";
         this.newAtk=this.originAtk;
         this.newDef= this.originDef;
+        this.heroPowerList.push(new heropoert());
     }
 }
 module.exports = Magic;

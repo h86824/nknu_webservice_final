@@ -70,9 +70,9 @@ class card {
             bti.invoke(bf,target,Arr);
         })
     }
-    heroPower(bf,target,Arr){
+    heroPower(allay,enemy,target,Arr,ID){
         this.heroPowerList.forEach(hp=>{
-            hp.invoke(bf,target,Arr);
+            hp.invoke(allay,enemy,target,Arr,ID);
         })
     }
 }

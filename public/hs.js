@@ -1,4 +1,4 @@
-/*! webservicefinalproject 2018-06-20 */
+/*! webservicefinalproject 2018-06-21 */
 
 this.HS = this.HS || {};
 
@@ -17,7 +17,7 @@ this.HS = this.HS || {};
     }
 
     function start(){
-        socket = io('http://localhost:3000');
+        socket = io(window.location.protocol + '//'+ window.location.hostname + ":" + window.location.port);
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
         createjs.Touch.enable(stage);
@@ -80,6 +80,7 @@ this.HS = this.HS || {};
         stage.addChild(fpsLabel);
         fpsLabel.x = 10;
         fpsLabel.y = 10;
+        fpsLabel.visible = false;
 
         arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
@@ -96,7 +97,7 @@ this.HS = this.HS || {};
 
     function handleTick(event) {
         stage.update();
-        fpsLabel.text = "測試版 v0.2018061901\n"+
+        fpsLabel.text = "測試版 v0.2018062001\n"+
         "解析度 " + HS.Global.width + " x " + HS.Global.height + "\n"
         +Math.round(createjs.Ticker.getMeasuredFPS()) + " fps";
         if (!event.paused) {
@@ -189,11 +190,12 @@ this.HS = this.HS || {};
             
             action.obj.cards.forEach( cardInfo => {
                 let card = HS.CardFactory.create(cardInfo.name, cardInfo.cardID );
-                card.atk = cardInfo.originAtk;
+                /*card.atk = cardInfo.originAtk;
                 card.def = cardInfo.originDef;
                 card.cost = cardInfo.cost;
+                card.name = cardInfo.name;*/
+                copyInfo(cardInfo , card);
                 card.moveable = true;
-                card.name = cardInfo.name;
                 if(cardInfo.cost <= battleField.selfHero.crystal){
                     card.active = true;
                 }
@@ -253,9 +255,7 @@ this.HS = this.HS || {};
                 if(mycard){
                     battleField.selfHandArea.removeCard(mycard);
                     battleField.selfBattleArea.addCard(mycard , action.obj.position);
-                    mycard.cost = card.cost;
-                    mycard.atk = card.newAtk;
-                    mycard.def = card.newDef;
+                    copyInfo(card , mycard);
                     mycard.moveable = false;
                     mycard.assignable = true;
                     mycard.active = card.attackable;
@@ -274,10 +274,7 @@ this.HS = this.HS || {};
                 battleField.opponentHero.cristal = action.obj.crystal;
                 if(mycard){
                     mycard = HS.CardFactory.create( card.name, card.cardID);
-                    mycard.cost = card.cost;
-                    mycard.atk = card.newAtk;
-                    mycard.def = card.newDef;
-                    mycard.name = card.name;
+                    copyInfo(card , mycard);
                     mycard.moveable = false;
                     mycard.assignable = false;
                     mycard.yield();
@@ -367,10 +364,7 @@ this.HS = this.HS || {};
                     action.obj.cards.forEach( item => {
                         let card = battleField.findCardWithId( item.cardID );
                         if(card){
-                            card.atk = item.newAtk;
-                            card.def = item.newDef;
-                            card.cost = item.cost;
-                            card.active = item.attackable;
+                            copyInfo(item , card);
                         }
                     });
                 }
@@ -395,15 +389,11 @@ this.HS = this.HS || {};
             action.obj.cards.forEach( item => {
                 from.battleCry();
                 let card = battleField.findCardWithId( item.cardID );
-                let image = HS.Global.Source.getResult("FireBall");
+                let image = from.getBattleCryImage();
                 
                 if(card){
-                    HS.Anime.itemAttack(from , card , image , () => {
-                        card.atk = item.newAtk;
-                        card.def = item.newDef;
-                        card.cost = item.cost;
-                        card.active = item.attackable;
-                        
+                    HS.Anime.itemAttack(from , card , stage , image , () => {
+                        copyInfo(item , card);
                         if(card){
                             if(item.newDef <= 0){
                                 battleField.removeCard(card);
@@ -412,15 +402,23 @@ this.HS = this.HS || {};
                     });
                 }
             });
-/*
-            action.obj.cards.forEach( item => {
-                let card = battleField.findCardWithId( item.cardID );
-                if(card){
-                    if(item.newDef <= 0){
-                        battleField.removeCard(card);
-                    }
+
+            if(from){
+                if(from.def <= 0){
+                    battleField.removeCard(from);
                 }
-            });*/
+            }
+        }
+    }
+
+    function copyInfo(cardServer , cardLocal){
+        cardLocal.atk = cardServer.newAtk;
+        cardLocal.def = cardServer.newDef;
+        cardLocal.cost = cardServer.cost;
+        cardLocal.active = cardServer.attackable;
+        cardLocal.name = cardServer.name;
+        if(cardServer.msg){
+            cardLocal.content = cardServer.msg;
         }
     }
 
@@ -495,9 +493,9 @@ this.HS = this.HS || {};
             cardCostTextX: cardWidth * 0.15, 
             cardCostTextY: cardHeight * 0.115,
             cardAtkTextX: cardWidth * 0.15,
-            cardAtkTextY: cardHeight * 0.89,
+            cardAtkTextY: cardHeight * 0.88,
             cardDefTextX: cardWidth * 0.87,
-            cardDefTextY: cardHeight * 0.89,
+            cardDefTextY: cardHeight * 0.88,
             cardNameTextX: cardWidth * 0.58,
             cardNameTextY: cardHeight * 0.53,
             cardNameScale: width / 1920,
@@ -675,6 +673,8 @@ this.HS = this.HS || {};
         container.addChild(holder);
 
         createjs.Ticker.addEventListener("tick", (event) => {
+            if(!container.visible)
+                return;
             holder.rotation += 0.03;
             holder.children.forEach( item => {
                 
@@ -691,8 +691,8 @@ this.HS = this.HS || {};
                 var shape = new createjs.Shape();
                 shape.alpha = Math.random();
                 shape.graphics.clear().beginFill("#FFF").drawCircle(0 , 0 , (Math.random() * 3 + 1) * HS.Global.rate );
-                shape.x = (Math.random() - 0.5) * HS.Global.deckWidth;
-                shape.y = (Math.random() - 0.5) * HS.Global.deckWidth;
+                shape.x = (Math.random() - 0.5) * HS.Global.deckWidth * 1.5;
+                shape.y = (Math.random() - 0.5) * HS.Global.deckWidth * 1.5;
                 shape.xSpeed = (Math.random() - 0.5) * 0.5 * HS.Global.rate;
                 shape.ySpeed = (Math.random() - 0.5) * 0.5 * HS.Global.rate;
                 holder.addChild(shape);
@@ -732,8 +732,6 @@ this.HS = this.HS || {};
         this.on("pressmove", (e) => { if(this.moveable && this.active) pressMove(e) });
         this.on("pressup", (e) => { if(this.moveable && this.active) pressUp(e) });
         this.on("mousedown" , (e) => { if(this.moveable && this.active) pressDown(e) });
-        //this.snapToPixel = true;
-        //this.cache(0, 0, image.width, image.height);
 
         let templateImg = HS.Global.Source.getResult("CardTemplate");
         this.template = new createjs.Shape(); 
@@ -807,11 +805,7 @@ this.HS = this.HS || {};
         this.addChild(this.cardContent);
         this.addChild(this.cardName);
 
-        /*this.setAtk = setText(this.atkTextOutline , this.atkText);
-        this.setDef = setText(this.defTextOutline , this.defText);
-        this.setCost = setText(this.costTextOutline , this.costText);*/
         this.snapToPixel = true;
-        //this.cache(0, 0, HS.Global.cardWidth , HS.Global.cardHeight);
         this.active = false;
     }
 
@@ -835,7 +829,11 @@ this.HS = this.HS || {};
             return this._cost;
         },
         set def ( value ){
+            this._def = value;
             setText(this , this.defTextOutline , this.defText)(value);
+        },
+        get def(){
+            return this._def;
         },
         set name( value ){
             setName(this)(value);
@@ -866,10 +864,14 @@ this.HS = this.HS || {};
         },
         assignable: false,
         toTop: function(){
-            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
             this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
+            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
         },
         set content(text){
+            
+            for(let i = 10 ; i < text.length ; i += 11){
+                text = text.slice(0,i) + "\n" + text.slice(i,text.length-1);
+            }
             let cardContentText = new createjs.Text(text, HS.Global.TextFontVerySmall, "#fff");
             cardContentText.set({
                 textAlign:"left",
@@ -877,6 +879,7 @@ this.HS = this.HS || {};
                 y: HS.Global.cardHeight * 0.7,
                 outline:false,
                 lineWidth: HS.Global.cardWidth * 0.63,
+                lineHeight : 15 * HS.Global.rate,
                 maxWidth: HS.Global.cardWidth * 0.63,
             });
             let cardContentTextOutline = cardContentText.clone();
@@ -891,6 +894,12 @@ this.HS = this.HS || {};
         },
         battleCry: function(){
             HS.BGM.play("launcher");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("explosion");
+        },
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("FireBall");
         },
         yield: function(){
             HS.BGM.play("playcard");
@@ -1924,10 +1933,11 @@ this.HS = this.HS || {};
 
     function BGM(){
         let now = 1;
+        let bgm;
         let instance;
-        let volume = 0.3;
+        let volume = 0.4;
         this.start = () => {
-            this.play("sound2");
+            this.playBgm("sound2");
         }
 
         this.handleComplete = (event) => {
@@ -1935,10 +1945,15 @@ this.HS = this.HS || {};
             this.play("sound" + now);
         }
 
-        this.play = (id) => {
-            instance = createjs.Sound.play(id);  // play using id.  Could also use full sourcepath or event.src.
-            instance.on("complete", this.handleComplete, this);
-            instance.volume = volume;
+        this.playBgm = (id) => {
+            bgm = createjs.Sound.play(id);  // play using id.  Could also use full sourcepath or event.src.
+            bgm.on("complete", this.handleComplete, this);
+            bgm.on("failed", (e) => {
+                console.error(e);
+                this.handleComplete();
+            });
+            
+            bgm.volume = volume;
         }
 
         this.buttonClick = () => {
@@ -2020,8 +2035,8 @@ this.HS = this.HS || {};
             } , 700).call(cb);
         }
 
-        this.itemAttack = (from , to , item , cb) => {
-            item = new HS.ImagePackage(item);
+        this.itemAttack = (from , to , stage , img , cb) => {
+            let item = new HS.ImagePackage(img);
             if(!from instanceof HS.Card){
                 throw new HS.Error.TypeError("attacker" , "HS.Card");
             }
@@ -2035,18 +2050,19 @@ this.HS = this.HS || {};
                 y: fromTp.y + HS.Global.cardHeight / 4
             })
             item.visibel = true;
-            from.stage.addChild(item);
+            stage.addChild(item);
             let distanceX = fromTp.x - toTp.x;
             let distanceY = fromTp.y - toTp.y;
-
+            
             let offset = {x: -distanceX + fromTp.x , y:  - distanceY + fromTp.y};
 
             createjs.Tween.get(item, {override:true}).to({
                 x: offset.x + HS.Global.cardWidth / 4,
                 y: offset.y + HS.Global.cardHeight / 4
             } , 300).wait(150).call(() => {
-                HS.BGM.play("explosion");
+                from.afterBattleCry();
                 item.stage.removeChild(item);
+                item.visibel = false;
             }).call(cb);
         }
     }
@@ -2057,8 +2073,8 @@ this.HS = this.HS || {};
 
 (function(){
     let deckArray = [
-        {id: 1 ,name:"預設牌組1" , cover:"DeckCover0"} , 
-        {id: 2 ,name:"預設牌組2" , cover:"DeckCover1"} , 
+        {id: 1 ,name:"一號牌組" , cover:"DeckCover0"} , 
+        {id: 2 ,name:"二號牌組" , cover:"DeckCover1"} , 
         /*{name:"預設牌組3" , cover:"DeckCover1"}*/];
     let _index = 0;
 
@@ -2496,7 +2512,15 @@ this.HS.Card = this.HS.Card || {};
         HS.Card.call(this , id , 'CardPoo' , new createjs.Matrix2D(1,0,0,1,20,0));
     }
     Poo.prototype = {
-        
+        battleCry: function(){
+            HS.BGM.play("bell");
+        },
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("BattleCryWinTingLee");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("angels");
+        },
     }
     extend(Poo , HS.Card);
 
@@ -2508,7 +2532,15 @@ this.HS.Card = this.HS.Card || {};
         HS.Card.call(this , id , 'CardWinTingLee' , new createjs.Matrix2D(1,0,0,1,20,0));
     }
     WinTingLee.prototype = {
-        
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("BattleCryWinTingLee");
+        },
+        battleCry: function(){
+            HS.BGM.play("bell");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("angels");
+        },
     }
     extend(WinTingLee , HS.Card);
 
@@ -2549,7 +2581,18 @@ this.HS.Card = this.HS.Card || {};
     extend(YYT , HS.Card);
 
         HS.Card.YYT = YYT;
-    }());;
+    }());;this.HS = this.HS || {};
+this.HS.Card = this.HS.Card || {};
+(function(){
+    function FireBall(id){
+        HS.Card.call(this , id , 'CardFireBall' , new createjs.Matrix2D(1,0,0,1,20,0));
+    }
+    FireBall.prototype = {
+    }
+    extend(FireBall , HS.Card);
+
+        HS.Card.FireBall = FireBall;
+}());;
 this.HS = this.HS || {};
 this.HS.Action = this.HS.Action || {};
 
@@ -2674,7 +2717,15 @@ this.HS.Card = this.HS.Card || {};
     }
 
     TinLee.prototype = {
-
+        getBattleCryImg: function(){
+            return HS.Global.Source.getResult("BattleCryWinTingLee");
+        },
+        battleCry: function(){
+            HS.BGM.play("bell");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("angels");
+        },
     }
 
     extend(TinLee , HS.Card);
@@ -2753,6 +2804,7 @@ this.HS = this.HS || {};
         文義:{name:"文義", class:HS.Card.Yee},
         Yo:{name:"Yo", class:HS.Card.Yo},
         遠澤:{name:"遠澤", class:HS.Card.YYT},
+        火球術:{name:"火球術", class:HS.Card.FireBall},
     };
 
     extend(CardFactory , createjs.Shape);

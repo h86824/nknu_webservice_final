@@ -8,7 +8,7 @@ class Yo extends card {
         this.cost = 1;
         this.originAtk = 2;
         this.originDef = 2;
-        this.msg = "死亡之聲:魔法陣回復2點生命值，敵方魔法陣受到兩點傷害。";
+        this.msg = "死亡之聲:雙方魔法陣受到2點傷害。";
         this.cardType = "minion";
         this.newAtk = this.originAtk;
         this.newDef = this.originDef;
