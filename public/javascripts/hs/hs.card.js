@@ -159,8 +159,8 @@ this.HS = this.HS || {};
         },
         assignable: false,
         toTop: function(){
-            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
             this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
+            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
         },
         set content(text){
             

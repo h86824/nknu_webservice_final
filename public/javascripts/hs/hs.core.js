@@ -16,7 +16,7 @@ this.HS = this.HS || {};
     }
 
     function start(){
-        socket = io('http://'+window.location.hostname+':3000');
+        socket = io(window.location.protocol + '//'+ window.location.hostname + ":" + window.location.port);
         stage = new createjs.Stage("battlefield");
         stage.enableMouseOver(10);
         createjs.Touch.enable(stage);

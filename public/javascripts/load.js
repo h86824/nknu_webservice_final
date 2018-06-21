@@ -14,14 +14,6 @@ this.HS = this.HS || {};
         let finishedCount = 0;
 
         function start(){
-
-           /* loadList.forEach( srcUrl => {
-                var script = document.createElement('script');
-                script.onload = finishCheck;
-                script.src = srcUrl;
-                document.head.appendChild(script);
-            });*/
-
             loadNext();
     
         }
@@ -73,7 +65,7 @@ this.HS = this.HS || {};
 
     function getManifest(){
         var manifest = [
-            {src:"/javascripts/hs/hs.core.js"},
+            /*{src:"/javascripts/hs/hs.core.js"},
             {src:"/javascripts/hs/hs.global.js"},
             {src:"/javascripts/hs/hs.method.js"},
             {src:"/javascripts/hs/hs.match.js"},
@@ -131,7 +123,8 @@ this.HS = this.HS || {};
             {src:"/javascripts/hs/card/hs.card.cclin.js"},
             
             {src:"/javascripts/hs/error/hs.error.type-error.js"},
-            {src:"/javascripts/hs/hs.card-factory.js"},
+            {src:"/javascripts/hs/hs.card-factory.js"},*/
+            {src:"hs.js"},
 
             {id: "sound1", src: "/sounds/sound01.ogg"},
             {id: "sound2", src: "/sounds/sound02.ogg"},
@@ -194,6 +187,7 @@ this.HS = this.HS || {};
             {src:"/images/card_Yee.png", id:"CardYee"},
             {src:"/images/card_Yo.png", id:"CardYo"},
             {src:"/images/card_YYT.jpg", id:"CardYYT"},
+            {src:"/images/card_Fireball.png", id:"CardFireBall"},
             
             {src:"/images/dmyeh.jpg", id:"CardDMYeh"},
             {src:"/images/card_WinTingLee_BattleCry.png", id:"BattleCryWinTingLee"},

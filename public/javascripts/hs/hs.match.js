@@ -118,6 +118,8 @@ this.HS = this.HS || {};
         container.addChild(holder);
 
         createjs.Ticker.addEventListener("tick", (event) => {
+            if(!container.visible)
+                return;
             holder.rotation += 0.03;
             holder.children.forEach( item => {
                 
