@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/load.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <h1 id="title"><%= title %></h1>
+    <div id="loadingDiv" style="width:460px;margin:0 auto;">
+      <div id="loading">
+        <span class="bar bar1"></span>
+        <span class="bar bar2"></span>
+        <span class="bar bar3"></span>
+        <span class="bar bar4"></span>
+        <span class="bar bar5"></span>
+        <span class="bar bar6"></span>
+        <span class="bar bar7"></span>
+        <span class="bar bar8"></span>
+        <span class="bar bar9"></span>
+      </div>
+      <p id="progressText"></p>
+    </div>
+    <canvas width="3840" height="2160" id="battlefield" style="display:none;width:1440px;background-color:#FFF;margin:0 auto;"></canvas>
+    <script>
+      $(document).ready(() => {
+        window.onresize = function(event){
+          
+        };
+      });
+
+      var loader = new HS.Loader();
+      loader.progress(function(event){
+        document.getElementById("progressText").innerText = parseInt(event.progress * 100) + "%";
+      });
+      loader.load(function(){
+        var core = new HS.Core();
+        document.getElementById("loadingDiv").style.display = "none";
+        document.getElementById("battlefield").style.display = "initial";
+        document.getElementById("title").style.color = "#000";
+        document.getElementById("title").style.fontSize = "150%";
+        document.getElementById("title").style.textAlign = "left";
+        
+        core.start();
+
+        
+        /*var resolutions = [
+          {width:1920 , height:1080},
+          {width:1440 , height:900},
+          {width:3840 , height:2160},
+        ];
+        
+        resolutions.forEach(item => { 
+          let option = $(document.createElement("option")).text(item.width + " , " + item.height).val(JSON.stringify(item));
+          $("#resolutionSelect").append(option);
+        });
+
+        $("#resolutionSelect").change(function(){
+          let resolution = JSON.parse($("#resolutionSelect").val());
+          HS.Global.resize( resolution.width , resolution.height);
+          let canvas = document.getElementById("battlefield");
+          canvas.width = resolution.width;
+          canvas.height = resolution.height;
+        });*/
+        
+      })
+      loader.start();
+      
+      document.getElementById("title").addEventListener("click", function(e) {
+        var elem = document.getElementById("battlefield");
+        elem.style.width = screen.width + "px";
+
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          elem.msRequestFullscreen();
+        } else if (elem.mozRequestFullScreen) {
+          elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) {
+          elem.webkitRequestFullscreen();
+        }
+      })
+
+      if (document.addEventListener)
+      {
+          document.addEventListener('webkitfullscreenchange', exitHandler, false);
+          document.addEventListener('mozfullscreenchange', exitHandler, false);
+          document.addEventListener('fullscreenchange', exitHandler, false);
+          document.addEventListener('MSFullscreenChange', exitHandler, false);
+      }
+
+      function exitHandler()
+      {
+          if (!(document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement))
+          {
+            var elem = document.getElementById("battlefield");
+            elem.style.width = 1440 + "px";
+          }
+      }
+    </script>
+    
+  </body>
+</html>

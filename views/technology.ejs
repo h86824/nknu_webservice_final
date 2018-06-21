@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="/indexScripts/script.js"></script>
+    <link rel="stylesheet" href="/stylesheets/myStyleSheet.css">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body style="background-color:#B388FF">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <button type="button" class="btn btn-start btn-text">開始遊戲</button>
+            </div>
+            <div class="col-9">
+                <img src="indexImages/cover.png" class="img-fluid img-thumbnail" style="float: right;">
+            </div>
+        </div>
+        <br>
+        <nav class="navbar navbar-expand-sm navbar-dark">
+            <a id="introduction" class="navbar-brand" href="/">首頁</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="system">系統分析與設計</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="technology">使用技術介紹</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tools">使用工具</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="source">資料來源</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="code">程式碼</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="team">組員及分工</a>
+                </li>
+            </ul>
+        </nav>
+        <br />
+        <div id="demo" class="container bg-light">
+            <h1>
+                <%= header%>
+            </h1>
+            <br />
+            <div class="row">
+                <div class="col-6">
+                    <h3>前端技術</h3>
+                    <br>
+                    <ul>
+                        <li>
+                            <p class="font-weight-bold">CreateJS
+                                <div>
+                                    我們使用CreateJS來製作遊戲，使用JavaScript繪製Canvas。
+                                </div>
+                                <br>
+                                <dl>
+                                    <dt>EASELJS</dt>
+                                    <dd>- 繪製靜態物件</dd>
+                                    <dt>TWEENJS</dt>
+                                    <dd>- 繪製物件動畫</dd>
+                                    <dt>SOUNDJS</dt>
+                                    <dd>- 播放背景音樂、音效</dd>
+                                    <dt>PRELOADJS</dt>
+                                    <dd>- 載入圖片、音樂</dd>
+                                </dl>
+                            </p>
+                        </li>
+                        <div style="border:black 2px solid;">
+                            <img src="indexImages/grunt.png">
+                        </div>
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <br>
+                    <br>
+                    <br>
+                    <div style="border:black 2px solid;">
+                        <img src="indexImages/createjs.png">
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <ul>
+                        <li>
+                            <p class="font-weight-bold">Grunt、Grunt-Contrib-Concat
+                                <div>使用Grunt 和 Grunt-Contrib-Concat 合併前端JS檔。
+                                </div>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <h3>後端技術</h3>
+            <br>
+            <div class="row">
+                <div class="col-6" >
+                    <br><br><br><br><br><br>
+                    <ul>
+                        <li>
+                            <p class="font-weight-bold" style="font-size: 24pt;">Node.js
+                                <div>
+                                </div>
+                            </p>
+                        </li>
+                    </ul>
+                    <br><br><br><br><br>
+                    <div>
+                        <img src="indexImages/express.png">
+                    </div>
+                    <br><br><br><br><br>
+                    <ul>
+                        <li>
+                            <p class="font-weight-bold" style="font-size: 24pt">EJS
+                                <div></div>
+                            </p>
+                        </li>
+                    </ul>
+                    <br><br><br><br><br>
+                    <div style="border:black 2px solid;">
+                            <img src="indexImages/socketio.png">
+                        </div>
+                </div>
+                <div class="col-6">
+                    <div style="border:black 2px solid;">
+                        <img src="indexImages/nodejs.png">
+                    </div>
+                    <br><br><br><br><br><br>
+                    <ul>
+                        <li>
+                            <p class="font-weight-bold" style="font-size: 24pt">Express
+                                <div>
+                                </div>
+                            </p>
+                        </li>
+                    </ul>
+                    <br><br><br><br><br><br>
+                    <div>
+                        <img src="indexImages/ejs.png">
+                    </div>
+                    <br><br><br><br><br>
+                    <ul>
+                        <li>
+                            <p class="font-weight-bold" style="font-size: 24pt">Socket.io
+                                <div></div>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <br>
+    <div class="footer">
+        心の石團隊
+    </div>
+    </div>
+</body>
+
+</html>
