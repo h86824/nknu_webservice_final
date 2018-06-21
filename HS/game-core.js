@@ -128,7 +128,7 @@ class GameCore {
                 case Action.Type.Heropower:
                     let heroArr = this.bf.HeropowerInvoke(this.currentPlayer,this.opponent,data.from,data.to);
                     this._sendBattleCry(heroArr,data.from,null);
-                    let DArr = this.bf.DeathrattleInvoke();
+                    let DArr = this.bf.DeathrattleInvoke(this.currentPlayer,this.opponent,data.from);
                     this._sendBattleCry(DArr,data.from,null);
                 
             }
