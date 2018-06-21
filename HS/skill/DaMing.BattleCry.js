@@ -2,7 +2,7 @@ class DaMing_BattleCry{
     constructor(){}
     invoke(allayplayer,enemy,target,Array,ID){
         if(target==null){
-            allayplayer.draw(1,enemy.socket);
+            allayplayer.draw(3,enemy.socket);
         }
     }
 }
