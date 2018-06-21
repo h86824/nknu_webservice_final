@@ -48,8 +48,6 @@ class player{
     draw(numbers,enemy){
         let temp=[];
         let returnNumber = numbers;
-        console.log(this.socket);
-        console.log(enemy);
         for(let c = 0;c<numbers;c++){
             if(this.cardNumbers>0){
                 let ramdomInt = Math.floor(Math.random()*this.cardNumbers);
@@ -132,6 +130,7 @@ class player{
                 
              }
         }
+        console.log(deadArr);
         return deadArr;
     }
     /*getdeck(mydeck){
