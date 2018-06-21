@@ -137,7 +137,7 @@ class GameCore {
             
         }
     }
-    _sendBattleCry(cards,from,to){
+    _sendHeroPower(cards,from,to){
         this.players.forEach( player => {
             player.socket.emit("match" , new heroPower1(this.actionCount++ , player,cards,from,to));
         });
