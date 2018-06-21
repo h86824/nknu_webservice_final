@@ -55,6 +55,7 @@ server.listen(3000);
 
 process.on('uncaughtException', function (err) { 
   console.log('Caught exception: ' + err); 
+  console.error(err);
 }); 
 
 io.sockets.on('connection', function (client) {

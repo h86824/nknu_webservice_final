@@ -23,6 +23,7 @@ class MagicHeroPower{
             targetCard.newDef-=1;
             Array.push(targetCard);
         }
+        allayplayer.newCost-=2;
     }
 }
 module.exports = MagicHeroPower;
