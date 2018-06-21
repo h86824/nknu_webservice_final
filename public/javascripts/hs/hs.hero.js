@@ -148,6 +148,18 @@ this.HS = this.HS || {};
             this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
             this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
         },
+        battleCry: function(){
+            HS.BGM.play("herobattlecry");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("heroafterbattlecry");
+        },
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("HeroBattleCry");
+        },
+        yield: function(){
+            HS.BGM.play("playcard");
+        }
     }
 
     function getStageX(){

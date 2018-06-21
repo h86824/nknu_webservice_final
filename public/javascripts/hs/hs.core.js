@@ -150,7 +150,6 @@ this.HS = this.HS || {};
     }
 
     function handleAction(action){
-        console.log(action);
         switch(action.type){
         case HS.Action.Type.Setting:
             handleSetting(action);
