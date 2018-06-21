@@ -44,6 +44,7 @@ this.HS = this.HS || {};
         文義:{name:"文義", class:HS.Card.Yee},
         Yo:{name:"Yo", class:HS.Card.Yo},
         遠澤:{name:"遠澤", class:HS.Card.YYT},
+        火球術:{name:"火球術", class:HS.Card.FireBall},
     };
 
     extend(CardFactory , createjs.Shape);
