@@ -1,5 +1,5 @@
 $(function(){
     $(".btn-start").click(function(){
-        window.location.href="login";
+        window.location.href="game";
     });
 });
