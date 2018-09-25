@@ -85,8 +85,13 @@ this.HS = this.HS || {};
         arrowsManager = new HS.ArrowsManager();
         arrowsManager.handle(stage , battleField);
         arrowsManager.onassign( (from , to) => {
-            console.log(new HS.Action.Attack( from.information.id , to.information.id) );
-            socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
+            if(from instanceof HS.Hero){
+                console.log(new HS.Action.HeroPower( from.information.id , to.information.id)  );
+                socket.emit('match', new HS.Action.HeroPower( from.information.id , to.information.id) );
+            }else{
+                console.log(new HS.Action.Attack( from.information.id , to.information.id) );
+                socket.emit('match', new HS.Action.Attack( from.information.id , to.information.id) );
+            }
         });
 
         stage.addChild(HS.AlertBox);
@@ -146,7 +151,6 @@ this.HS = this.HS || {};
     }
 
     function handleAction(action){
-        console.log(action);
         switch(action.type){
         case HS.Action.Type.Setting:
             handleSetting(action);
@@ -172,6 +176,9 @@ this.HS = this.HS || {};
         case HS.Action.Type.battleCry:
             handleBattleCry(action);
             break;
+        case HS.Action.Type.Heropower:
+            handleHeropower(action);
+            break;
         }
     }
 
@@ -190,10 +197,6 @@ this.HS = this.HS || {};
             
             action.obj.cards.forEach( cardInfo => {
                 let card = HS.CardFactory.create(cardInfo.name, cardInfo.cardID );
-                /*card.atk = cardInfo.originAtk;
-                card.def = cardInfo.originDef;
-                card.cost = cardInfo.cost;
-                card.name = cardInfo.name;*/
                 copyInfo(cardInfo , card);
                 card.moveable = true;
                 if(cardInfo.cost <= battleField.selfHero.crystal){
@@ -268,6 +271,11 @@ this.HS = this.HS || {};
                         card.active = false;
                     }
                 });
+                if(battleField.selfHero.crystal >= 2){
+                    battleField.selfHero.active = true;
+                }else{
+                    battleField.selfHero.active = false;
+                }
             }else if(action.player != playerId && card){
                 let mycard = battleField.findCardWithId( -1 );
                 battleField.opponentHandArea.removeCard(mycard);
@@ -304,6 +312,11 @@ this.HS = this.HS || {};
             battleField.selfBattleArea.cards.forEach( card => {
                 card.active = true;
             });
+            if(battleField.selfHero.crystal >= 2){
+                battleField.selfHero.active = true;
+            }else{
+                battleField.selfHero.active = false;
+            }
         }else{
             HS.Alert("對方的回合");
             battleField.btn.enable = false;
@@ -314,6 +327,7 @@ this.HS = this.HS || {};
             battleField.selfBattleArea.cards.forEach( card => {
                 card.active = false;
             });
+            battleField.selfHero.active = false;
         }
     }
 
@@ -419,6 +433,32 @@ this.HS = this.HS || {};
         cardLocal.name = cardServer.name;
         if(cardServer.msg){
             cardLocal.content = cardServer.msg;
+        }
+    }
+
+    function handleHeropower(action){
+        if(action.obj && action.obj.cards){
+            let from = battleField.findCardWithId( action.from );
+            
+            action.obj.cards.forEach( item => {
+                from.battleCry();
+                let card = battleField.findCardWithId( item.cardID );
+                let image = from.getBattleCryImage();
+                
+                if(card){
+                    HS.Anime.itemAttack(from , card , stage , image , () => {
+                        copyInfo(item , card);
+                        if(card){
+                            if(item.newDef <= 0){
+                                battleField.removeCard(card);
+                            }
+                        }
+                    });
+                }
+            });
+
+            from.cristal = action.obj.crystal;
+            from.active = false;
         }
     }
 
@@ -1021,6 +1061,16 @@ this.HS = this.HS || {};
         this.cristalList = [];
         this.information = {};
         createjs.Container.call(this);
+        
+        this.activeCircle = new createjs.Shape();
+        this.activeCircle.graphics.clear().beginFill("#7CB342").drawCircle(0,0,HS.Global.handCardDistance * 0.6);
+        this.activeCircle.x = HS.Global.handCardDistance * 0.75;
+        this.activeCircle.y = HS.Global.handCardDistance * 0.75;
+        this.activeCircle.alpha = 0.4;
+        this.addChild(this.activeCircle);
+        createjs.Tween.get(this.activeCircle, { loop: -1 })
+            .to({alpha:0.75} , 2000)
+            .to({alpha:0.1} , 2000)
 
         let template = new createjs.Shape();
         templateImage = HS.Global.Source.getResult("HeroTemplate");
@@ -1091,6 +1141,7 @@ this.HS = this.HS || {};
         this.addChild(this.rcText);
         this.cristal = 0;
         this.hp = 40;
+        this.active = false;
     }
 
     Hero.prototype = {
@@ -1135,6 +1186,49 @@ this.HS = this.HS || {};
             this._rc = value;
             this.rcTextOutLine.text = this.rcText.text = "RC: " + value;
         },
+        set active(value){
+            this.isActive = value;
+            this.activeCircle.visible = value;
+        },
+        get active(){
+            return this.isActive;
+        },
+        assignable:true,
+        
+        getStageX: getStageX,
+        getStageY: getStageY,
+
+        toTop: function(){
+            this.parent.setChildIndex(this , this.parent.getNumChildren()-1);
+            this.parent.parent.setChildIndex(this.parent , this.parent.parent.getNumChildren()-3);
+        },
+        battleCry: function(){
+            HS.BGM.play("herobattlecry");
+        },
+        afterBattleCry:function(){
+            HS.BGM.play("heroafterbattlecry");
+        },
+        getBattleCryImage: function(){
+            return HS.Global.Source.getResult("HeroBattleCry");
+        },
+        yield: function(){
+            HS.BGM.play("playcard");
+        }
+    }
+
+    function getStageX(){
+        return getParent(this , "x") + this.x;
+    }
+
+    function getStageY(){
+        return getParent(this , "y") + this.y;
+    }
+
+    function getParent(item , property){
+        if(!item.parent){
+            return 0;
+        }
+        return item.parent[property] + getParent(item.parent , property);
     }
     
     extend(Hero , createjs.Container);
@@ -1665,7 +1759,7 @@ this.HS = this.HS || {};
 
             stage.on("mousedown" , (event) =>{
                 let item = event.target.parent;
-                if(item instanceof HS.Card && item.active && item.assignable){
+                if((item instanceof HS.Card || item instanceof HS.Hero) && item.active && item.assignable){
                     showArrow(item.getStageX() + HS.Global.cardWidth * 0.55 , item.getStageY() + HS.Global.cardHeight * 0.55);
                     isDragging = item;
                 }
@@ -1677,7 +1771,7 @@ this.HS = this.HS || {};
                 if(isDragging){
                     moveArrow(event.stageX , event.stageY);
                 }
-                else if(item instanceof HS.Card && item.active && item.assignable){
+                else if((item instanceof HS.Card || item instanceof HS.Hero) && item.active && item.assignable){
                     showArrow(item.getStageX() + HS.Global.cardWidth * 0.55 , item.getStageY() + HS.Global.cardHeight * 0.55);
                     isDragging = item;
                 }
@@ -2706,6 +2800,26 @@ this.HS.Action = this.HS.Action || {};
     extend(Attack , HS.Action.Action);
 
     HS.Action.Attack = Attack;
+}());;
+this.HS = this.HS || {};
+this.HS.Action = this.HS.Action || {};
+
+(function(){
+    function HeroPower(from,to){
+        HS.Action.Action.call(this);
+        
+        this.type = HS.Action.Type.Heropower;
+        this.from=from;
+        this.to=to;
+    }
+
+    HeroPower.prototype = {
+        
+    }
+
+    extend(HeroPower , HS.Action.Action);
+
+    HS.Action.HeroPower = HeroPower;
 }());;
 this.HS = this.HS || {};
 this.HS.Card = this.HS.Card || {};
