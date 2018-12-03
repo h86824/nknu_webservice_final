@@ -58,72 +58,8 @@ this.HS = this.HS || {};
         }
     }
 
-    function onFileLoaded(evt){
-        var item = evt.item;
-        var type = evt.type;
-    }
-
     function getManifest(){
         var manifest = [
-            /*{src:"/javascripts/hs/hs.core.js"},
-            {src:"/javascripts/hs/hs.global.js"},
-            {src:"/javascripts/hs/hs.method.js"},
-            {src:"/javascripts/hs/hs.match.js"},
-            {src:"/javascripts/hs/hs.card.js"},
-            {src:"/javascripts/hs/hs.hero.js"},
-            {src:"/javascripts/hs/hs.battle-field.js"},
-            {src:"/javascripts/hs/hs.handArea.js"},
-            {src:"/javascripts/hs/hs.battle-area.js"},
-            {src:"/javascripts/hs/hs.button.js"},
-            {src:"/javascripts/hs/hs.arrows-manager.js"},
-            {src:"/javascripts/hs/hs.message-box.js"},
-            {src:"/javascripts/hs/hs.bgm.js"},
-            {src:"/javascripts/hs/hs.anime.js"},
-            {src:"/javascripts/hs/hs.deck.js"},
-            {src:"/javascripts/hs/hs.image-package.js"},
-
-            {src:"/javascripts/hs/card/hs.card.Ahri.js"},
-            {src:"/javascripts/hs/card/hs.card.Annie.js"},
-            {src:"/javascripts/hs/card/hs.card.Ashe.js"},
-            {src:"/javascripts/hs/card/hs.card.Azir.js"},
-            {src:"/javascripts/hs/card/hs.card.Blitzcrank.js"},
-            {src:"/javascripts/hs/card/hs.card.Braum.js"},
-            {src:"/javascripts/hs/card/hs.card.Caitlyn.js"},
-            {src:"/javascripts/hs/card/hs.card.Camille.js"},
-            {src:"/javascripts/hs/card/hs.card.CCLin.js"},
-            {src:"/javascripts/hs/card/hs.card.CPH.js"},
-            {src:"/javascripts/hs/card/hs.card.DaMing.js"},
-            {src:"/javascripts/hs/card/hs.card.Darius.js"},
-            {src:"/javascripts/hs/card/hs.card.DyMing.js"},
-            {src:"/javascripts/hs/card/hs.card.Flower.js"},
-            {src:"/javascripts/hs/card/hs.card.GAYA.js"},
-            {src:"/javascripts/hs/card/hs.card.Haru.js"},
-            {src:"/javascripts/hs/card/hs.card.HauShiang.js"},
-            {src:"/javascripts/hs/card/hs.card.Jan.js"},
-            {src:"/javascripts/hs/card/hs.card.JianAn.js"},
-            {src:"/javascripts/hs/card/hs.card.JiungHan.js"},
-            {src:"/javascripts/hs/card/hs.card.Justin.js"},
-            {src:"/javascripts/hs/card/hs.card.Kuo.js"},
-            {src:"/javascripts/hs/card/hs.card.Lily.js"},
-            {src:"/javascripts/hs/card/hs.card.LiWei.js"},
-            {src:"/javascripts/hs/card/hs.card.Maple.js"},
-            {src:"/javascripts/hs/card/hs.card.Poo.js"},
-            {src:"/javascripts/hs/card/hs.card.WinTingLee.js"},
-            {src:"/javascripts/hs/card/hs.card.Yee.js"},
-            {src:"/javascripts/hs/card/hs.card.Yo.js"},
-            {src:"/javascripts/hs/card/hs.card.YYT.js"},
-
-            {src:"/javascripts/hs/action/hs.action.js"},
-            {src:"/javascripts/hs/action/hs.action.dual.js"},
-            {src:"/javascripts/hs/action/hs.action.end-turn.js"},
-            {src:"/javascripts/hs/action/hs.action.play-card.js"},
-            {src:"/javascripts/hs/action/hs.action.attack.js"},
-
-            {src:"/javascripts/hs/card/hs.card.tinlee.js"},
-            {src:"/javascripts/hs/card/hs.card.cclin.js"},
-            
-            {src:"/javascripts/hs/error/hs.error.type-error.js"},
-            {src:"/javascripts/hs/hs.card-factory.js"},*/
             {src:"hs.js"},
 
             {id: "sound1", src: "/sounds/sound01.ogg"},
@@ -202,14 +138,6 @@ this.HS = this.HS || {};
     function handleFileLoad(event) {
         var item = event.item; // A reference to the item that was passed in to the LoadQueue
         var type = item.type;
-    }
-
-    function loadSound(event) {
-        // This is fired for each sound that is registered.
-        console.log("loaded!")
-        var instance = createjs.Sound.play("sound2");  // play using id.  Could also use full source path or event.src.
-        //instance.on("complete", this.handleComplete, this);
-        instance.volume = 0.5;
     }
 
     HS.Loader = Loader;
