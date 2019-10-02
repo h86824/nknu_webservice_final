@@ -80,7 +80,7 @@ class GameCore {
                     this.opponent.socket.emit("match" , new start(this.actionCount++,this.currentPlayer.socket,this.currentPlayer.cost));//回合Msg
                     for(let j=0;j<this.currentPlayer.allayList.length;j++){
                         this.currentPlayer.allayList[j].attackable = true;
-                    }//變成可以攻擊
+                    }//所有手下變成可以攻擊
                     
                     //let beginArr = this.bf.BeginTurnInvoke(this.currentPlayer);
                     //this._sendBF(beginArr);
